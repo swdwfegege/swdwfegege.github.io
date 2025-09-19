@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proxys</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #4a7a9e, #1a2a44);
+        color: white;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* Center vertically */
+        overflow: hidden;
+      }
+      .games-title {
+        font-size: 64px;
+        margin: 20px 0;
+      }
+      .buttons-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        padding: 20px;
+      }
+      .game-button {
+        background-color: #1a2a44;
+        color: white;
+        border: none;
+        border-radius: 15px; /* Rounded square */
+        padding: 15px 25px;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+      .game-button:hover {
+        background-color: #2e4057; /* Darker shade on hover */
+      }
+      .best-button {
+        background-color: #2e4057; /* Slightly darker to emphasize "best" */
+        font-weight: bold;
+        font-size: 20px; /* Slightly larger for emphasis */
+      }
+      .best-button:hover {
+        background-color: #3c5070; /* Darker shade on hover for "best" */
+      }
+      .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: #1a2a44;
+        color: white;
+        border: none;
+        border-radius: 15px; /* Rounded square, matching other buttons */
+        padding: 15px 25px;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+      .back-button:hover {
+        background-color: #2e4057; /* Darker shade on hover, matching other buttons */
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-button">Back</a>
+    <h1 class="games-title">proxys</h1>
+    <div class="buttons-container">
+      <a href="https://starship-app.com/" class="game-button">Starship</a>
+      <a href="https://youtubeunblocker.onrender.com/" class="game-button"
+        >YouTube Unblocker</a
+      >
+      <a href="https://ttgworld.net/play" class="game-button">TTG World</a>
+      <a
+        href="https://sites.google.com/view/securedweb/home"
+        class="game-button"
+        >Secured Web</a
+      >
+      <a href="https://21v.com.de/" class="game-button best-button">(best)</a>
+    </div>
+  </body>
+</html>
