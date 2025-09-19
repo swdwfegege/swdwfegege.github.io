@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Games</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #4a7a9e, #1a2a44);
+        color: white;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+      }
+      .games-title {
+        font-size: 64px;
+        margin: 20px 0;
+      }
+      .buttons-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        padding: 20px;
+      }
+      .game-button {
+        background-color: #1a2a44;
+        color: white;
+        border: none;
+        border-radius: 15px; /* Rounded square */
+        padding: 15px 25px;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+      .game-button:hover {
+        background-color: #2e4057; /* Darker shade on hover */
+      }
+      .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: #1a2a44;
+        color: white;
+        border: none;
+        border-radius: 15px; /* Rounded square, matching other buttons */
+        padding: 15px 25px;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+      .back-button:hover {
+        background-color: #2e4057; /* Darker shade on hover, matching other buttons */
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-button">Back</a>
+    <h1 class="games-title">games</h1>
+    <div class="buttons-container">
+      <a href="https://basketrandom.io/" class="game-button">Basket Random</a>
+      <a
+        href="https://classroom-6x.io/game/10-minutes-till-dawn/"
+        class="game-button"
+        >10 Minutes Till Dawn</a
+      >
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/survival-race?authuser=0"
+        class="game-button"
+        >Survival Race</a
+      >
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/lol-v-11?authuser=0"
+        class="game-button"
+        >LOL v11</a
+      >
+    </div>
+  </body>
+</html>
