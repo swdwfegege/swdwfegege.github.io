@@ -22,29 +22,28 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        gap: 15px; /* Increased gap for better spacing */
+        gap: 18px;
         background: #1a2a44;
-        padding: 12px; /* Slightly increased padding */
-        border-radius: 15px; /* Rounded edges */
-        box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+        padding: 12px;
+        border-radius: 15px;
+        box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.4);
       }
       .arrow {
         font-size: 24px;
-        cursor: pointer;
-        color: #b0c4de; /* Lighter color for contrast */
+        color: #b0c4de;
       }
       .bottom-text {
-        font-size: 20px; /* Slightly larger text */
-        color: #ffffff;
+        font-size: 20px;
         font-weight: bold;
       }
       .clickable-emoji {
-        font-size: 24px;
-        cursor: pointer; /* Indicate clickable */
-        transition: color 0.3s; /* Smooth color transition */
+        font-size: 28px;
+        cursor: pointer;
+        transition: transform 0.2s, opacity 0.2s;
       }
       .clickable-emoji:hover {
-        color: #d3d3d3; /* Lighter color on hover */
+        transform: scale(1.2);
+        opacity: 0.8;
       }
       .container {
         position: absolute;
@@ -64,9 +63,9 @@
       .search-bar {
         width: 300px;
         height: 40px;
-        background-color: #0f1a2e; /* Darker background */
+        background-color: #0f1a2e;
         border: none;
-        border-radius: 20px; /* Rounded edges */
+        border-radius: 20px;
         padding: 0 15px;
         font-size: 16px;
         color: #ffffff;
@@ -83,12 +82,10 @@
       @keyframes fall {
         0% {
           opacity: 0;
-          transform: translateY(
-            -10vh
-          ); /* Start just above spawn point, invisible */
+          transform: translateY(-10vh);
         }
         1% {
-          opacity: 0.7; /* Become visible briefly after start */
+          opacity: 0.7;
         }
         100% {
           opacity: 0;
@@ -101,14 +98,27 @@
     <div class="bottom-bar">
       <span class="arrow"></span>
       <span class="bottom-text">freecalc</span>
+
+      <!-- Games -->
       <span class="clickable-emoji" onclick="window.location.href='games.html'"
         >🎮</span
       >
+
+      <!-- Movies -->
       <span class="clickable-emoji" onclick="window.location.href='movies.html'"
         >🎬</span
       >
+
+      <!-- Proxys -->
       <span class="clickable-emoji" onclick="window.location.href='proxys.html'"
         >🌐</span
+      >
+
+      <!-- YouTube -->
+      <span
+        class="clickable-emoji"
+        onclick="window.location.href='youtube.html'"
+        >▶</span
       >
     </div>
 
@@ -121,31 +131,18 @@
     <!-- Snowflakes -->
     <script>
       function createSnowflake() {
-        const snowflake = document.createElement("div");
-        snowflake.classList.add("snowflake");
-        snowflake.style.width = Math.random() * 3 + 1 + "px";
-        snowflake.style.height = snowflake.style.width;
-
-        // Spawn snowflakes only from the lower 50% to 80% of the screen
-        snowflake.style.top = 5 + Math.random() * 50 + "%";
-        snowflake.style.left = Math.random() * 100 + "vw";
-        snowflake.style.animationDuration = Math.random() * 10 + 10 + "s";
-
-        // Randomly decide if snowflake falls instantly or after a hidden delay
-        const delayBeforeFall = Math.random() < 0.5; // 50% chance to delay
-        if (delayBeforeFall) {
-          snowflake.style.animationDelay = Math.random() * 5 + "s"; // Hidden delay up to 5 seconds
-        } else {
-          snowflake.style.animationDelay = "0s"; // Fall instantly
-        }
-
-        document.body.appendChild(snowflake);
-
-        setTimeout(() => {
-          snowflake.remove();
-        }, 15000);
+        const s = document.createElement("div");
+        s.classList.add("snowflake");
+        s.style.width = Math.random() * 3 + 1 + "px";
+        s.style.height = s.style.width;
+        s.style.top = 5 + Math.random() * 50 + "%";
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.animationDuration = Math.random() * 10 + 10 + "s";
+        if (Math.random() < 0.5)
+          s.style.animationDelay = Math.random() * 5 + "s";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 15000);
       }
-
       setInterval(createSnowflake, 200);
     </script>
   </body>
