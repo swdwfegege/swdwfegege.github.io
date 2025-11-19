@@ -15,60 +15,102 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        overflow: hidden;
+        overflow-y: auto;
       }
-      .games-title {
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #1a2a44;
+        color: white;
+        border-radius: 15px;
+        padding: 15px 25px;
+        font-size: 18px;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s;
+        z-index: 100;
+      }
+      .back-button:hover {
+        background-color: #2e4057;
+      }
+
+      h1 {
         font-size: 64px;
-        margin: 20px 0;
+        margin: 80px 0 30px 0;
       }
       .buttons-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 15px;
+        gap: 18px;
         padding: 20px;
+        max-width: 1100px;
       }
       .game-button {
         background-color: #1a2a44;
         color: white;
         border: none;
-        border-radius: 15px; /* Rounded square */
-        padding: 15px 25px;
-        font-size: 18px;
+        border-radius: 15px;
+        padding: 18px 30px;
+        font-size: 20px;
         cursor: pointer;
         text-align: center;
         text-decoration: none;
-        transition: background-color 0.3s;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        min-width: 180px;
       }
       .game-button:hover {
-        background-color: #2e4057; /* Darker shade on hover */
-      }
-      .back-button {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        background-color: #1a2a44;
-        color: white;
-        border: none;
-        border-radius: 15px; /* Rounded square, matching other buttons */
-        padding: 15px 25px;
-        font-size: 18px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        transition: background-color 0.3s;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      }
-      .back-button:hover {
-        background-color: #2e4057; /* Darker shade on hover, matching other buttons */
+        background-color: #2e4057;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       }
     </style>
   </head>
   <body>
     <a href="index.html" class="back-button">Back</a>
-    <h1 class="games-title">games</h1>
+    <h1>games</h1>
+
     <div class="buttons-container">
+      <!-- NEW GAMES (added at the top) -->
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/arc"
+        class="game-button"
+        >Arc</a
+      >
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/survival-race"
+        class="game-button"
+        >Racing</a
+      >
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/granny"
+        class="game-button"
+        >Granny</a
+      >
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/ultrakill"
+        class="game-button"
+        >Ultrakill</a
+      >
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/kart-bros"
+        class="game-button"
+        >Kart Bros</a
+      >
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/clash"
+        class="game-button"
+        >Clash Royale</a
+      >
+      <a
+        href="https://sites.google.com/view/drive-u-7-home/melon-playground"
+        class="game-button"
+        >Melon Playground</a
+      >
+
+      <!-- Original games (still here, just below the new ones) -->
       <a href="https://basketrandom.io/" class="game-button">Basket Random</a>
       <a
         href="https://classroom-6x.io/game/10-minutes-till-dawn/"
