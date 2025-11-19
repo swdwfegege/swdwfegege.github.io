@@ -88,12 +88,79 @@
           transform: translateY(110vh);
         }
       }
+
+      /* ──────── Terms of Service Overlay ──────── */
+      #tos-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.92);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        color: white;
+      }
+      .tos-box {
+        background: #1a2a44;
+        padding: 35px;
+        border-radius: 20px;
+        max-width: 620px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        text-align: center;
+      }
+      .tos-box h1 {
+        font-size: 38px;
+        margin-bottom: 20px;
+      }
+      .tos-box p {
+        line-height: 1.7;
+        margin: 18px 0;
+        font-size: 17px;
+      }
+      .tos-btn {
+        margin-top: 30px;
+        padding: 15px 50px;
+        font-size: 20px;
+        background: #4a7a9e;
+        color: white;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .tos-btn:hover {
+        background: #5a9bd4;
+      }
     </style>
   </head>
   <body>
+    <!-- Terms of Service Popup (only shows first visit) -->
+    <div id="tos-overlay">
+      <div class="tos-box">
+        <h1>Welcome to freecalc</h1>
+        <p>By continuing you agree to the following:</p>
+        <p>
+          • This site is for
+          <strong>personal & educational use only</strong>.<br />
+          • All games, videos, music, and proxies are linked or embedded from
+          third-party sources.<br />
+          • You are responsible for following your school/work network
+          policies.<br />
+          • We are not liable for any consequences from bypassing restrictions.
+        </p>
+        <p>This message appears only once.</p>
+        <button class="tos-btn" onclick="agreeTOS()">I Agree</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
     <div class="bottom-bar">
       <span class="bottom-text">freecalc</span>
-
       <span class="clickable-emoji" onclick="window.location.href='games.html'"
         >🎮</span
       >
@@ -109,9 +176,8 @@
         >▶️</span
       >
       <span class="clickable-emoji" onclick="window.location.href='music.html'"
-        >♪</span
+        >🎵</span
       >
-      <!-- NEW -->
     </div>
 
     <div class="container">
@@ -120,7 +186,18 @@
       <input type="text" class="search-bar" placeholder="Search..." />
     </div>
 
+    <!-- Snowflakes -->
     <script>
+      // Terms of Service handler
+      if (localStorage.getItem("tosAgreed") === "true") {
+        document.getElementById("tos-overlay").style.display = "none";
+      }
+      function agreeTOS() {
+        localStorage.setItem("tosAgreed", "true");
+        document.getElementById("tos-overlay").style.display = "none";
+      }
+
+      // Snowflakes
       function createSnowflake() {
         const s = document.createElement("div");
         s.classList.add("snowflake");
