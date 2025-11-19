@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #4a7a9e, #1a2a44);
+        color: white;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+      }
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #1a2a44;
+        color: white;
+        border-radius: 15px;
+        padding: 15px 25px;
+        font-size: 18px;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        transition: background-color 0.3s;
+        z-index: 100;
+      }
+      .back-button:hover { background-color: #2e4057; }
+
+      h1 { font-size: 64px; margin: 80px 0 30px 0; }
+
+      .playlist {
+        width: 90%;
+        max-width: 900px;
+        aspect-ratio: 16 / 9;
+        margin-bottom: 40px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-button">Back</a>
+    <h1>music</h1>
+
+    <iframe class="playlist"
+      src="https://www.youtube.com/embed/videoseries?list=PLoZDU1CpacjxyMMCiNuLYksrqbtUi3ZBC"
+      title="King Von"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+
+    <iframe class="playlist"
+      src="https://www.youtube.com/embed/videoseries?list=PLE_cPG1UEZSHsnIqDwu1l7W9J298wQrXD"
+      title="Kendrick Lamar"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+
+    <iframe class="playlist"
+      src="https://www.youtube.com/embed/videoseries?list=PL-P58vw5Sabl0kVjUGZ8U01-EvryIek7L"
+      title="BP Music (idk bro)"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </body>
+</html>
