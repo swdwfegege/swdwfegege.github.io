@@ -28,10 +28,6 @@
         border-radius: 15px;
         box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.4);
       }
-      .arrow {
-        font-size: 24px;
-        color: #b0c4de;
-      }
       .bottom-text {
         font-size: 20px;
         font-weight: bold;
@@ -39,12 +35,12 @@
       .clickable-emoji {
         font-size: 28px;
         cursor: pointer;
-        transition: transform 0.2s, opacity 0.2s;
+        transition: transform 0.2s;
       }
       .clickable-emoji:hover {
         transform: scale(1.2);
-        opacity: 0.8;
       }
+
       .container {
         position: absolute;
         top: 50%;
@@ -96,30 +92,26 @@
   </head>
   <body>
     <div class="bottom-bar">
-      <span class="arrow"></span>
       <span class="bottom-text">freecalc</span>
 
-      <!-- Games -->
       <span class="clickable-emoji" onclick="window.location.href='games.html'"
         >🎮</span
       >
-
-      <!-- Movies -->
       <span class="clickable-emoji" onclick="window.location.href='movies.html'"
         >🎬</span
       >
-
-      <!-- Proxys -->
       <span class="clickable-emoji" onclick="window.location.href='proxys.html'"
-        >🌐</span
+        >🛜</span
       >
-
-      <!-- YouTube -->
       <span
         class="clickable-emoji"
         onclick="window.location.href='youtube.html'"
-        >▶</span
+        >▶️</span
       >
+      <span class="clickable-emoji" onclick="window.location.href='music.html'"
+        >♪</span
+      >
+      <!-- NEW -->
     </div>
 
     <div class="container">
@@ -128,13 +120,11 @@
       <input type="text" class="search-bar" placeholder="Search..." />
     </div>
 
-    <!-- Snowflakes -->
     <script>
       function createSnowflake() {
         const s = document.createElement("div");
         s.classList.add("snowflake");
-        s.style.width = Math.random() * 3 + 1 + "px";
-        s.style.height = s.style.width;
+        s.style.width = s.style.height = Math.random() * 3 + 1 + "px";
         s.style.top = 5 + Math.random() * 50 + "%";
         s.style.left = Math.random() * 100 + "vw";
         s.style.animationDuration = Math.random() * 10 + 10 + "s";
