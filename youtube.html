@@ -3,95 +3,188 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YouTube Playlists</title>
+    <title>The Cinematic Theatre Hub - YouTube Stage</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to bottom, #4a7a9e, #1a2a44);
-        color: white;
-        font-family: Arial, sans-serif;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-y: auto;
-      }
-      .back-button {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        background-color: #1a2a44;
-        color: white;
-        border-radius: 15px;
-        padding: 15px 25px;
-        font-size: 18px;
-        text-decoration: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        transition: background-color 0.3s;
-      }
-      .back-button:hover {
-        background-color: #2e4057;
+        /* Use a dark background when not in the lobby view */
+        background-color: #0a0a0a;
+        font-family: "Inter", sans-serif;
+        min-height: 100vh;
       }
 
-      h1 {
-        font-size: 64px;
-        margin: 80px 0 30px 0;
+      /* --- YOUTUBE STAGE VIEW STYLES --- */
+      #youtube-view {
+        min-height: 100vh;
+        background-color: #0a0a0a; /* Stage floor */
+        padding: 2rem 1rem;
       }
 
-      .playlist {
-        width: 90%;
-        max-width: 900px;
-        aspect-ratio: 16 / 9;
-        margin-bottom: 40px;
-        border-radius: 15px;
+      .stage-title {
+        color: #fde047; /* Yellow gold */
+        text-shadow: 2px 2px 4px #7f1d1d; /* Red shadow */
+      }
+
+      /* Video Card Styling */
+      .video-card {
+        background-color: #1e1e1e; /* Dark frame */
+        border: 4px solid #7f1d1d; /* Red border for stage look */
+        box-shadow: 0 0 15px rgba(253, 224, 71, 0.5); /* Soft gold glow */
+        border-radius: 0.75rem;
         overflow: hidden;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .video-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 25px rgba(253, 224, 71, 0.8);
+      }
+
+      /* Responsive Iframe Container to maintain 16:9 aspect ratio */
+      .video-responsive {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 * 100) */
+        height: 0;
+        overflow: hidden;
+      }
+      .video-responsive iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
     </style>
   </head>
-  <body>
-    <a href="index.html" class="back-button">Back</a>
-    <h1>youtube</h1>
+  <body class="overflow-y-auto">
+    <!-- YOUTUBE STAGE VIEW -->
+    <div id="youtube-view">
+      <!-- Header and Back Button -->
+      <header
+        class="flex flex-col sm:flex-row justify-between items-center mb-10 p-4 border-b-2 border-yellow-400"
+      >
+        <h2
+          class="stage-title text-3xl sm:text-4xl font-extrabold uppercase tracking-widest mb-4 sm:mb-0"
+        >
+          Youtube
+        </h2>
+        <!-- Button links back to index.html -->
+        <a
+          href="index.html"
+          class="bg-red-800 text-yellow-400 font-bold py-2 px-4 rounded-lg shadow-xl hover:bg-red-700 transition"
+        >
+          Back to Lobby
+        </a>
+      </header>
 
-    <!-- Evbo (replaced joe cus he no worky) -->
-    <iframe
-      class="playlist"
-      src="https://www.youtube.com/embed/videoseries?list=PLB_41AwejHR-iciZ0f8ryrx4Ok9TKNnWD"
-      title="Evbo"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
+      <!-- Video Grid -->
+      <div
+        id="video-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4"
+      >
+        <!-- Videos will be injected here by JavaScript -->
+      </div>
 
-    <!-- Flamingo -->
-    <iframe
-      class="playlist"
-      src="https://www.youtube.com/embed/videoseries?list=PLzvOJijAcg077gWSB3dIO-0JOZ3VKhtIY"
-      title="Flamingo"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
+      <!-- Warning Message for Embedding Issue -->
+      <div
+        class="text-center mt-12 p-6 bg-red-900/50 border border-red-700 rounded-lg max-w-xl mx-auto"
+      >
+        <p class="text-yellow-300 font-semibold text-lg">
+          🚨 Some may not work! 🚨
+        </p>
+        <p class="text-red-200 text-sm mt-2">
+          These videos may display "Error 153" because the creator has disabled
+          embedding on external sites. This is a restriction set by YouTube, not
+          an issue with the code.
+        </p>
+      </div>
 
-    <!-- Surronster -->
-    <iframe
-      class="playlist"
-      src="https://www.youtube.com/embed/videoseries?list=PLYWGtSXr-bRuBJf74Q7xMownSVrWauVUb"
-      title="Surronster"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
+      <!-- Footer for Stage View -->
+      <footer class="text-center mt-12 py-4 text-yellow-400 opacity-80">
+        <p>&copy; The Cinematic Stream - Enjoy the Show!</p>
+      </footer>
+    </div>
 
-    <!-- Jynski -->
-    <iframe
-      class="playlist"
-      src="https://www.youtube.com/embed/videoseries?list=PLdjhf6kRxIJChMbt4jIHJtj_TW3exZFZa"
-      title="Jynski"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
+    <script>
+      // Array of YouTube Playlists using the exact embed URLs provided by the user.
+      // We use the full 'embedUrl' and clean the '&amp;' to '&' for consistency.
+      const youtubePlaylists = [
+        {
+          title: "MrBeast Playlist",
+          creator: "MrBeast",
+          embedUrl:
+            "https://www.youtube.com/embed/videoseries?si=cM94eKLSoE_JdSL1&list=PLJ-qODNIUEEtPdKZNLfbx7JOuRA_JjUxI",
+        },
+        {
+          title: "Flamingo Playlist",
+          creator: "Flamingo",
+          embedUrl:
+            "https://www.youtube.com/embed/videoseries?si=kooUWuSPAjnjzuM7&list=PLCWhAo_cqAH1eI0RGqL10N0RYxkiXr2iI",
+        },
+        {
+          title: "Jynxzi Playlist",
+          creator: "Jynxzi",
+          embedUrl:
+            "https://www.youtube.com/embed/videoseries?si=9ZzyDRLHJE0Mw1bX&list=PL9Yy6OKxAeuLm38T7WRHy02CWNL1gh7B4",
+        },
+        {
+          title: "Parkour Civilisation Playlist",
+          creator: "Parkour Civilisation",
+          embedUrl:
+            "https://www.youtube.com/embed/videoseries?si=WP-HVtxFMrEoFcfv&list=PLch-YqJO7IRNJKPMYBIZXmS83EftManRW",
+        },
+        {
+          title: "Joe Bartolozzi Playlist",
+          creator: "Joe Bartolozzi",
+          embedUrl:
+            "https://www.youtube.com/embed/videoseries?si=ldhLOTPL_0t8godX&list=PLhum48r_nVR5Be5JpHq58-RFIDV8iwOD7",
+        },
+        {
+          title: "Surronster Playlist",
+          creator: "Surronster",
+          embedUrl:
+            "https://www.youtube.com/embed/videoseries?si=7w33HWWlzq2fRhBl&list=PLYWGtSXr-bRuBJf74Q7xMownSVrWauVUb",
+        },
+        {
+          title: "Ludwig Playlist",
+          creator: "Ludwig",
+          embedUrl:
+            "https://www.youtube.com/embed/videoseries?si=O-Da0m3_Veh29DFw&list=PLLGT0cEMIAzfg8uRxwDV_vsw_KoKhTbG8",
+        },
+      ];
+
+      // Function to render the playlist grid
+      function renderPlaylists() {
+        const grid = document.getElementById("video-grid");
+        if (!grid) return;
+
+        grid.innerHTML = ""; // Clear existing content
+
+        youtubePlaylists.forEach((playlist) => {
+          // Use the complete, provided embed URL directly
+          const videoHtml = `
+                    <div class="video-card">
+                        <div class="video-responsive">
+                            <iframe 
+                                src="${playlist.embedUrl}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen
+                                title="${playlist.title} by ${playlist.creator}">
+                            </iframe>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-white text-lg font-semibold">${playlist.title}</h3>
+                            <p class="text-yellow-400 text-sm">Creator: ${playlist.creator}</p>
+                        </div>
+                    </div>
+                `;
+          grid.insertAdjacentHTML("beforeend", videoHtml);
+        });
+      }
+
+      // Render playlists as soon as the page content is loaded
+      document.addEventListener("DOMContentLoaded", renderPlaylists);
+    </script>
   </body>
 </html>
