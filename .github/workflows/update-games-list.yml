@@ -1,0 +1,35 @@
+name: Update games list
+
+on:
+  push:
+    paths:
+      - "**/*.html"          # run whenever any html file changes/gets added
+    branches:
+      - main                 # adjust to your default branch if different
+
+# Lets the workflow push the commit it makes back to the repo
+permissions:
+  contents: write
+
+jobs:
+  update-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Update GAMES array in frontend.html
+        run: node scripts/update_games.js
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add frontend.html
+          git diff --cached --quiet || git commit -m "chore: auto-add new html files to games list"
+          git push
