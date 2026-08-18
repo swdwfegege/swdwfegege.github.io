@@ -121,6 +121,268 @@ header{
 .search input{ all:unset; flex:1; color: var(--text); font-size: 14px; }
 .search input::placeholder{ color: var(--text-dim); }
 
+
+/* ---------- Saturn landing hero ---------- */
+.saturn-hero{
+  position:relative;
+  min-height:500px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  max-width:1368px;
+  margin:0 auto;
+  padding:58px 24px 72px;
+}
+
+.saturn-hero-center{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+
+.saturn-ad{
+  position:absolute;
+  left:24px;
+  top:50%;
+  transform:translateY(-50%);
+  width:280px;
+  min-height:315px;
+  border:1px solid var(--border-strong);
+  border-radius:18px;
+  background:rgba(10,9,4,0.82);
+  box-shadow:0 18px 50px rgba(0,0,0,0.28), inset 0 0 30px rgba(212,230,60,0.025);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.saturn-ad-title{
+  margin:0 0 18px;
+  color:var(--green);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:20px;
+  font-weight:700;
+}
+
+.saturn-ad-icon{
+  width:76px;
+  height:76px;
+  margin:0 auto 20px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.saturn-ad-icon::before{
+  content:"";
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#e8f26b 0%,#b7d52b 42%,#7e951d 100%);
+  box-shadow:0 0 24px rgba(212,230,60,0.25);
+}
+
+.saturn-ad-icon::after{
+  content:"";
+  position:absolute;
+  width:78px;
+  height:25px;
+  border:4px solid var(--green);
+  border-radius:50%;
+  transform:rotate(-18deg);
+  box-shadow:0 0 10px rgba(212,230,60,0.18);
+}
+
+.saturn-ad-input{
+  width:100%;
+  height:48px;
+  border:1px solid var(--border-strong);
+  border-radius:11px;
+  background:rgba(0,0,0,0.24);
+  color:var(--text);
+  text-align:center;
+  outline:none;
+  font:600 14px 'Inter',sans-serif;
+}
+
+.saturn-ad-input::placeholder{ color:var(--text-dim); }
+
+.saturn-ad-btn{
+  width:100%;
+  height:48px;
+  margin-top:10px;
+  border:0;
+  border-radius:11px;
+  background:var(--green);
+  color:#0a0904;
+  font:800 14px 'Inter',sans-serif;
+  cursor:pointer;
+  transition:transform .15s ease,filter .15s ease;
+}
+
+.saturn-ad-btn:hover{ transform:translateY(-2px); filter:brightness(1.06); }
+.saturn-ad-btn:active{ transform:translateY(0) scale(.98); }
+
+.saturn-ad-link{
+  display:block;
+  margin-top:15px;
+  color:var(--text-dim);
+  font-size:12px;
+  font-weight:600;
+  text-decoration:none;
+}
+
+.saturn-ad-link:hover{ color:var(--green); }
+
+.saturn-logo{
+  width:132px;
+  height:132px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:24px;
+  filter:drop-shadow(0 12px 20px rgba(0,0,0,.35));
+}
+
+.saturn-logo::before{
+  content:"";
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 31% 28%,#f4ff91 0 9%,transparent 10%),
+    radial-gradient(circle at 37% 37%,#d9ec58 0 35%,#a6c52a 57%,#668014 100%);
+  box-shadow:inset -14px -10px 22px rgba(0,0,0,.34),0 0 30px rgba(212,230,60,.20);
+  transform:rotate(-12deg);
+}
+
+.saturn-logo::after{
+  content:"";
+  position:absolute;
+  width:142px;
+  height:45px;
+  border:10px solid var(--green);
+  border-left-color:rgba(212,230,60,.85);
+  border-right-color:rgba(212,230,60,.55);
+  border-radius:50%;
+  transform:rotate(-18deg);
+  box-shadow:0 0 18px rgba(212,230,60,.18);
+}
+
+.saturn-hero-title{
+  margin:0;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:46px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:-1.5px;
+  color:var(--text);
+}
+
+.saturn-hero-title span{ color:var(--green); }
+
+.bookmark-hint{
+  margin-top:28px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  border:1px solid var(--border-strong);
+  border-radius:999px;
+  background:rgba(0,0,0,.22);
+  color:var(--text);
+  font-size:13px;
+  font-weight:600;
+}
+
+.keycap{
+  min-width:28px;
+  padding:3px 7px;
+  border:1px solid var(--border-strong);
+  border-radius:6px;
+  background:var(--panel);
+  color:var(--text);
+  font-size:12px;
+  text-align:center;
+}
+
+.discord-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-width:315px;
+  margin-top:24px;
+  padding:15px 24px;
+  border:1px solid var(--border-strong);
+  border-radius:12px;
+  background:rgba(37,150,55,.22);
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
+  font-weight:700;
+  transition:transform .15s ease,background .15s ease,box-shadow .15s ease;
+}
+
+.discord-btn:hover{
+  transform:translateY(-2px);
+  background:rgba(37,150,55,.34);
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+
+.discord-icon{
+  width:21px;
+  height:21px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+.hero-games-divider{
+  max-width:1368px;
+  margin:0 auto;
+  padding:0 24px;
+}
+
+.hero-games-divider::before{
+  content:"";
+  display:block;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--border-strong),transparent);
+  opacity:.7;
+}
+
+@media (max-width:800px){
+  .saturn-hero{
+    min-height:auto;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    padding-top:38px;
+  }
+  .saturn-ad{
+    position:static;
+    transform:none;
+    max-width:360px;
+    width:100%;
+    margin:0 auto;
+    order:2;
+  }
+  .saturn-hero-center{ order:1; }
+  .saturn-hero-title{ font-size:38px; }
+  .discord-btn{ min-width:min(315px,100%); }
+}
+
 /* ---------- categories & grid ---------- */
 .grid-wrap{ padding: 20px 24px 70px; max-width: 1368px; margin: 0 auto; }
 .category-section{ margin-bottom: 32px; }
@@ -298,9 +560,31 @@ footer{
   </div>
 </header>
 
+<section class="saturn-hero" aria-label="Saturn home">
+
+  <div class="saturn-hero-center">
+    <div class="saturn-logo" aria-label="Saturn logo"></div>
+    <h1 class="saturn-hero-title">saturn<span>_</span></h1>
+
+    <div class="bookmark-hint">
+      <span class="keycap">ctrl</span>
+      <span>+</span>
+      <span class="keycap">D</span>
+      <span>to bookmark</span>
+    </div>
+
+    <a class="discord-btn" href="https://discord.gg/FqSB3WBNg" target="_blank" rel="noopener noreferrer">
+      <span class="discord-icon">◉</span>
+      <span>join the discord server for more links</span>
+    </a>
+  </div>
+</section>
+
+<div class="hero-games-divider"></div>
+
 <main class="grid-wrap" id="mainContainer"></main>
 
-<footer>edit the GAMES list near the top of the script to change images, links, and names</footer>
+<footer>nothing to see down here</footer>
 
 <!-- GAME OVERLAY PLAYER -->
 <div id="gameOverlay" class="game-overlay">
@@ -464,9 +748,6 @@ const GAMES = [
   { name: 'Henry Stickman : Breaking out of prison', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk-7qcfoRL9Kn80cc_0kIEXTIJ-hIlYrUUyIVweerJuw&s=10', link: 'clstickminescapingprison.html' },
   { name: 'Henry Stickman : Escaping the complex', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvTEtSnBNhCMeQl4jkuo4A-Rqxd3NgJCSUxU_7uf1Oqw&s=10', link: 'clstickminfleecomplex.html' },
   { name: 'Hollow Knight', image: 'https://cdn.jsdelivr.net/gh/freebuisness/covers@main/468.png', link: 'Hollow Knight.html' },
-  { name: 'Hotline Miami', image: 'https://cdn.jsdelivr.net/gh/freebuisness/covers@main/217.png', link: 'Hotline Miami.html' },
-  { name: 'ULTRAKILL', image: 'https://cdn.jsdelivr.net/gh/freebuisness/covers@main/196.png', link: 'ULTRAKILL.html' },
-  { name: 'Tag', image: 'https://cdn.jsdelivr.net/gh/freebuisness/covers@main/627.png', link: 'Tag.html' },
 ];
 
 const colors = ['#ff6b57','#7b5bff','#ff4fa0','#3ba8ff','#ffb340','#4fe05a','#ff5c5c','#8a7bff','#2fd6c8','#ffd23f','#5ad1ff','#ff8a3d'];
@@ -624,6 +905,19 @@ document.getElementById('searchInput').addEventListener('input', (e)=>{
   const emptyMsg = document.getElementById('emptyMsg');
   if(emptyMsg) emptyMsg.style.display = visible === 0 ? 'block' : 'none';
 });
+
+/* ---------------- Saturn landing controls ---------------- */
+document.getElementById('redeemBtn').addEventListener('click', () => {
+  const code = document.getElementById('adCode').value.trim();
+  if (!code) return;
+  document.getElementById('adCode').value = '';
+});
+
+document.getElementById('purchaseLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  window.open('https://discord.gg/FqSB3WBNg', '_blank', 'noopener,noreferrer');
+});
+
 </script>
 </body>
 <iframe
