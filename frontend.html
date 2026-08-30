@@ -242,42 +242,6 @@ header{
 
 .saturn-ad-link:hover{ color:var(--green); }
 
-.saturn-logo{
-  width:132px;
-  height:132px;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:24px;
-  filter:drop-shadow(0 12px 20px rgba(0,0,0,.35));
-}
-
-.saturn-logo::before{
-  content:"";
-  width:92px;
-  height:92px;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 31% 28%,#f4ff91 0 9%,transparent 10%),
-    radial-gradient(circle at 37% 37%,#d9ec58 0 35%,#a6c52a 57%,#668014 100%);
-  box-shadow:inset -14px -10px 22px rgba(0,0,0,.34),0 0 30px rgba(212,230,60,.20);
-  transform:rotate(-12deg);
-}
-
-.saturn-logo::after{
-  content:"";
-  position:absolute;
-  width:142px;
-  height:45px;
-  border:10px solid var(--green);
-  border-left-color:rgba(212,230,60,.85);
-  border-right-color:rgba(212,230,60,.55);
-  border-radius:50%;
-  transform:rotate(-18deg);
-  box-shadow:0 0 18px rgba(212,230,60,.18);
-}
-
 .saturn-hero-title{
   margin:0;
   font-family:'Space Grotesk',sans-serif;
@@ -340,12 +304,23 @@ header{
 }
 
 .discord-icon{
-  width:21px;
-  height:21px;
+  width:21px !important;
+  height:21px !important;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  font-size:18px;
+  flex-shrink:0;
+}
+
+.discord-icon img{
+  width:21px !important;
+  height:21px !important;
+  max-width:21px !important;
+  max-height:21px !important;
+  min-width:21px !important;
+  min-height:21px !important;
+  object-fit:contain;
+  display:block;
 }
 
 .hero-games-divider{
@@ -563,7 +538,8 @@ footer{
 <section class="saturn-hero" aria-label="Saturn home">
 
   <div class="saturn-hero-center">
-    <div class="saturn-logo" aria-label="Saturn logo"></div>
+    <div class="saturn-logo" aria-label="Saturn logo">
+    </div>
     <h1 class="saturn-hero-title">saturn<span>_</span></h1>
 
     <div class="bookmark-hint">
@@ -574,7 +550,9 @@ footer{
     </div>
 
     <a class="discord-btn" href="https://discord.gg/FqSB3WBNg" target="_blank" rel="noopener noreferrer">
-      <span class="discord-icon">◉</span>
+      <span class="discord-icon">
+        <img src="discord.png" alt="Discord">
+      </span>
       <span>join the discord server for more links</span>
     </a>
   </div>
