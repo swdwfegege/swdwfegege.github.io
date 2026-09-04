@@ -323,13 +323,13 @@ header{
   display:block;
 }
 
-.hero-games-divider{
+.hero-zones-divider{
   max-width:1368px;
   margin:0 auto;
   padding:0 24px;
 }
 
-.hero-games-divider::before{
+.hero-zones-divider::before{
   content:"";
   display:block;
   height:1px;
@@ -448,8 +448,8 @@ footer{
   font-size:12px; position:relative; z-index:1;
 }
 
-/* ---------- game overlay & back button ---------- */
-.game-overlay {
+/* ---------- zone overlay & back button ---------- */
+.zone-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -458,7 +458,7 @@ footer{
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.game-overlay iframe {
+.zone-overlay iframe {
   width: 100%;
   height: 100%;
   border: none;
@@ -558,19 +558,19 @@ footer{
   </div>
 </section>
 
-<div class="hero-games-divider"></div>
+<div class="hero-zones-divider"></div>
 
 <main class="grid-wrap" id="mainContainer"></main>
 
 <footer>nothing to see down here</footer>
 
-<!-- GAME OVERLAY PLAYER -->
-<div id="gameOverlay" class="game-overlay">
+<!-- ZONE OVERLAY PLAYER -->
+<div id="zoneOverlay" class="zone-overlay">
   <button id="backBtn" class="back-btn">
     <svg width="20" height="20"><use href="#icon-back"/></svg>
     back
   </button>
-  <iframe id="gameFrame" src=""></iframe>
+  <iframe id="zoneFrame" src=""></iframe>
 </div>
 
 <script>
@@ -586,7 +586,7 @@ function saveStore(store){
 const store = loadStore();
 store.images = store.images || {};       
 store.favorites = store.favorites || []; 
-store.customGames = store.customGames || []; 
+store.customZones = store.customZones || []; 
 
 /* ---------------- live status pills ---------------- */
 function pad(n){ return n.toString().padStart(2,'0'); }
@@ -683,11 +683,11 @@ for(let i=0;i<34;i++){
 }
 
 /* =====================================================================
-    GAME LIBRARY
+                                  ZONES
 ===================================================================== */
-const GAMES = [
+const ZONES = [
   { name: 'Minecraft',         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3-NLG95WUm-a39k5_e7GLvw7cqeWlXRtvwSBeP6D5_A&s=10', link: 'zones/Minecraft 1.12.2.html' },
-  { name: 'Proxy',         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFQSmfoAy1oIf3MghDkmkfbgSHsq4Z2n0b6l8Pdfzymw&s', link: 'zones/Helios-Offline (1).html' },
+  { name: 'Próxy',         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFQSmfoAy1oIf3MghDkmkfbgSHsq4Z2n0b6l8Pdfzymw&s', link: 'zones/Helios-Offline (1).html' },
   { name: '1v1.LOL',    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnwEaEeiMfkXELEXqopOaFjAO7x762S7mnZOHcx-ZAhw&s=10', link: 'zones/1v1.LoL.html' },
   { name: 'Adventure Capitalist',       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOUetzHo6wthSr9Wcom6l6WbxjeK5rfzxy2SgL9vsz5w&s=10', link: 'zones/Adventure Capatalist.html' },
   { name: 'Angry Birds', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_WYWw6e-EKd8BRyVBD6Yuz3WidY8Ag1Q9BAdC4_lv4w&s=10', link: 'zones/Angry Birds.html' },
@@ -702,7 +702,6 @@ const GAMES = [
   { name: 'Tiny Fishing',     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWey9sNvkAuFG9nq0HHCOSShYD3eEHCLqLxI454XkUMQ&s=10', link: 'zones/Tiny Fishing.html' },
   { name: 'Happy Wheels',    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCkaubw8IC2JMnB9MLOeEY3DlLjBsMZ7XxZRjPUufzfQ&s=10', link: 'zones/Happy Wheels.html' },
   { name: 'Melon Playground', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE_JXcDw0WyyAGqH-2vy3_ijeZeMnR9M6qIlEWCJRk6A&s', link: 'zones/Melon Playground.html' },
-  // updated games add imgs later
   { name: 'Bad Parenting 1', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtCwht1BXekIJeRf8vRDLiGPhX_xOagsiLMgDedDo3AQ&s', link: 'zones/clbadparenting.html' },
   { name: 'Bit Planes', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTodxH85s14TRnTN8HkwB4lkbnfHrZc1r1UZLlZwqEqaQ&s=10', link: 'zones/clbitplanes.html' },
   { name: 'Buster Jam', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFpWX9GClnwUZR3xaG6c2cS92fmp0dQ1mW1ppOYBHGKg&s', link: 'zones/clBusterJam.html' },
@@ -779,8 +778,8 @@ const GAMES = [
 
 const colors = ['#ff6b57','#7b5bff','#ff4fa0','#3ba8ff','#ffb340','#4fe05a','#ff5c5c','#8a7bff','#2fd6c8','#ffd23f','#5ad1ff','#ff8a3d'];
 
-function buildTile(game, index){
-  const { name, image, link } = game;
+function buildTile(zone, index){
+  const { name, image, link } = zone;
   const tile = document.createElement('a');
   tile.className = 'tile';
   tile.href = link || 'example.html';
@@ -803,11 +802,11 @@ function buildTile(game, index){
 
   if(store.favorites.includes(name)) tile.classList.add('favorited');
 
-  // Launch game overlay click handler
+  // Launch zon overlay click handler
   tile.addEventListener('click', (e) => {
     e.preventDefault(); 
-    const overlay = document.getElementById('gameOverlay');
-    const frame = document.getElementById('gameFrame');
+    const overlay = document.getElementById('zoneOverlay');
+    const frame = document.getElementById('zoneFrame');
     frame.src = tile.href;
     overlay.style.display = 'block';
     setTimeout(() => overlay.style.opacity = '1', 10);
@@ -823,23 +822,23 @@ function buildTile(game, index){
       store.favorites.push(name);
     }
     saveStore(store);
-    renderGames(); 
+    renderZones(); 
   });
 
   return tile;
 }
 
-function renderGames(){
+function renderZones(){
   const container = document.getElementById('mainContainer');
   container.innerHTML = '';
 
-  const allGames = GAMES.concat(store.customGames).sort((a, b) => a.name.localeCompare(b.name));
-  const favoriteGames = allGames.filter(g => store.favorites.includes(g.name));
+  const allZones = ZONES.concat(store.customZones).sort((a, b) => a.name.localeCompare(b.name));
+  const favoriteZones = allZones.filter(g => store.favorites.includes(g.name));
 
   let globalIndex = 0;
 
   // 1. Render Favorites Section (if any favorites exist)
-  if(favoriteGames.length > 0){
+  if(favoriteZones.length > 0){
     const favSection = document.createElement('div');
     favSection.className = 'category-section';
 
@@ -850,35 +849,35 @@ function renderGames(){
 
     const favGrid = document.createElement('div');
     favGrid.className = 'grid';
-    favoriteGames.forEach((game, i) => {
-      favGrid.appendChild(buildTile(game, globalIndex++));
+    favoriteZones.forEach((zone, i) => {
+      favGrid.appendChild(buildTile(zone, globalIndex++));
     });
     favSection.appendChild(favGrid);
     container.appendChild(favSection);
   }
 
-  // 2. Render All Games Section
+  // 2. Render All zones Section
   const allSection = document.createElement('div');
   allSection.className = 'category-section';
 
   const allHeader = document.createElement('div');
   allHeader.className = 'category-title';
-  allHeader.textContent = favoriteGames.length > 0 ? 'All Games' : 'Games';
+  allHeader.textContent = favoriteZones.length > 0 ? 'All Zones' : 'Zones';
   allSection.appendChild(allHeader);
 
   const allGrid = document.createElement('div');
   allGrid.className = 'grid';
-  allGames.forEach((game, i) => {
-    allGrid.appendChild(buildTile(game, globalIndex++));
+  allZones.forEach((zone, i) => {
+    allGrid.appendChild(buildTile(zone, globalIndex++));
   });
 
-  // Add suggest game tile
+  // Add suggest zone tile
   const addBtn = document.createElement('a');
   addBtn.className = 'tile add-tile';
   addBtn.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdO1EtMpTdaAgJkkxVyJxqerFNZLql6xH-pJXiy8v7PTgP7Uw/viewform?usp=publish-editor';
   addBtn.target = '_blank';
-  addBtn.style.animationDelay = (allGames.length * 0.035) + 's';
-  addBtn.innerHTML = `<svg><use href="#icon-plus"/></svg><span>suggest games</span>`;
+  addBtn.style.animationDelay = (allZones.length * 0.035) + 's';
+  addBtn.innerHTML = `<svg><use href="#icon-plus"/></svg><span>suggest zones</span>`;
   allGrid.appendChild(addBtn);
 
   allSection.appendChild(allGrid);
@@ -888,17 +887,17 @@ function renderGames(){
   const emptyMsg = document.createElement('p');
   emptyMsg.className = 'empty-msg';
   emptyMsg.id = 'emptyMsg';
-  emptyMsg.textContent = 'No games match your search.';
+  emptyMsg.textContent = 'No zones match your search.';
   container.appendChild(emptyMsg);
 }
 
 // Initial render
-renderGames();
+renderZones();
 
 /* ---------------- back button logic ---------------- */
 document.getElementById('backBtn').addEventListener('click', () => {
-  const overlay = document.getElementById('gameOverlay');
-  const frame = document.getElementById('gameFrame');
+  const overlay = document.getElementById('zoneOverlay');
+  const frame = document.getElementById('zoneFrame');
   overlay.style.opacity = '0';
   setTimeout(() => {
     overlay.style.display = 'none';
