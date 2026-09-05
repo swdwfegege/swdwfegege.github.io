@@ -85,6 +85,54 @@ header{
   display:flex; align-items:center; justify-content:space-between;
   gap:16px; flex-wrap:wrap; padding: 16px 24px;
 }
+
+.hub-tabs{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  margin-right:auto;
+  margin-left:8px;
+}
+.hub-tab{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--text-dim);
+  padding:7px 2px 9px;
+  font:700 14px 'Inter',sans-serif;
+  cursor:pointer;
+  position:relative;
+  transition:color .18s ease;
+}
+.hub-tab::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:1px;
+  height:2px;
+  border-radius:2px;
+  background:var(--green);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .18s ease;
+}
+.hub-tab:hover,
+.hub-tab.active{
+  color:var(--text);
+}
+.hub-tab:hover::after,
+.hub-tab.active::after{
+  transform:scaleX(1);
+}
+@media (max-width:800px){
+  .hub-tabs{
+    order:3;
+    width:100%;
+    justify-content:center;
+    margin:0;
+  }
+}
 .brand{ display:flex; align-items:center; gap:10px; }
 .brand-mark{
   width:34px; height:34px; border-radius:9px;
@@ -520,6 +568,11 @@ footer{
     </div>
     <span class="brand-name">saturn</span>
   </div>
+
+  <nav class="hub-tabs" aria-label="Hub sections">
+    <button class="hub-tab active" id="zonesTab" type="button">Zones</button>
+    <button class="hub-tab" id="moviesTab" type="button">Movies</button>
+  </nav>
   
 
   <div class="stats">
@@ -561,6 +614,7 @@ footer{
 <div class="hero-zones-divider"></div>
 
 <main class="grid-wrap" id="mainContainer"></main>
+<main class="grid-wrap" id="moviesContainer" style="display:none"></main>
 
 <footer>nothing to see down here</footer>
 
@@ -776,6 +830,22 @@ const ZONES = [
   { name: 'Undertale Yellow', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQeWXShNrLVLckzHyMkLnQxWJw58TdFEIAUepuCYEdKw&s=10', link: 'zones/Undertale Yellow.html' },
 ];
 
+/* =====================================================================
+                                  MOVIES
+   Same tile UI as Zones; example movie entries currently point to
+   example.html so the movie pages can be added later.
+===================================================================== */
+const MOVIES = [
+  { name: 'Back to the Future', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhNo6nIO64HkGO7v9KPFOvtHK9o8o8ejBaiWHu8SpxjQ&s=10', link: 'https://drive.google.com/file/d/1ZwP0FLdFdAoeskqGvQYX5CwqEeSFWS1G/view' },
+  { name: 'Back to the Future 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtuRsr4g73wVp96Au0nG5zQP_87vYh_gu19zEwYde2ig&s=10', link: 'https://drive.google.com/file/d/1vmA2LTkSzbtUJve8TTy2UVkPAfHMtGwK/view' },
+  { name: 'Diary of a Wimpy Kid ; Rodrick Rules', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLoHcv1_GI8-S41fHCjDql86rzE4luHW1gtSJuiI7fcg&s=10', link: 'https://drive.google.com/file/d/12wLX2jPldPn8dKW8tfUuz4TzbhOo1ORc/view' },
+  { name: 'Family Guy', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFWHb0MG053GiO7oJEtZJiMW6VbadEOWqEZ2obkLcBKg&s', link: 'https://drive.google.com/drive/folders/11W6C-Jqv9iQVasqjfiaYz77puax1UTjH' },
+  { name: 'IT', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSpItBHxk8Wv0wDOkdu41nSycxyeS_lvSQFb-Hc2LsxA&s=10', link: 'https://drive.google.com/file/d/1BhQDbp8lXDwS-Q-pq4axufeZI-5TklpR/view' },
+  { name: 'South Park', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzla3SOy7wqGrvUAlLubb6pNfgiAG5MiLy98vlerCkxQ&s=10', link: 'https://drive.google.com/drive/folders/1PzKaoaK4blzlaoxnwC20gZoeYE5mDxWL' },
+  { name: 'Five Nights At Freddys', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HacYEaUg5ZaPzEjPoD3SGMUNsenIAagZoJLv8neSYw&s=10', link: 'https://drive.google.com/file/d/1OyO1OdhtfwR883Uvi0QPP5iooGcxTVSY/view' },
+];
+
+
 const colors = ['#ff6b57','#7b5bff','#ff4fa0','#3ba8ff','#ffb340','#4fe05a','#ff5c5c','#8a7bff','#2fd6c8','#ffd23f','#5ad1ff','#ff8a3d'];
 
 function buildTile(zone, index){
@@ -894,6 +964,69 @@ function renderZones(){
 // Initial render
 renderZones();
 
+function renderMovies(){
+  const container = document.getElementById('moviesContainer');
+  container.innerHTML = '';
+
+  const section = document.createElement('div');
+  section.className = 'category-section';
+
+  const header = document.createElement('div');
+  header.className = 'category-title';
+  header.textContent = 'Movies';
+  section.appendChild(header);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+
+  MOVIES.forEach((movie, i) => {
+    const tile = buildTile(movie, i);
+    grid.appendChild(tile);
+  });
+
+  section.appendChild(grid);
+  container.appendChild(section);
+
+  const emptyMsg = document.createElement('p');
+  emptyMsg.className = 'empty-msg';
+  emptyMsg.id = 'movieEmptyMsg';
+  emptyMsg.textContent = 'No movies match your search.';
+  container.appendChild(emptyMsg);
+}
+
+renderMovies();
+
+/* ---------------- Zones / Movies tabs ---------------- */
+const zonesTab = document.getElementById('zonesTab');
+const moviesTab = document.getElementById('moviesTab');
+const zonesContainer = document.getElementById('mainContainer');
+const moviesContainer = document.getElementById('moviesContainer');
+const searchInput = document.getElementById('searchInput');
+
+function switchHubTab(tab){
+  const showingMovies = tab === 'movies';
+
+  zonesTab.classList.toggle('active', !showingMovies);
+  moviesTab.classList.toggle('active', showingMovies);
+
+  zonesContainer.style.display = showingMovies ? 'none' : '';
+  moviesContainer.style.display = showingMovies ? '' : 'none';
+
+  searchInput.placeholder = showingMovies ? 'search movies' : 'search zones';
+  searchInput.value = '';
+
+  document.querySelectorAll('.grid .tile').forEach(t => t.style.display = '');
+  const zoneAddBtn = zonesContainer.querySelector('.add-tile');
+  if(zoneAddBtn) zoneAddBtn.style.display = '';
+  const emptyZone = document.getElementById('emptyMsg');
+  if(emptyZone) emptyZone.style.display = 'none';
+  const emptyMovie = document.getElementById('movieEmptyMsg');
+  if(emptyMovie) emptyMovie.style.display = 'none';
+}
+
+zonesTab.addEventListener('click', () => switchHubTab('zones'));
+moviesTab.addEventListener('click', () => switchHubTab('movies'));
+
 /* ---------------- back button logic ---------------- */
 document.getElementById('backBtn').addEventListener('click', () => {
   const overlay = document.getElementById('zoneOverlay');
@@ -906,33 +1039,36 @@ document.getElementById('backBtn').addEventListener('click', () => {
 });
 
 /* ---------------- search filter ---------------- */
-document.getElementById('searchInput').addEventListener('input', (e)=>{
+searchInput.addEventListener('input', (e)=>{
   const q = e.target.value.trim().toLowerCase();
-  
 
   if (q === "9999") {
     window.open("example.html", "_blank");
-    e.target.value = ""; 
+    e.target.value = "";
     return;
   }
 
+  const showingMovies = moviesTab.classList.contains('active');
+  const container = showingMovies ? moviesContainer : zonesContainer;
+  const emptyMsg = document.getElementById(showingMovies ? 'movieEmptyMsg' : 'emptyMsg');
+
   let visible = 0;
-  document.querySelectorAll('.grid .tile:not(.add-tile)').forEach(t=>{
+  container.querySelectorAll('.grid .tile:not(.add-tile)').forEach(t=>{
     const match = t.dataset.name.includes(q);
     t.style.display = match ? '' : 'none';
     if(match) visible++;
   });
-  
 
-  const addBtn = document.querySelector('.add-tile');
-  if(addBtn) addBtn.style.display = q ? 'none' : '';
-  
+  if(!showingMovies){
+    const addBtn = zonesContainer.querySelector('.add-tile');
+    if(addBtn) addBtn.style.display = q ? 'none' : '';
+  }
 
-  const emptyMsg = document.getElementById('emptyMsg');
   if(emptyMsg) emptyMsg.style.display = visible === 0 ? 'block' : 'none';
 });
 
 /* ---------------- Saturn landing controls ---------------- */
+
 document.getElementById('redeemBtn').addEventListener('click', () => {
   const code = document.getElementById('adCode').value.trim();
   if (!code) return;
