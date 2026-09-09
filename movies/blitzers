@@ -1,0 +1,427 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>blitzers</title> <style> * { box-sizing: border-box; margin: 0; padding: 0; } body { background: #000; color: white; font-family: Arial, sans-serif; min-height: 100vh; overflow-x: hidden; } /* Animated space background */ .space { position: fixed; inset: 0; overflow: hidden; z-index: -2; background: radial-gradient(circle at 50% 50%, #111 0%, #050505 35%, #000 75%); } /* Stars */ .stars, .stars2, .stars3 { position: absolute; inset: -100%; width: 300%; height: 300%; background-image: radial-gradient(2px 2px at 20px 30px, white, transparent), radial-gradient(1px 1px at 80px 90px, white, transparent), radial-gradient(2px 2px at 150px 120px, #aaa, transparent), radial-gradient(1px 1px at 200px 40px, white, transparent), radial-gradient(2px 2px at 300px 200px, #888, transparent), radial-gradient(1px 1px at 400px 150px, white, transparent), radial-gradient(2px 2px at 500px 300px, #aaa, transparent); background-size: 550px 400px; } .stars { animation: moveStars 80s linear infinite; opacity: 0.8; } .stars2 { animation: moveStars 120s linear infinite reverse; opacity: 0.45; transform: scale(1.3); } .stars3 { animation: moveStars 160s linear infinite; opacity: 0.25; transform: scale(1.6); } @keyframes moveStars { from { transform: translate(0, 0); } to { transform: translate(-400px, -300px); } } /* Glowing orb */ .orb { position: fixed; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient( circle, rgba(90, 90, 255, 0.15), rgba(0, 0, 0, 0) 70% ); top: 20%; left: 50%; transform: translateX(-50%); animation: pulse 5s ease-in-out infinite; z-index: -1; } @keyframes pulse { 0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; } 50% { transform: translateX(-50%) scale(1.2); opacity: 1; } } /* Main container */ .container { width: 90%; max-width: 1200px; margin: auto; padding: 70px 0; } /* Header */ .header { text-align: center; margin-bottom: 50px; } .header h1 { font-size: 50px; letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 10px #fff, 0 0 25px #555, 0 0 50px #333; animation: titleGlow 3s ease-in-out infinite; } .header p { margin-top: 15px; color: #888; font-size: 15px; letter-spacing: 3px; } @keyframes titleGlow { 0%, 100% { text-shadow: 0 0 10px #fff, 0 0 25px #555; } 50% { text-shadow: 0 0 20px #fff, 0 0 40px #888, 0 0 70px #444; } } /* Video grid */ .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 30px; } /* Video cards */ .video-card { background: rgba(10, 10, 10, 0.8); border: 1px solid #222; border-radius: 15px; padding: 15px; box-shadow: 0 0 20px rgba(255, 255, 255, 0.03), inset 0 0 30px rgba(255, 255, 255, 0.02); transition: 0.3s ease; backdrop-filter: blur(8px); } .video-card:hover { transform: translateY(-6px); border-color: #555; box-shadow: 0 0 25px rgba(255, 255, 255, 0.12), 0 0 60px rgba(255, 255, 255, 0.04); } .video-title { font-size: 18px; margin-bottom: 12px; color: #ddd; letter-spacing: 1px; } /* YouTube iframe */ .video-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 10px; background: #000; } .video-wrapper iframe { position: absolute; width: 100%; height: 100%; border: none; left: 0; top: 0; } /* Bottom glowing line */ .bottom-line { width: 60%; height: 1px; margin: 70px auto 0; background: linear-gradient( 90deg, transparent, #777, white, #777, transparent ); box-shadow: 0 0 15px #fff; animation: linePulse 3s ease-in-out infinite; } @keyframes linePulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } } /* Mobile */ @media (max-width: 650px) { .container { width: 94%; padding-top: 40px; } .header h1 { font-size: 30px; letter-spacing: 4px; } .video-grid { grid-template-columns: 1fr; } } </style> </head> <body> <!-- Animated background --> <div class="space"> <div class="stars"></div> <div class="stars2"></div> <div class="stars3"></div> <div class="orb"></div> </div> <main class="container"> <section class="video-grid"> <!-- VIDEO 1 --> <div class="video-card"> <div class="video-title">dont play fortnite at 3 am</div> <div class="video-wrapper"> <iframe src="https://www.youtube.com/embed/-UhIVqgMmIY?si=1FtO5cGh5mM1buVz" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen> </iframe> </div> </div> <!-- VIDEO 2 --> <div class="video-card"> <div class="video-title">i cant do nathan og</div> <div class="video-wrapper"> <iframe src="https://www.youtube.com/embed/TX1fH_lQsh4?si=QvEupT3AW-z8BgAJ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen> </iframe> </div> </div> <!-- VIDEO 3 --> <div class="video-card"> <div class="video-title">o block full movie</div> <div class="video-wrapper"> <iframe src="https://www.youtube.com/embed/UuHAoEg4uFA?si=StkyvF8Xg6nFrdMv" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen> </iframe> </div> </div> <!-- VIDEO 4 --> <div class="video-card"> <div class="video-title">fortnite rizz party</div> <div class="video-wrapper"> <iframe src="https://www.youtube.com/embed/4A0SKL_vC3k?si=oNM4xtWYe1awscyh" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen> </iframe> </div> </div> </section> </main> </body> </html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Hub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* SPACE BACKGROUND */
+        .space {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: -2;
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    #151515 0%,
+                    #080808 35%,
+                    #000 75%
+                );
+        }
+
+        /* STAR LAYERS */
+        .stars,
+        .stars2,
+        .stars3 {
+            position: absolute;
+            inset: -100%;
+            width: 300%;
+            height: 300%;
+
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, white, transparent),
+                radial-gradient(1px 1px at 80px 90px, white, transparent),
+                radial-gradient(2px 2px at 150px 120px, #aaa, transparent),
+                radial-gradient(1px 1px at 200px 40px, white, transparent),
+                radial-gradient(2px 2px at 300px 200px, #888, transparent),
+                radial-gradient(1px 1px at 400px 150px, white, transparent),
+                radial-gradient(2px 2px at 500px 300px, #aaa, transparent);
+
+            background-size: 550px 400px;
+        }
+
+        .stars {
+            animation: starsMove 80s linear infinite;
+            opacity: 0.8;
+        }
+
+        .stars2 {
+            animation: starsMove 120s linear infinite reverse;
+            opacity: 0.45;
+            transform: scale(1.3);
+        }
+
+        .stars3 {
+            animation: starsMove 160s linear infinite;
+            opacity: 0.25;
+            transform: scale(1.6);
+        }
+
+        @keyframes starsMove {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(-400px, -300px);
+            }
+        }
+
+        /* GLOWING SPACE ORB */
+        .orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(100, 100, 255, 0.14),
+                    rgba(0, 0, 0, 0) 70%
+                );
+
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+
+            animation: orbPulse 6s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes orbPulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translateX(-50%) scale(1.25);
+                opacity: 1;
+            }
+        }
+
+        /* MAIN */
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: auto;
+            padding: 70px 0;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 52px;
+            letter-spacing: 9px;
+            text-transform: uppercase;
+
+            text-shadow:
+                0 0 10px white,
+                0 0 25px #777,
+                0 0 50px #333;
+
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        .header p {
+            margin-top: 15px;
+            color: #777;
+            font-size: 14px;
+            letter-spacing: 4px;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow:
+                    0 0 10px white,
+                    0 0 25px #555;
+            }
+
+            50% {
+                text-shadow:
+                    0 0 20px white,
+                    0 0 40px #888,
+                    0 0 70px #444;
+            }
+        }
+
+        /* VIDEO GRID */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        /* VIDEO CARD */
+        .video-card {
+            background: rgba(10, 10, 10, 0.82);
+            border: 1px solid #222;
+            border-radius: 15px;
+
+            padding: 15px;
+
+            box-shadow:
+                0 0 20px rgba(255, 255, 255, 0.03),
+                inset 0 0 30px rgba(255, 255, 255, 0.02);
+
+            backdrop-filter: blur(10px);
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-7px);
+
+            border-color: #555;
+
+            box-shadow:
+                0 0 30px rgba(255, 255, 255, 0.12),
+                0 0 70px rgba(255, 255, 255, 0.04);
+        }
+
+        /* VIDEO TITLE */
+        .video-title {
+            font-size: 18px;
+            color: #ddd;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* VIDEO */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+
+            overflow: hidden;
+            border-radius: 10px;
+
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            left: 0;
+            top: 0;
+
+            border: none;
+        }
+
+        /* BOTTOM LINE */
+        .bottom-line {
+            width: 60%;
+            height: 1px;
+
+            margin: 70px auto 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #777,
+                    white,
+                    #777,
+                    transparent
+                );
+
+            box-shadow: 0 0 15px white;
+
+            animation: linePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes linePulse {
+            0%, 100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 800px) {
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 35px;
+                letter-spacing: 5px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 94%;
+                padding-top: 40px;
+            }
+
+            .header h1 {
+                font-size: 27px;
+                letter-spacing: 3px;
+            }
+
+            .header p {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ANIMATED SPACE -->
+    <div class="space">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+        <div class="orb"></div>
+    </div>
+
+    <main class="container">
+
+        <section class="video-grid">
+
+            <!-- VIDEO 1 -->
+            <div class="video-card">
+                <div class="video-title">
+                    The Kyle Meme is MASSIVE
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/fjEFKpf9Evk"
+                        title="The Kyle Meme is MASSIVE"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+
+            <!-- VIDEO 2 -->
+            <div class="video-card">
+                <div class="video-title">
+                    O Block: The Movie
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/UuHAoEg4uFA"
+                        title="O Block: The Movie"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+
+            <!-- VIDEO 3 -->
+            <div class="video-card">
+                <div class="video-title">
+                    Video 3
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/4A0SKL_vC3k"
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+
+            <!-- VIDEO 4 -->
+            <div class="video-card">
+                <div class="video-title">
+                    DO NOT PLAY FORTNITE AT 3:00AM
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/-UhIVqgMmIY"
+                        title="DO NOT PLAY FORTNITE AT 3:00AM"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+
+            <!-- VIDEO 5 -->
+            <div class="video-card">
+                <div class="video-title">
+                    The Funky Ehh Rizz Party
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/8OD5YCmExuo"
+                        title="The Funky Ehh Rizz Party"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+
+            <!-- VIDEO 6 -->
+            <div class="video-card">
+                <div class="video-title">
+                    The Dolly Parton Event Made Us Cry
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/Aj_WMujptZ8"
+                        title="The Dolly Parton Event Made Us Cry"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
