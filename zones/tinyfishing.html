@@ -5,18 +5,114 @@
   gtag('js', new Date());
 
   gtag('config', 'G-L7856P3VNT');
-</script><html lang="en">
+</script><!DOCTYPE html>
+<html lang="en">
 
 <head>
     
     
     
+    <script type="text/javascript" src="https://361820596-851580422716946014.preview.editmysite.com/uploads/b/139890129-473108247243760926/files/gamesnacks.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Rabbibo/moto@35b09901c725d990145f7b305cbcb42ddcee4782/assets/css/app.css" type="text/css" />
-<style>
-#sidebarad1,
+    <title>Tiny Fishing 1</title>
+    <style>
+        body {
+            background: #000;
+            color: #cccccc;
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+        }
+
+        canvas {
+            image-rendering: optimizeSpeed;
+            -webkit-interpolation-mode: nearest-neighbor;
+            -ms-touch-action: none;
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+        }
+
+        :-webkit-full-screen #canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        invisible_button {
+            background-color: rgba(1, 1, 1, 1);
+            background-repeat: no-repeat;
+            border: none;
+            cursor: disabled;
+            overflow: hidden;
+            outline: none;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 0px;
+            left: 0px;
+            pointer-events: none;
+            filter: alpha(opacity=0);
+            -mos-opacity: 0.0;
+            opacity: 0.0;
+            display: block;
+            z-index: 2;
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        div.gm4html5_div_class {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+        }
+
+        /* START - Login Dialog Box */
+        div.gm4html5_login {
+            padding: 20px;
+            position: absolute;
+            border: solid 2px #000000;
+            background-color: #404040;
+            color: #00ff00;
+            border-radius: 15px;
+            box-shadow: #101010 20px 20px 40px;
+        }
+
+        div.gm4html5_cancel_button {
+            float: right;
+        }
+
+        div.gm4html5_login_button {
+            float: left;
+        }
+
+        div.gm4html5_login_header {
+            text-align: center;
+        }
+
+        /* END - Login Dialog Box */
+        :-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+        }
+
+        #sbar1 {
+            border-radius: 25px;
+            background: #73AD21;
+            padding: 20px;
+            width: 200px;
+            height: 150px;
+        }
+    #sidebarad1,
 #sidebarad2 {
   position: fixed;
   top: 50%;
@@ -55,20 +151,33 @@
   display: block;
 }
 </style>
+    <script>
+        if (!Number.isNaN && window.isNaN) Number.isNaN = isNaN;
+        //if (typeof Math.sign ==='undefined') { Math.sign = function (x) { return x > 0 ? 1 : x < 0 ? -1 : x; } }
+    </script>
 </head>
 
 <body>
-    <div id="content"></div>
-    <div id="orientation"></div>
-    <div id="loader">Loading ...</div>
-    <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Stypical/lacklack@0959ed15fc96078cbb053e4e3c259a62b3e9e296/motox3m/assets/lib/nape.min.js">
-        var nape = "nape.min.js";
+    <img src="https://361820596-851580422716946014.preview.editmysite.com/uploads/b/139890129-473108247243760926/files/html5game/bg.png" id="img_loadingbg" alt="" style="position:absolute; left : 0; top : 0; width:1px; height:1px;" />
+    <img src="https://361820596-851580422716946014.preview.editmysite.com/uploads/b/139890129-473108247243760926/files/html5game/caption.png" id="img_loadingicon" alt="" style="position:absolute; left : 0; top : 0; width:1px; height:1px;" />
+    <img src="https://361820596-851580422716946014.preview.editmysite.com/uploads/b/139890129-473108247243760926/files/html5game/bh5logo.png" id="img_loadinglogoicon" alt="" style="position:absolute; left : 0; top : 0; width:1px; height:1px;" />
+    <div id="img_loadingbar" style="border-radius: 25px; width:1px;height:1px; position:absolute; left : 0px; top : 0; background-color:#d7e0ee"></div>
+    <div id="img_loadingbaroverlay" style="border-radius: 25px; width:1px;height:1px; position:absolute; left : 0px; top : 0; background-color:#f8703a"></div>
+    <div class="gm4html5_div_class" id="gm4html5_div_id">
+        <canvas id="canvas" width="1" height="1">
+            <p>Your browser doesn't support HTML5 canvas.</p>
+        </canvas>
+    </div>
+    <script type="text/javascript" src="https://361820596-851580422716946014.preview.editmysite.com/uploads/b/139890129-473108247243760926/files/html5game/TinyFishing.js"></script>
+    <script>
+        //window.onload = GameMaker_Init;
+        //if(!Number.isNaN && window.isNaN) Number.isNaN = isNaN;
+        window.onload = function () {
+            if (!window.AudioContext && !window.webkitAudioContext) g_WebAudioContext = {};
+            GameMaker_Init();
+            if (!window.AudioContext && !window.webkitAudioContext) g_WebAudioContext = null;
+        };
     </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Stypical/lacklack@0959ed15fc96078cbb053e4e3c259a62b3e9e296/motox3m/assets/lib/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Stypical/lacklack@0959ed15fc96078cbb053e4e3c259a62b3e9e296/motox3m/assets/lib/easeljs-0.8.2.combined.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Stypical/lacklack@0959ed15fc96078cbb053e4e3c259a62b3e9e296/motox3m/assets/lib/bluebird.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bobydob/JSEngine@0e96212fb7b2e7aa0a310d3ebe3a8ab01a114b4b/build/m3m/m3m.min.js"></script>
 <div id="sidebarad1">
   <div class="sidebar-close" onclick="this.parentElement.style.display='none'">✕</div>
 </div>
