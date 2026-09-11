@@ -125,6 +125,72 @@ header{
 .hub-tab.active::after{
   transform:scaleX(1);
 }
+
+
+/* ---------- downloads ---------- */
+.download-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-width:1000px;
+  margin:0 auto;
+}
+.download-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:15px 18px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--panel);
+  transition:transform .15s ease,border-color .15s ease,background .15s ease;
+}
+.download-item:hover{
+  transform:translateY(-2px);
+  border-color:var(--border-strong);
+  background:var(--panel-2);
+}
+.download-name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:var(--text);
+  font-size:14px;
+  font-weight:700;
+}
+.download-path{
+  margin-top:4px;
+  color:var(--text-dim);
+  font-size:11px;
+  font-weight:500;
+}
+.download-btn{
+  flex:none;
+  border:1px solid var(--border-strong);
+  border-radius:10px;
+  padding:9px 14px;
+  background:rgba(212,230,60,.12);
+  color:var(--text);
+  font:700 12px 'Inter',sans-serif;
+  cursor:pointer;
+  transition:transform .15s ease,background .15s ease;
+}
+.download-btn:hover{
+  transform:translateY(-1px);
+  background:rgba(212,230,60,.22);
+}
+.download-status{
+  color:var(--text-dim);
+  text-align:center;
+  padding:45px 20px;
+  font-size:14px;
+}
+@media(max-width:600px){
+  .download-item{ align-items:flex-start; }
+  .download-btn{ padding:8px 11px; }
+}
 @media (max-width:800px){
   .hub-tabs{
     order:3;
@@ -572,6 +638,7 @@ footer{
   <nav class="hub-tabs" aria-label="Hub sections">
     <button class="hub-tab active" id="zonesTab" type="button">Zones</button>
     <button class="hub-tab" id="moviesTab" type="button">Movies</button>
+    <button class="hub-tab" id="downloadsTab" type="button">Downloads</button>
   </nav>
   
 
@@ -615,6 +682,7 @@ footer{
 
 <main class="grid-wrap" id="mainContainer"></main>
 <main class="grid-wrap" id="moviesContainer" style="display:none"></main>
+<main class="grid-wrap" id="downloadsContainer" style="display:none"></main>
 
 <footer>nothing to see down here</footer>
 
@@ -908,13 +976,72 @@ const ZONES = [
 { name: 'Monkey Mart', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTezBcq7dEnLZ73KlF_PhD8eGKnEgkLnOF8wtsokzdwBQ&s=10', link: 'zones/clmonkeymart.html' },
 { name: 'Mr Mine', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY2OOu50LpA4xwjNvyjOu4L56VV9K_btZDoukHngzYKg&s=10', link: 'zones/clmrmine.html' },
 { name: 'Ovo Fixed', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrGbdDWy-U7pFxdP6RVNDHx-l2LqJfpod5IpFjE7rq9w&s=10', link: 'zones/clovofixed.html' },
+// 80 johns kms :sob:
+{ name: 'Slope', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaJEvmfniPnLgKh348GmxnYBOeHlzahHFlJRSaGJUJjQ&s', link: 'zones/Slope.html' },
+{ name: 'Smash Karts', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYx6OsRNzK5ohK1uZJBnMDWrC2_f9-kIIeYG3hTxU9mw&s=10', link: 'zones/Smash Karts.html' },
+{ name: 'Snow Rider 3D', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc7SccqYoTGD5WfMU_o8VitPdl4O9fFxrndntsOSKbjg&s', link: 'zones/Snow Rider 3D.html' },
+{ name: 'Steal A Brainrot', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfFHGfgGc5jOqddMT-mlw7EocN5KW-lxQn-LdnoaU-BA&s=10', link: 'zones/Steal A Brainrot.html' },
+{ name: 'Superhot', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt4xadrLG3ltifp2io8nWEXuCySdOQlCmtRSoejzIDqg&s=10', link: 'zones/superhot.html' },
+{ name: 'Super Mario Bros', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2RIjKJ7jbfRiVSdvALz2AWUnwcMbGe7O38AaZQk4Vvw&s=10', link: 'zones/supermariobros.html' },
+{ name: 'They Are Coming', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYyHT6SMRPW0XngGGO-CDvGqCC84JjmPWg028ggTL2XQ&s=10', link: 'zones/theyarecoming.html' },
+{ name: 'Tomb of the Mask', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG1vL9LgJpuJJMC7-oOQL6KzvLe3u1QbYcJu4cNnTRgw&s', link: 'zones/tombofthemask.html' },
+{ name: 'Undertale', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtfrTQotvFCZQULMWV4vpDk1Wd05fJIcMJ26vNY_k1zA&s=10', link: 'zones/undertale.html' },
+
+{ name: 'Fallout', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKAx_hSQ5RiUDh69tO-T4ptO1ZSDbYtBORUBoZEZIr_g&s=10', link: 'zones/Fallout.html' },
+{ name: "Five Nights at Candy's 2", image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdyH-4ebrZb0SfznZYR8O1yg6P4AfFUyJBROGli8_9RA&s=10', link: "zones/Five Nights at Candy's 2.html" },
+{ name: "Five Nights at Candy's", image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvGdPSvAkF1IVBLIP4B-PMNhrr258rzjI5EXJMttWK8Q&s=10', link: "zones/Five Nights at Candy's.html" },
+{ name: 'Football Bros', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-3XMh4mEP7OFXZVjmw2nB6fx64IO_L59QmBuihG-I0A&s=10', link: 'zones/Football Bros.html' },
+{ name: 'Hill Climb Racing Lite', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxX3L5R0Y6GtmqdqaAknbn34TCPRf56u1cL8xANOwN1A&s=10', link: 'zones/Hill Climb Racing Lite.html' },
+{ name: 'Johnny Trigger', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchPqfbEASHrJiejgw6exu9OpwiyJ_tzhQeOy93KoPWw&s', link: 'zones/Johnny Trigger.html' },
+{ name: 'Kindergarten 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsZH3NmsLIIh7GTsq3rRTvF_AhdRoNIUDqb2pGbs_O3g&s=10', link: 'zones/Kindergarten 3.html' },
+{ name: 'Learn to Fly 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkPxQHi1saXMVNdmilZxJq0TW4o-n5mInOL2fzbk1Hsw&s=10', link: 'zones/Learn to Fly 3.html' },
+{ name: 'Nazi Zombies: Portable', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV0_TW5GC4v22dHOWn5HYYwn65JlIc3MgzLIVFt4lkwA&s=10', link: 'zones/Nazi Zombies_ Portable.html' },
+{ name: 'OMORI', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcEfd1lidAIkNarbGAILi4V_mxBwXr5tl1fFlAAcREbQ&s=10', link: 'zones/OMORI.html' },
+{ name: 'OvO 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-OLQGkU35Sgx8tCS6pRDu3EvoxGn9e-5kdENfBWirqQ&s=10', link: 'zones/OvO 2.html' },
+{ name: 'Papers, Please', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8f2KmeDpUZaHwpJ1acNKS9AwNo33FyFjSn3Okh9TLJw&s=10', link: 'zones/Papers, Please.html' },
+{ name: 'Peggle', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZna9guRXmckxdZeG35tYtu6TpJ2LVeod4LEvT5cnxCw&s=10', link: 'zones/Peggle.html' },
+{ name: 'Pixel Gun Survival', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUiNnYbi8yUH5hGbxYZid-z1LOZRf3cf7IwgsyOBN6-A&s=10', link: 'zones/Pixel Gun Survival.html' },
+{ name: 'Plants vs. Zombies 2 Gardenless', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_DVlc1ETJs-z-M-Tblx0kNlGtmyVS-329KoWuI14rAw&s=10', link: 'zones/Plants vs. Zombies 2 Gardenless.html' },
+{ name: 'Pokemon Red', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_OI_flatJctx14k5332KHajPeLbL6UP357f8NYhhf1Q&s=10', link: 'zones/Pokemon Red.html' },
+{ name: 'Ragdoll Archers', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq1LT4-60bQ_wPuPkRQtk4eseSEnQzfy-FXEiK3ov_IQ&s=10', link: 'zones/Ragdoll Archers.html' },
+{ name: 'Ragdoll Hit', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3jkUakudmY8EFSOiZMgD5rzaxKJTlElPQvdetMs2jLg&s=10', link: 'zones/Ragdoll Hit.html' },
+
+{ name: 'FNAF 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx9oeEGj7D-DMNtzgBxMZlWZ1veZdvxa3FWo6_qn-j8Q&s=10', link: 'zones/clFNAF3.html' },
+{ name: 'FNAF 4', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlUCZ_0IaX2OkmNRBr9xvQr1BxBzdPU3RuwpoNhAerRQ&s=10', link: 'zones/clFNAF4.html' },
+{ name: 'FNAF 4 Halloween', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuHg6pyvR60q51CsqKrq9pMofSe5Oil2fqNADLUyFcxA&s=10', link: 'zones/clfnaf4halloween.html' },
+{ name: 'FNAF Plus', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmlE8HL96gKqbZJcQJzkS-uIVfVPhmQd7kFkkqzYJr9g&s=10', link: 'zones/clfnafps.html' },
+{ name: 'FNAF SL', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPyAjy1n_L0iBm2RQguFhwvEUTZ4bmrrBz21fTOYVVZA&s=10', link: 'zones/clfnafsl.html' },
+{ name: 'FNAF UCN', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNEALsJjdhc7icxpjnDS46Ew440Dd17AAJFxGZA9i_0Q&s=10', link: 'zones/clfnafucn.html' },
+{ name: 'Grow a Garden', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ-B6ILaEyvTTKxxqPNTibm1Xyr78OK-VPCxmsHFvIIg&s', link: 'zones/clgrowagarden.html' },
+{ name: 'Jelly Drift', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnhSDw_T_DJW4Ir9YGXyqoZvP8SxYInxfHzVPDUqs8AQ&s=10', link: 'zones/cljellydrift.html' },
+{ name: 'Slender Man', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTceIkRjuG8kMfaUXTKYONnLuqUtKN7PPxKMATRxHfRUw&s', link: 'zones/clslenderman.html' },
+{ name: 'Survival Race v2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb0fl8utKCu0xpYlaGKdzBeMdW8XOEhLtvI1dRlN1tmQ&s', link: 'zones/clsurvivalracev2.html' },
+{ name: 'Cookie Clicker', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREBf6s-KDTlLuKjjopV2q8sScIvZbSrl4aonWecZWmxA&s', link: 'zones/Cookie Clicker.html' },
+{ name: 'Doom 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFd5uhdt2wZ7k9bP7IvjKLFQxwvBMhTOKnVb0qaFWdWw&s=10', link: 'zones/Doom 2.html' },
+{ name: 'Drift Hunters', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCicJPOAvGO5-Ny81hXhYO16z8dpFRXyZSdA5HTw27Ug&s', link: 'zones/Drift Hunters.html' },
+{ name: 'Endoparasitic 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTavqMBWK-9phJw6vm3KdhyWpdsw0H62PIxa_vE30Emmg&s=10', link: 'zones/Endoparasitic 2.html' },
+{ name: 'Endoparasitic', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTavqMBWK-9phJw6vm3KdhyWpdsw0H62PIxa_vE30Emmg&s=10', link: 'zones/Endoparasitic.html' },
+{ name: 'Escape Road 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52hDXAFplcBrsg2ZuYOiXiMNMcXGXyGjWPLPwb9vwzw&s=10', link: 'zones/Escape Road 2.html' },
+
+{ name: 'Minecraft 1.8.8', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9JxZ799FIJuEljUg7u70qywAHG0rqLP8Z2s98sH6JiQ&s=10', link: 'zones/1.8.8minecraft.html' },
+{ name: 'Among Us', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS37nEoFt1doZQr98KhYAMnsHbQHXWZHBoTkqgvA8QTg&s=10', link: 'zones/amongus.html' },
+{ name: 'Bank Robbery', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9bACZ3rQr6gpauV3nZerwmGWdNGCcxiFtYvz2N5VrBw&s=10', link: 'zones/Bank Robbery.html' },
+{ name: 'Bank Robbery 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTimQQXdMs1pvWtWl84i5kUIo2kh8rerlwigVh8sZUIow&s=10', link: 'zones/bankrobbery2.html' },
+{ name: 'Baseball Bros', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2vV6rKBW1ldpypUsjGqaa49-2XXBouwKjjKsH-8wcUQ&s', link: 'zones/baseballbros.html' },
+{ name: 'Binding of Isaac', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzTjnvO4hHEtWeBZY6opj_7t-dJklxFSBJDXq5L_KDBw&s=10', link: 'zones/bindingofisaac.html' },
+{ name: 'Bouncemasters', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkDu99B3yTyAOTMr5Q63xd0FPY-P-OmMODekIaCGQI2Q&s=10', link: 'zones/Bouncemasters.html' },
+{ name: "Baldi's Basics Remastered", image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO-tu7mMGKfA5m0SyCv7xVZTHqD__iHh6BuucDvnXG3Q&s', link: 'zones/clbaldisbasicsremaster.html' },
+{ name: 'Basketball Stars', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgcjwwXtI27DfFuRq8PH8drm6qA_Li6mzzQR8Vg2UnHA&s=10', link: 'zones/clbasketballstars.html' },
+{ name: 'Basket Bros', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrS9MGLa_9Ha8R15PDBKPe_ft6KvxT3IMN9IMc0JQRdA&s=10', link: 'zones/clbasketbros.html' },
+{ name: 'BuildNow GG', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwbInH9kthkRCtVdui4itLcMyMmC20iawR9M-f_NjbjQ&s=10', link: 'zones/clbuildnowgg.html' },
+{ name: 'Core Ball', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGpy6n81snU1yGk2u4PmDFSixrr65ucJqXxqH3A6nrHA&s=10', link: 'zones/clcoreball.html' },
+{ name: 'Escape Road 2 (Alt)', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52hDXAFplcBrsg2ZuYOiXiMNMcXGXyGjWPLPwb9vwzw&s=10', link: 'zones/clescaperoad-2.html' },
+{ name: 'Escape Road 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWIi-CGhaYFVfIyFgcxVde-diroxWJ4Dvjs1KjuARLgA&s', link: 'zones/clescaperoad3.html' },
+{ name: 'Fears to Fathom: Home Alone', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTukF-fGFvhcSi9CoxAy813f7c6Fko-TNRasJ4ULf9owA&s=10', link: 'zones/clfearstofathomhomealone.html' },
+{ name: 'FNAF', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS27gd7rAwOvdKzEbAH4eXMe3sO5soAMRbTuaO_TIPNTw&s=10', link: 'zones/clFNAF.html' },
+{ name: 'FNAF 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrSSAuzZrnUA9DYtz6Oy1pDgxwzYlQi4vtyD7xpporQg&s=10', link: 'zones/clFNAF2.html' },
 ];
 
-/* =====================================================================
-                                  MOVIES
-   Same tile UI as Zones; example movie entries currently point to
-   example.html so the movie pages can be added later.
-===================================================================== */
 const MOVIES = [
   { name: 'Back to the Future', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhNo6nIO64HkGO7v9KPFOvtHK9o8o8ejBaiWHu8SpxjQ&s=10', link: 'https://drive.google.com/file/d/1ZwP0FLdFdAoeskqGvQYX5CwqEeSFWS1G/view' },
   { name: 'Back to the Future 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtuRsr4g73wVp96Au0nG5zQP_87vYh_gu19zEwYde2ig&s=10', link: 'https://drive.google.com/file/d/1vmA2LTkSzbtUJve8TTy2UVkPAfHMtGwK/view' },
@@ -1077,36 +1204,303 @@ function renderMovies(){
 
 renderMovies();
 
-/* ---------------- Zones / Movies tabs ---------------- */
+/* =====================================================================
+                              DOWNLOADS
+   The Downloads tab reads the /zones folder from the GitHub repository.
+   That means newly uploaded .html zones appear automatically.
+   ===================================================================== */
+
+const DOWNLOADS_CACHE_KEY = 'saturn_downloads_v1';
+let downloadZones = [];
+
+function getGitHubRepoInfo(){
+  const host = window.location.hostname;
+
+  // GitHub Pages: username.github.io/repository
+  if(host.endsWith('.github.io')){
+    const owner = host.split('.')[0];
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const repo = parts.length ? parts[0] : `${owner}.github.io`;
+    return { owner, repo };
+  }
+
+  // Optional manual fallback for custom domains.
+  return { owner: 'swdwfegege', repo: 'swdwfegege.github.io' };
+}
+
+function getZoneFilename(link){
+  try{
+    const clean = String(link || '').split('?')[0].split('#')[0];
+    const parts = clean.split('/');
+    return decodeURIComponent(parts[parts.length - 1] || '');
+  }catch(e){
+    return String(link || '').split('/').pop() || '';
+  }
+}
+
+function mergeDownloadZones(githubFiles){
+  const byPath = new Map();
+
+  // Include every .html file GitHub reports in /zones.
+  githubFiles.forEach(file => {
+    if(file && file.type === 'file' && /\.html$/i.test(file.name)){
+      byPath.set(file.path.toLowerCase(), {
+        name: file.name.replace(/\.html$/i, ''),
+        filename: file.name,
+        path: file.path,
+        downloadUrl: file.download_url || ''
+      });
+    }
+  });
+
+  // Also include zones already defined in the site's ZONES array.
+  // This keeps the list working if GitHub's API is temporarily unavailable
+  // or a zone has a custom/case-sensitive filename.
+  ZONES.concat(store.customZones).forEach(zone => {
+    const filename = getZoneFilename(zone.link);
+    if(!filename || !/\.html$/i.test(filename)) return;
+
+    const path = `zones/${filename}`;
+    if(!byPath.has(path.toLowerCase())){
+      byPath.set(path.toLowerCase(), {
+        name: zone.name || filename.replace(/\.html$/i, ''),
+        filename,
+        path,
+        downloadUrl: ''
+      });
+    }else{
+      const item = byPath.get(path.toLowerCase());
+      if(zone.name) item.name = zone.name;
+    }
+  });
+
+  return [...byPath.values()].sort((a,b) =>
+    a.name.localeCompare(b.name, undefined, {numeric:true, sensitivity:'base'})
+  );
+}
+
+function renderDownloads(statusText){
+  const container = downloadsContainer;
+  container.innerHTML = '';
+
+  const section = document.createElement('div');
+  section.className = 'category-section';
+
+  const header = document.createElement('div');
+  header.className = 'category-title';
+  header.textContent = `Downloads${downloadZones.length ? ` (${downloadZones.length})` : ''}`;
+  section.appendChild(header);
+
+  if(statusText){
+    const status = document.createElement('div');
+    status.className = 'download-status';
+    status.textContent = statusText;
+    section.appendChild(status);
+    container.appendChild(section);
+    return;
+  }
+
+  const list = document.createElement('div');
+  list.className = 'download-list';
+
+  downloadZones.forEach((zone, index) => {
+    const item = document.createElement('div');
+    item.className = 'download-item';
+    item.dataset.name = `${zone.name} ${zone.filename}`.toLowerCase();
+    item.style.animationDelay = `${index * 0.02}s`;
+
+    const info = document.createElement('div');
+    info.style.minWidth = '0';
+
+    const name = document.createElement('div');
+    name.className = 'download-name';
+    name.textContent = zone.name;
+
+    const path = document.createElement('div');
+    path.className = 'download-path';
+    path.textContent = zone.path;
+
+    info.appendChild(name);
+    info.appendChild(path);
+
+    const button = document.createElement('button');
+    button.className = 'download-btn';
+    button.type = 'button';
+    button.textContent = 'Download';
+    button.title = `Download ${zone.filename}`;
+
+    button.addEventListener('click', () => downloadZone(zone, button));
+
+    item.appendChild(info);
+    item.appendChild(button);
+    list.appendChild(item);
+  });
+
+  section.appendChild(list);
+
+  const emptyMsg = document.createElement('p');
+  emptyMsg.className = 'empty-msg';
+  emptyMsg.id = 'downloadEmptyMsg';
+  emptyMsg.textContent = 'No downloads match your search.';
+  section.appendChild(emptyMsg);
+
+  container.appendChild(section);
+}
+
+function filterDownloads(q){
+  const items = downloadsContainer.querySelectorAll('.download-item');
+  let visible = 0;
+
+  items.forEach(item => {
+    const match = item.dataset.name.includes(q);
+    item.style.display = match ? 'flex' : 'none';
+    if(match) visible++;
+  });
+
+  const empty = document.getElementById('downloadEmptyMsg');
+  if(empty){
+    empty.style.display = visible === 0 && items.length > 0 ? 'block' : 'none';
+  }
+}
+
+async function downloadZone(zone, button){
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Downloading...';
+
+  try{
+    let downloadUrl = zone.downloadUrl;
+
+    if(!downloadUrl){
+      const { owner, repo } = getGitHubRepoInfo();
+      downloadUrl =
+        `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/` +
+        `${encodeURIComponent(repo)}/main/${zone.path.split('/').map(encodeURIComponent).join('/')}`;
+    }
+
+    // Fetch the HTML and create a local Blob so the browser downloads
+    // the actual .html file instead of navigating to it.
+    const response = await fetch(downloadUrl, {cache:'no-store'});
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = zone.filename || `${zone.name}.html`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+    button.textContent = 'Downloaded';
+    setTimeout(() => button.textContent = originalText, 1200);
+  }catch(error){
+    console.error('Zone download failed:', error);
+
+    // Fallback: open the raw file if the browser blocks the fetch.
+    if(zone.downloadUrl){
+      window.open(zone.downloadUrl, '_blank', 'noopener,noreferrer');
+    }else{
+      const { owner, repo } = getGitHubRepoInfo();
+      const rawUrl =
+        `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/` +
+        `${encodeURIComponent(repo)}/main/${zone.path.split('/').map(encodeURIComponent).join('/')}`;
+      window.open(rawUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    button.textContent = 'Open file';
+    setTimeout(() => button.textContent = originalText, 1500);
+  }finally{
+    button.disabled = false;
+  }
+}
+
+async function loadDownloads(){
+  // Render immediately from the existing ZONES list.
+  downloadZones = mergeDownloadZones([]);
+  renderDownloads('Checking GitHub for the latest zones...');
+
+  try{
+    const { owner, repo } = getGitHubRepoInfo();
+    const apiUrl =
+      `https://api.github.com/repos/${encodeURIComponent(owner)}/` +
+      `${encodeURIComponent(repo)}/contents/zones?ref=main`;
+
+    const response = await fetch(apiUrl, {
+      cache:'no-store',
+      headers:{'Accept':'application/vnd.github+json'}
+    });
+
+    if(!response.ok) throw new Error(`GitHub API HTTP ${response.status}`);
+
+    const files = await response.json();
+    if(!Array.isArray(files)) throw new Error('GitHub did not return a folder listing');
+
+    downloadZones = mergeDownloadZones(files);
+    renderDownloads('');
+  }catch(error){
+    console.warn('Could not refresh the zones list from GitHub:', error);
+
+    // Still show all zones known by the frontend.
+    downloadZones = mergeDownloadZones([]);
+    renderDownloads('');
+  }
+
+  filterDownloads(searchInput.value.trim().toLowerCase());
+}
+
+// Load once in the background so the first visit is instant.
+loadDownloads();
+
+/* ---------------- Zones / Movies / Downloads tabs ---------------- */
 const zonesTab = document.getElementById('zonesTab');
 const moviesTab = document.getElementById('moviesTab');
+const downloadsTab = document.getElementById('downloadsTab');
 const zonesContainer = document.getElementById('mainContainer');
 const moviesContainer = document.getElementById('moviesContainer');
+const downloadsContainer = document.getElementById('downloadsContainer');
 const searchInput = document.getElementById('searchInput');
 
 function switchHubTab(tab){
   const showingMovies = tab === 'movies';
+  const showingDownloads = tab === 'downloads';
 
-  zonesTab.classList.toggle('active', !showingMovies);
+  zonesTab.classList.toggle('active', tab === 'zones');
   moviesTab.classList.toggle('active', showingMovies);
+  downloadsTab.classList.toggle('active', showingDownloads);
 
-  zonesContainer.style.display = showingMovies ? 'none' : '';
+  zonesContainer.style.display = tab === 'zones' ? '' : 'none';
   moviesContainer.style.display = showingMovies ? '' : 'none';
+  downloadsContainer.style.display = showingDownloads ? '' : 'none';
 
-  searchInput.placeholder = showingMovies ? 'search movies' : 'search zones';
+  searchInput.placeholder = showingMovies
+    ? 'search movies'
+    : showingDownloads
+      ? 'search downloads'
+      : 'search zones';
+
   searchInput.value = '';
 
   document.querySelectorAll('.grid .tile').forEach(t => t.style.display = '');
   const zoneAddBtn = zonesContainer.querySelector('.add-tile');
   if(zoneAddBtn) zoneAddBtn.style.display = '';
+
   const emptyZone = document.getElementById('emptyMsg');
   if(emptyZone) emptyZone.style.display = 'none';
   const emptyMovie = document.getElementById('movieEmptyMsg');
   if(emptyMovie) emptyMovie.style.display = 'none';
+
+  filterDownloads('');
 }
 
 zonesTab.addEventListener('click', () => switchHubTab('zones'));
 moviesTab.addEventListener('click', () => switchHubTab('movies'));
+downloadsTab.addEventListener('click', () => {
+  switchHubTab('downloads');
+  loadDownloads();
+});
 
 /* ---------------- back button logic ---------------- */
 document.getElementById('backBtn').addEventListener('click', () => {
@@ -1126,6 +1520,11 @@ searchInput.addEventListener('input', (e)=>{
   if (q === "9999") {
     window.open("example.html", "_blank");
     e.target.value = "";
+    return;
+  }
+
+  if(downloadsTab.classList.contains('active')){
+    filterDownloads(q);
     return;
   }
 

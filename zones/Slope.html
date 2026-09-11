@@ -5,18 +5,34 @@
   gtag('js', new Date());
 
   gtag('config', 'G-L7856P3VNT');
-</script><html lang="en">
+</script><!DOCTYPE html>
+<html lang="en-us">
 
 <head>
-    
-    
-    
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Rabbibo/moto@35b09901c725d990145f7b305cbcb42ddcee4782/assets/css/app.css" type="text/css" />
-<style>
-#sidebarad1,
+    <base href="https://cdn.jsdelivr.net/gh/freebuisness/assets@51462750d29b68ac1e33887c1bf13d9c478d5ead/198/">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Slope Plus</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+
+        #unity-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    #sidebarad1,
 #sidebarad2 {
   position: fixed;
   top: 50%;
@@ -55,20 +71,86 @@
   display: block;
 }
 </style>
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+        function mergeFiles(fileParts) {
+            return new Promise((resolve, reject) => {
+                let buffers = [];
+
+                function fetchPart(index) {
+                    if (index >= fileParts.length) {
+                        let mergedBlob = new Blob(buffers);
+                        let mergedFileUrl = URL.createObjectURL(mergedBlob);
+                        resolve(mergedFileUrl);
+                        return;
+                    }
+                    fetch(fileParts[index]).then((response) => response.arrayBuffer()).then((data) => {
+                        buffers.push(data);
+                        fetchPart(index + 1);
+                    }).catch(reject);
+                }
+                fetchPart(0);
+            });
+        }
+
+        function getParts(file, start, end) {
+            let parts = [];
+            for (let i = start; i <= end; i++) {
+                parts.push(file + ".part" + i);
+            }
+            return parts;
+        }
+
+        window.addEventListener('resize', resizeGameContainer);
+
+        function resizeGameContainer() {
+            const container = document.getElementById('gameContainer');
+            if (container) {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                container.style.width = `${width}px`;
+                container.style.height = `${height}px`;
+            }
+        }
+
+        window.onload = function () {
+            resizeGameContainer();
+
+            Promise.all([
+                mergeFiles(getParts("https://cdn.jsdelivr.net/gh/freebuisness/assets@51462750d29b68ac1e33887c1bf13d9c478d5ead/198/Build/WEB1.2.1.data.unityweb", 1, 2))
+            ]).then(([dataUrl]) => {
+                let json = {
+                    companyName: "Slope Plus",
+                    productName: "Slope Plus",
+                    dataUrl: dataUrl,
+                    wasmCodeUrl: "https://cdn.jsdelivr.net/gh/freebuisness/assets@51462750d29b68ac1e33887c1bf13d9c478d5ead/198/Build/WEB1.2.1.wasm.code.unityweb",
+                    wasmFrameworkUrl: "https://cdn.jsdelivr.net/gh/freebuisness/assets@51462750d29b68ac1e33887c1bf13d9c478d5ead/198/Build/WEB1.2.1.wasm.framework.unityweb",
+                    TOTAL_MEMORY: 268435456,
+                    graphicsAPI: ["WebGL 2.0", "WebGL 1.0"],
+                    webglContextAttributes: {
+                        preserveDrawingBuffer: false
+                    },
+                    splashScreenStyle: "Dark",
+                    backgroundColor: "#000000"
+                }
+                let blob = new Blob([JSON.stringify(json)], {
+                    type: 'application/json'
+                });
+                let blobUrl = URL.createObjectURL(blob);
+                UnityLoader.instantiate("gameContainer", json, {
+                    onProgress: UnityProgress,
+                    url: blobUrl
+                });
+            });
+        };
+    </script>
 </head>
 
 <body>
-    <div id="content"></div>
-    <div id="orientation"></div>
-    <div id="loader">Loading ...</div>
-    <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Stypical/lacklack@0959ed15fc96078cbb053e4e3c259a62b3e9e296/motox3m/assets/lib/nape.min.js">
-        var nape = "nape.min.js";
-    </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Stypical/lacklack@0959ed15fc96078cbb053e4e3c259a62b3e9e296/motox3m/assets/lib/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Stypical/lacklack@0959ed15fc96078cbb053e4e3c259a62b3e9e296/motox3m/assets/lib/easeljs-0.8.2.combined.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Stypical/lacklack@0959ed15fc96078cbb053e4e3c259a62b3e9e296/motox3m/assets/lib/bluebird.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bobydob/JSEngine@0e96212fb7b2e7aa0a310d3ebe3a8ab01a114b4b/build/m3m/m3m.min.js"></script>
+    <div class="webgl-content">
+        <div id="gameContainer"></div>
+    </div>
 <div id="sidebarad1">
   <div class="sidebar-close" onclick="this.parentElement.style.display='none'">✕</div>
 </div>
