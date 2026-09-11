@@ -125,6 +125,72 @@ header{
 .hub-tab.active::after{
   transform:scaleX(1);
 }
+
+
+/* ---------- downloads ---------- */
+.download-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-width:1000px;
+  margin:0 auto;
+}
+.download-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:15px 18px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--panel);
+  transition:transform .15s ease,border-color .15s ease,background .15s ease;
+}
+.download-item:hover{
+  transform:translateY(-2px);
+  border-color:var(--border-strong);
+  background:var(--panel-2);
+}
+.download-name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:var(--text);
+  font-size:14px;
+  font-weight:700;
+}
+.download-path{
+  margin-top:4px;
+  color:var(--text-dim);
+  font-size:11px;
+  font-weight:500;
+}
+.download-btn{
+  flex:none;
+  border:1px solid var(--border-strong);
+  border-radius:10px;
+  padding:9px 14px;
+  background:rgba(212,230,60,.12);
+  color:var(--text);
+  font:700 12px 'Inter',sans-serif;
+  cursor:pointer;
+  transition:transform .15s ease,background .15s ease;
+}
+.download-btn:hover{
+  transform:translateY(-1px);
+  background:rgba(212,230,60,.22);
+}
+.download-status{
+  color:var(--text-dim);
+  text-align:center;
+  padding:45px 20px;
+  font-size:14px;
+}
+@media(max-width:600px){
+  .download-item{ align-items:flex-start; }
+  .download-btn{ padding:8px 11px; }
+}
 @media (max-width:800px){
   .hub-tabs{
     order:3;
@@ -572,6 +638,7 @@ footer{
   <nav class="hub-tabs" aria-label="Hub sections">
     <button class="hub-tab active" id="zonesTab" type="button">Zones</button>
     <button class="hub-tab" id="moviesTab" type="button">Movies</button>
+    <button class="hub-tab" id="downloadsTab" type="button">Downloads</button>
   </nav>
   
 
@@ -615,6 +682,7 @@ footer{
 
 <main class="grid-wrap" id="mainContainer"></main>
 <main class="grid-wrap" id="moviesContainer" style="display:none"></main>
+<main class="grid-wrap" id="downloadsContainer" style="display:none"></main>
 
 <footer>nothing to see down here</footer>
 
@@ -1136,36 +1204,303 @@ function renderMovies(){
 
 renderMovies();
 
-/* ---------------- Zones / Movies tabs ---------------- */
+/* =====================================================================
+                              DOWNLOADS
+   The Downloads tab reads the /zones folder from the GitHub repository.
+   That means newly uploaded .html zones appear automatically.
+   ===================================================================== */
+
+const DOWNLOADS_CACHE_KEY = 'saturn_downloads_v1';
+let downloadZones = [];
+
+function getGitHubRepoInfo(){
+  const host = window.location.hostname;
+
+  // GitHub Pages: username.github.io/repository
+  if(host.endsWith('.github.io')){
+    const owner = host.split('.')[0];
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const repo = parts.length ? parts[0] : `${owner}.github.io`;
+    return { owner, repo };
+  }
+
+  // Optional manual fallback for custom domains.
+  return { owner: 'swdwfegege', repo: 'swdwfegege.github.io' };
+}
+
+function getZoneFilename(link){
+  try{
+    const clean = String(link || '').split('?')[0].split('#')[0];
+    const parts = clean.split('/');
+    return decodeURIComponent(parts[parts.length - 1] || '');
+  }catch(e){
+    return String(link || '').split('/').pop() || '';
+  }
+}
+
+function mergeDownloadZones(githubFiles){
+  const byPath = new Map();
+
+  // Include every .html file GitHub reports in /zones.
+  githubFiles.forEach(file => {
+    if(file && file.type === 'file' && /\.html$/i.test(file.name)){
+      byPath.set(file.path.toLowerCase(), {
+        name: file.name.replace(/\.html$/i, ''),
+        filename: file.name,
+        path: file.path,
+        downloadUrl: file.download_url || ''
+      });
+    }
+  });
+
+  // Also include zones already defined in the site's ZONES array.
+  // This keeps the list working if GitHub's API is temporarily unavailable
+  // or a zone has a custom/case-sensitive filename.
+  ZONES.concat(store.customZones).forEach(zone => {
+    const filename = getZoneFilename(zone.link);
+    if(!filename || !/\.html$/i.test(filename)) return;
+
+    const path = `zones/${filename}`;
+    if(!byPath.has(path.toLowerCase())){
+      byPath.set(path.toLowerCase(), {
+        name: zone.name || filename.replace(/\.html$/i, ''),
+        filename,
+        path,
+        downloadUrl: ''
+      });
+    }else{
+      const item = byPath.get(path.toLowerCase());
+      if(zone.name) item.name = zone.name;
+    }
+  });
+
+  return [...byPath.values()].sort((a,b) =>
+    a.name.localeCompare(b.name, undefined, {numeric:true, sensitivity:'base'})
+  );
+}
+
+function renderDownloads(statusText){
+  const container = downloadsContainer;
+  container.innerHTML = '';
+
+  const section = document.createElement('div');
+  section.className = 'category-section';
+
+  const header = document.createElement('div');
+  header.className = 'category-title';
+  header.textContent = `Downloads${downloadZones.length ? ` (${downloadZones.length})` : ''}`;
+  section.appendChild(header);
+
+  if(statusText){
+    const status = document.createElement('div');
+    status.className = 'download-status';
+    status.textContent = statusText;
+    section.appendChild(status);
+    container.appendChild(section);
+    return;
+  }
+
+  const list = document.createElement('div');
+  list.className = 'download-list';
+
+  downloadZones.forEach((zone, index) => {
+    const item = document.createElement('div');
+    item.className = 'download-item';
+    item.dataset.name = `${zone.name} ${zone.filename}`.toLowerCase();
+    item.style.animationDelay = `${index * 0.02}s`;
+
+    const info = document.createElement('div');
+    info.style.minWidth = '0';
+
+    const name = document.createElement('div');
+    name.className = 'download-name';
+    name.textContent = zone.name;
+
+    const path = document.createElement('div');
+    path.className = 'download-path';
+    path.textContent = zone.path;
+
+    info.appendChild(name);
+    info.appendChild(path);
+
+    const button = document.createElement('button');
+    button.className = 'download-btn';
+    button.type = 'button';
+    button.textContent = 'Download';
+    button.title = `Download ${zone.filename}`;
+
+    button.addEventListener('click', () => downloadZone(zone, button));
+
+    item.appendChild(info);
+    item.appendChild(button);
+    list.appendChild(item);
+  });
+
+  section.appendChild(list);
+
+  const emptyMsg = document.createElement('p');
+  emptyMsg.className = 'empty-msg';
+  emptyMsg.id = 'downloadEmptyMsg';
+  emptyMsg.textContent = 'No downloads match your search.';
+  section.appendChild(emptyMsg);
+
+  container.appendChild(section);
+}
+
+function filterDownloads(q){
+  const items = downloadsContainer.querySelectorAll('.download-item');
+  let visible = 0;
+
+  items.forEach(item => {
+    const match = item.dataset.name.includes(q);
+    item.style.display = match ? 'flex' : 'none';
+    if(match) visible++;
+  });
+
+  const empty = document.getElementById('downloadEmptyMsg');
+  if(empty){
+    empty.style.display = visible === 0 && items.length > 0 ? 'block' : 'none';
+  }
+}
+
+async function downloadZone(zone, button){
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Downloading...';
+
+  try{
+    let downloadUrl = zone.downloadUrl;
+
+    if(!downloadUrl){
+      const { owner, repo } = getGitHubRepoInfo();
+      downloadUrl =
+        `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/` +
+        `${encodeURIComponent(repo)}/main/${zone.path.split('/').map(encodeURIComponent).join('/')}`;
+    }
+
+    // Fetch the HTML and create a local Blob so the browser downloads
+    // the actual .html file instead of navigating to it.
+    const response = await fetch(downloadUrl, {cache:'no-store'});
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = zone.filename || `${zone.name}.html`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+    button.textContent = 'Downloaded';
+    setTimeout(() => button.textContent = originalText, 1200);
+  }catch(error){
+    console.error('Zone download failed:', error);
+
+    // Fallback: open the raw file if the browser blocks the fetch.
+    if(zone.downloadUrl){
+      window.open(zone.downloadUrl, '_blank', 'noopener,noreferrer');
+    }else{
+      const { owner, repo } = getGitHubRepoInfo();
+      const rawUrl =
+        `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/` +
+        `${encodeURIComponent(repo)}/main/${zone.path.split('/').map(encodeURIComponent).join('/')}`;
+      window.open(rawUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    button.textContent = 'Open file';
+    setTimeout(() => button.textContent = originalText, 1500);
+  }finally{
+    button.disabled = false;
+  }
+}
+
+async function loadDownloads(){
+  // Render immediately from the existing ZONES list.
+  downloadZones = mergeDownloadZones([]);
+  renderDownloads('Checking GitHub for the latest zones...');
+
+  try{
+    const { owner, repo } = getGitHubRepoInfo();
+    const apiUrl =
+      `https://api.github.com/repos/${encodeURIComponent(owner)}/` +
+      `${encodeURIComponent(repo)}/contents/zones?ref=main`;
+
+    const response = await fetch(apiUrl, {
+      cache:'no-store',
+      headers:{'Accept':'application/vnd.github+json'}
+    });
+
+    if(!response.ok) throw new Error(`GitHub API HTTP ${response.status}`);
+
+    const files = await response.json();
+    if(!Array.isArray(files)) throw new Error('GitHub did not return a folder listing');
+
+    downloadZones = mergeDownloadZones(files);
+    renderDownloads('');
+  }catch(error){
+    console.warn('Could not refresh the zones list from GitHub:', error);
+
+    // Still show all zones known by the frontend.
+    downloadZones = mergeDownloadZones([]);
+    renderDownloads('');
+  }
+
+  filterDownloads(searchInput.value.trim().toLowerCase());
+}
+
+// Load once in the background so the first visit is instant.
+loadDownloads();
+
+/* ---------------- Zones / Movies / Downloads tabs ---------------- */
 const zonesTab = document.getElementById('zonesTab');
 const moviesTab = document.getElementById('moviesTab');
+const downloadsTab = document.getElementById('downloadsTab');
 const zonesContainer = document.getElementById('mainContainer');
 const moviesContainer = document.getElementById('moviesContainer');
+const downloadsContainer = document.getElementById('downloadsContainer');
 const searchInput = document.getElementById('searchInput');
 
 function switchHubTab(tab){
   const showingMovies = tab === 'movies';
+  const showingDownloads = tab === 'downloads';
 
-  zonesTab.classList.toggle('active', !showingMovies);
+  zonesTab.classList.toggle('active', tab === 'zones');
   moviesTab.classList.toggle('active', showingMovies);
+  downloadsTab.classList.toggle('active', showingDownloads);
 
-  zonesContainer.style.display = showingMovies ? 'none' : '';
+  zonesContainer.style.display = tab === 'zones' ? '' : 'none';
   moviesContainer.style.display = showingMovies ? '' : 'none';
+  downloadsContainer.style.display = showingDownloads ? '' : 'none';
 
-  searchInput.placeholder = showingMovies ? 'search movies' : 'search zones';
+  searchInput.placeholder = showingMovies
+    ? 'search movies'
+    : showingDownloads
+      ? 'search downloads'
+      : 'search zones';
+
   searchInput.value = '';
 
   document.querySelectorAll('.grid .tile').forEach(t => t.style.display = '');
   const zoneAddBtn = zonesContainer.querySelector('.add-tile');
   if(zoneAddBtn) zoneAddBtn.style.display = '';
+
   const emptyZone = document.getElementById('emptyMsg');
   if(emptyZone) emptyZone.style.display = 'none';
   const emptyMovie = document.getElementById('movieEmptyMsg');
   if(emptyMovie) emptyMovie.style.display = 'none';
+
+  filterDownloads('');
 }
 
 zonesTab.addEventListener('click', () => switchHubTab('zones'));
 moviesTab.addEventListener('click', () => switchHubTab('movies'));
+downloadsTab.addEventListener('click', () => {
+  switchHubTab('downloads');
+  loadDownloads();
+});
 
 /* ---------------- back button logic ---------------- */
 document.getElementById('backBtn').addEventListener('click', () => {
@@ -1185,6 +1520,11 @@ searchInput.addEventListener('input', (e)=>{
   if (q === "9999") {
     window.open("example.html", "_blank");
     e.target.value = "";
+    return;
+  }
+
+  if(downloadsTab.classList.contains('active')){
+    filterDownloads(q);
     return;
   }
 
