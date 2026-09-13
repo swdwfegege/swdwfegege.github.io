@@ -1,3 +1,30 @@
+Pasted text(3).txt
+Document
+edit this code so there is a button when you click on the game with report broken which opens a thingy like the picture and says game name reports : (number) and under every zone a play count on how many times people played that game
+
+Done — I edited your HTML and added:
+
+“⚠ Report broken” button while a game is open.
+A dark popup like the screenshot showing Game Name reports: 0.
+Report broken button that increases the report count.
+Play count under every Zone, e.g. 12 plays.
+Play count increases every time someone opens that game.
+Counts are saved with localStorage, so they persist after refreshing.
+Existing favorites, tabs, settings, games, and styling were kept intact.
+I also checked the JavaScript syntax after editing.
+
+Download the edited HTML
+
+One important thing: these counts are currently per-browser, not shared between everyone. To make plays and reports show a true global count across all users, the site needs a small backend/database.
+
+saturn_reports_playcounts.html
+HTML
+move the plays to the top on tyhe opposite side of the favorite
+
+Done. The plays count is now at the top-left, directly opposite the favorite star on the top-right.
+
+Download the updated HTML
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -607,6 +634,112 @@ footer{
 .back-btn:active {
   transform: translateY(0) scale(0.96);
 }
+
+/* ---------- reports & play counts ---------- */
+.tile-play-count{
+  position:absolute;
+  left:10px;
+  bottom:9px;
+  z-index:2;
+  padding:4px 8px;
+  border-radius:999px;
+  background:rgba(0,0,0,.62);
+  border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.9);
+  font-size:10px;
+  font-weight:700;
+  line-height:1;
+  backdrop-filter:blur(5px);
+  pointer-events:none;
+}
+
+.game-report-btn{
+  position:absolute;
+  top:16px;
+  right:16px;
+  z-index:10001;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid rgba(255,116,116,.65);
+  border-radius:10px;
+  padding:10px 14px;
+  background:rgba(30,12,12,.92);
+  color:#fff;
+  font:700 13px 'Inter',sans-serif;
+  cursor:pointer;
+  box-shadow:0 5px 18px rgba(0,0,0,.35);
+  transition:transform .15s ease,background .15s ease,border-color .15s ease;
+}
+.game-report-btn:hover{
+  transform:translateY(-1px);
+  background:rgba(75,20,20,.96);
+  border-color:#ff7474;
+}
+.game-report-btn:active{transform:scale(.97)}
+
+#reportModal{
+  position:fixed;
+  inset:0;
+  z-index:110000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.58);
+  backdrop-filter:blur(4px);
+}
+#reportModal.open{display:flex}
+
+#reportPanel{
+  width:min(470px,100%);
+  background:#1f1f1f;
+  color:#f5f5f5;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  box-shadow:0 24px 70px rgba(0,0,0,.65);
+  overflow:hidden;
+}
+.report-top{
+  padding:18px 20px 8px;
+  font-size:15px;
+  font-weight:700;
+}
+.report-body{
+  padding:4px 20px 18px;
+  color:#ddd;
+  font-size:13px;
+  line-height:1.5;
+}
+.report-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  padding:12px 16px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.report-action{
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:8px;
+  padding:9px 18px;
+  background:#292929;
+  color:#fff;
+  font:700 12px 'Inter',sans-serif;
+  cursor:pointer;
+}
+.report-action:hover{background:#343434}
+.report-action.report-submit{
+  background:#d4e63c;
+  color:#0a0904;
+  border-color:#d4e63c;
+}
+.report-action.report-submit:hover{filter:brightness(1.06)}
+.report-note{
+  margin-top:8px;
+  color:#a8a8a8;
+  font-size:11px;
+}
+
 </style>
 
 <style id="saturn-settings-css">
@@ -840,7 +973,24 @@ footer{
     <svg width="20" height="20"><use href="#icon-back"/></svg>
     back
   </button>
+  <button id="gameReportBtn" class="game-report-btn" type="button">
+    ⚠ Report broken
+  </button>
   <iframe id="zoneFrame" src=""></iframe>
+</div>
+
+<div id="reportModal" aria-hidden="true">
+  <section id="reportPanel" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <div class="report-top" id="reportTitle">Game report</div>
+    <div class="report-body">
+      <div id="reportMessage"></div>
+      <div class="report-note">Reports are saved on this browser.</div>
+    </div>
+    <div class="report-actions">
+      <button id="reportCancel" class="report-action" type="button">Cancel</button>
+      <button id="reportSubmit" class="report-action report-submit" type="button">Report broken</button>
+    </div>
+  </section>
 </div>
 
 
@@ -903,9 +1053,11 @@ function saveStore(store){
 }
 
 const store = loadStore();
-store.images = store.images || {};       
-store.favorites = store.favorites || []; 
-store.customZones = store.customZones || []; 
+store.images = store.images || {};
+store.favorites = store.favorites || [];
+store.customZones = store.customZones || [];
+store.playCounts = store.playCounts || {};
+store.reportCounts = store.reportCounts || {};
 
 /* ---------------- live status pills ---------------- */
 function pad(n){ return n.toString().padStart(2,'0'); }
@@ -1335,6 +1487,41 @@ const MOVIES = [
 
 const colors = ['#ff6b57','#7b5bff','#ff4fa0','#3ba8ff','#ffb340','#4fe05a','#ff5c5c','#8a7bff','#2fd6c8','#ffd23f','#5ad1ff','#ff8a3d'];
 
+function isSiteZone(zone){
+  // Movies use the same tile builder, but only Zones get play/report stats.
+  return Array.isArray(ZONES) && ZONES.includes(zone) || store.customZones.includes(zone);
+}
+
+function getPlayCount(name){
+  return Number(store.playCounts[name] || 0);
+}
+
+function getReportCount(name){
+  return Number(store.reportCounts[name] || 0);
+}
+
+function recordPlay(name){
+  store.playCounts[name] = getPlayCount(name) + 1;
+  saveStore(store);
+}
+
+function openZone(zone){
+  const overlay = document.getElementById('zoneOverlay');
+  const frame = document.getElementById('zoneFrame');
+  const reportBtn = document.getElementById('gameReportBtn');
+
+  frame.src = zone.link || 'example.html';
+  overlay.dataset.gameName = zone.name;
+  reportBtn.style.display = isSiteZone(zone) ? 'flex' : 'none';
+
+  if(isSiteZone(zone)){
+    recordPlay(zone.name);
+  }
+
+  overlay.style.display = 'block';
+  setTimeout(() => overlay.style.opacity = '1', 10);
+}
+
 function buildTile(zone, index){
   const { name, image, link } = zone;
   const tile = document.createElement('a');
@@ -1346,11 +1533,13 @@ function buildTile(zone, index){
 
   const initials = name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
   const shownImg = store.images[name] || image;
+  const zoneTile = isSiteZone(zone);
 
   tile.innerHTML = `
     <div class="tile-img" style="${shownImg ? `background-image:url(${shownImg})` : `background-color:${colors[index % colors.length]}`}">
       <span class="tile-mono" style="${shownImg ? 'display:none' : ''}">${initials}</span>
     </div>
+    ${zoneTile ? `<div class="tile-play-count">${getPlayCount(name).toLocaleString()} plays</div>` : ''}
     <button class="star-btn" title="Favorite" aria-label="Favorite ${name}">
       <svg><use href="#icon-star"/></svg>
     </button>
@@ -1359,14 +1548,11 @@ function buildTile(zone, index){
 
   if(store.favorites.includes(name)) tile.classList.add('favorited');
 
-  // Launch zon overlay click handler
+  // Launch zone/movie overlay.
   tile.addEventListener('click', (e) => {
-    e.preventDefault(); 
-    const overlay = document.getElementById('zoneOverlay');
-    const frame = document.getElementById('zoneFrame');
-    frame.src = tile.href;
-    overlay.style.display = 'block';
-    setTimeout(() => overlay.style.opacity = '1', 10);
+    e.preventDefault();
+    e.stopPropagation();
+    openZone(zone);
   });
 
   const starBtn = tile.querySelector('.star-btn');
@@ -1379,11 +1565,13 @@ function buildTile(zone, index){
       store.favorites.push(name);
     }
     saveStore(store);
-    renderZones(); 
+    renderZones();
+    renderMovies();
   });
 
   return tile;
 }
+
 
 function renderZones(){
   const container = document.getElementById('mainContainer');
@@ -1782,14 +1970,73 @@ downloadsTab.addEventListener('click', () => {
 });
 
 /* ---------------- back button logic ---------------- */
+const zoneOverlay = document.getElementById('zoneOverlay');
+const zoneFrame = document.getElementById('zoneFrame');
+const gameReportBtn = document.getElementById('gameReportBtn');
+const reportModal = document.getElementById('reportModal');
+const reportMessage = document.getElementById('reportMessage');
+const reportCancel = document.getElementById('reportCancel');
+const reportSubmit = document.getElementById('reportSubmit');
+
 document.getElementById('backBtn').addEventListener('click', () => {
-  const overlay = document.getElementById('zoneOverlay');
-  const frame = document.getElementById('zoneFrame');
-  overlay.style.opacity = '0';
+  zoneOverlay.style.opacity = '0';
   setTimeout(() => {
-    overlay.style.display = 'none';
-    frame.src = ''; 
+    zoneOverlay.style.display = 'none';
+    zoneFrame.src = '';
+    zoneOverlay.dataset.gameName = '';
+    renderZones();
+    renderMovies();
   }, 300);
+});
+
+function closeReportModal(){
+  reportModal.classList.remove('open');
+  reportModal.setAttribute('aria-hidden', 'true');
+}
+
+function openReportModal(){
+  const gameName = zoneOverlay.dataset.gameName || 'This game';
+  const count = getReportCount(gameName);
+  reportMessage.innerHTML =
+    `<strong>${gameName}</strong> reports: <strong>${count.toLocaleString()}</strong>`;
+  reportModal.classList.add('open');
+  reportModal.setAttribute('aria-hidden', 'false');
+}
+
+gameReportBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  openReportModal();
+});
+
+reportCancel.addEventListener('click', closeReportModal);
+
+reportSubmit.addEventListener('click', () => {
+  const gameName = zoneOverlay.dataset.gameName || 'This game';
+  store.reportCounts[gameName] = getReportCount(gameName) + 1;
+  saveStore(store);
+
+  reportMessage.innerHTML =
+    `<strong>${gameName}</strong> reports: <strong>${getReportCount(gameName).toLocaleString()}</strong>`;
+  reportSubmit.textContent = 'Reported';
+  reportSubmit.disabled = true;
+
+  // Refresh the visible play-count tiles when the game is closed.
+  setTimeout(() => {
+    reportSubmit.textContent = 'Report broken';
+    reportSubmit.disabled = false;
+    closeReportModal();
+  }, 900);
+});
+
+reportModal.addEventListener('click', (e) => {
+  if(e.target === reportModal) closeReportModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    if(reportModal.classList.contains('open')) closeReportModal();
+  }
 });
 
 /* ---------------- search filter ---------------- */
@@ -2099,3 +2346,5 @@ document.getElementById('purchaseLink').addEventListener('click', (e) => {
   }
 </style>
 </html>
+saturn_reports_playcounts.html
+HTML
