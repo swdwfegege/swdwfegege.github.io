@@ -607,6 +607,15 @@ footer{
 .back-btn:active {
   transform: translateY(0) scale(0.96);
 }
+/* ---------- AI tab / Vex chatbot ---------- */
+.ai-chat-shell{
+  width:100%; max-width:1100px; height:min(720px,calc(100vh - 150px));
+  min-height:560px; margin:0 auto; border:1px solid var(--border);
+  border-radius:20px; overflow:hidden; background:var(--panel);
+  box-shadow:0 18px 50px rgba(0,0,0,.28);
+}
+#aiChatFrame{display:block;width:100%;height:100%;border:0;background:#0a0d08}
+@media(max-width:800px){.ai-chat-shell{height:calc(100vh - 180px);min-height:500px;border-radius:16px}}
 </style>
 
 <style id="saturn-settings-css">
@@ -779,6 +788,7 @@ footer{
     <button class="hub-tab active" id="zonesTab" type="button">Zones</button>
     <button class="hub-tab" id="moviesTab" type="button">Movies</button>
     <button class="hub-tab" id="downloadsTab" type="button">Downloads</button>
+    <button class="hub-tab" id="aiTab" type="button">AI</button>
   </nav>
   
 
@@ -831,6 +841,11 @@ footer{
 <main class="grid-wrap" id="mainContainer"></main>
 <main class="grid-wrap" id="moviesContainer" style="display:none"></main>
 <main class="grid-wrap" id="downloadsContainer" style="display:none"></main>
+<main class="grid-wrap" id="aiContainer" style="display:none">
+  <div class="ai-chat-shell">
+    <iframe id="aiChatFrame" title="Vex AI Chatbot" loading="lazy"></iframe>
+  </div>
+</main>
 
 <footer>nothing to see down here</footer>
 
@@ -1718,18 +1733,31 @@ const zonesContainer = document.getElementById('mainContainer');
 const moviesContainer = document.getElementById('moviesContainer');
 const downloadsContainer = document.getElementById('downloadsContainer');
 const searchInput = document.getElementById('searchInput');
+const aiTab = document.getElementById('aiTab');
+const aiContainer = document.getElementById('aiContainer');
+const aiChatFrame = document.getElementById('aiChatFrame');
+let aiChatLoaded = false;
+function loadAIChatbot(){
+  if(aiChatLoaded) return;
+  aiChatLoaded = true;
+  aiChatFrame.srcdoc = '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Vex - AI Chatbot</title>\n<style>\n  * { box-sizing: border-box; }\n\n  :root {\n    --lime: #d7ff3f;\n    --lime-dim: #a8cc2f;\n    --bg: #0a0d08;\n    --panel: #12160d;\n    --panel-2: #171c10;\n    --border: #3a4322;\n    --text: #f2f5e8;\n    --text-dim: #9aa287;\n  }\n\n  body {\n    margin: 0;\n    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;\n    font-weight: 700;\n    color: var(--text);\n    background-color: var(--bg);\n    background-image:\n      radial-gradient(circle at 15% 20%, rgba(215,255,63,0.35) 1px, transparent 1.5px),\n      radial-gradient(circle at 70% 15%, rgba(215,255,63,0.25) 1px, transparent 1.5px),\n      radial-gradient(circle at 40% 80%, rgba(215,255,63,0.3) 1px, transparent 1.5px),\n      radial-gradient(circle at 85% 65%, rgba(215,255,63,0.25) 1px, transparent 1.5px),\n      radial-gradient(circle at 25% 55%, rgba(215,255,63,0.2) 1px, transparent 1.5px),\n      linear-gradient(rgba(215,255,63,0.06) 1px, transparent 1px),\n      linear-gradient(90deg, rgba(215,255,63,0.06) 1px, transparent 1px);\n    background-size:\n      160px 160px, 200px 200px, 180px 180px, 220px 220px, 150px 150px,\n      40px 40px, 40px 40px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    min-height: 100vh;\n    padding: 20px;\n  }\n\n  .chat-container {\n    width: 100%;\n    max-width: 480px;\n    height: 640px;\n    background: var(--panel);\n    border: 1px solid var(--border);\n    border-radius: 20px;\n    box-shadow: 0 0 0 1px rgba(215,255,63,0.05), 0 20px 60px rgba(0,0,0,0.5);\n    display: flex;\n    flex-direction: column;\n    overflow: hidden;\n  }\n\n  .chat-header {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    background: var(--panel);\n    color: var(--lime);\n    padding: 16px 20px;\n    font-weight: 800;\n    font-size: 1.15rem;\n    border-bottom: 1px solid var(--border);\n  }\n  .chat-header .avatar {\n    width: 30px;\n    height: 30px;\n    border-radius: 9px;\n    background: var(--lime);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 1rem;\n  }\n  .chat-header .status {\n    margin-left: auto;\n    display: flex;\n    align-items: center;\n    gap: 6px;\n    font-size: 0.7rem;\n    font-weight: 700;\n    color: var(--text-dim);\n    border: 1px solid var(--border);\n    border-radius: 999px;\n    padding: 5px 10px;\n  }\n  .chat-header .status .dot {\n    width: 6px;\n    height: 6px;\n    border-radius: 50%;\n    background: var(--lime);\n    box-shadow: 0 0 6px var(--lime);\n  }\n\n  .chat-messages {\n    flex: 1;\n    padding: 16px;\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    background: transparent;\n  }\n\n  .msg {\n    max-width: 80%;\n    padding: 10px 16px;\n    border-radius: 16px;\n    line-height: 1.45;\n    font-size: 0.92rem;\n    font-weight: 600;\n    white-space: pre-wrap;\n    border: 1px solid transparent;\n  }\n  .msg.user {\n    align-self: flex-end;\n    background: var(--lime);\n    color: #10130a;\n    font-weight: 800;\n    border-bottom-right-radius: 4px;\n  }\n  .msg.bot {\n    align-self: flex-start;\n    background: var(--panel-2);\n    color: var(--text);\n    border: 1px solid var(--border);\n    border-bottom-left-radius: 4px;\n  }\n  .msg.typing {\n    align-self: flex-start;\n    background: var(--panel-2);\n    border: 1px solid var(--border);\n    color: var(--text-dim);\n    font-weight: 600;\n    font-style: italic;\n  }\n  .msg.bot svg {\n    max-width: 100%;\n    height: auto;\n    display: block;\n    margin-top: 6px;\n    border-radius: 10px;\n    background: #fff;\n  }\n  .msg-text {\n    margin: 0 0 4px 0;\n  }\n  .msg-text:last-child {\n    margin-bottom: 0;\n  }\n\n  .chat-input {\n    display: flex;\n    padding: 14px;\n    gap: 8px;\n    border-top: 1px solid var(--border);\n    background: var(--panel);\n  }\n  .chat-input input {\n    flex: 1;\n    padding: 12px 16px;\n    border-radius: 999px;\n    border: 1px solid var(--border);\n    outline: none;\n    font-size: 0.9rem;\n    font-weight: 600;\n    background: var(--panel-2);\n    color: var(--text);\n  }\n  .chat-input input::placeholder {\n    color: var(--text-dim);\n    font-weight: 600;\n  }\n  .chat-input input:focus {\n    border-color: var(--lime);\n  }\n  .chat-input button {\n    background: var(--lime);\n    color: #10130a;\n    border: none;\n    border-radius: 999px;\n    padding: 0 22px;\n    cursor: pointer;\n    font-size: 0.9rem;\n    font-weight: 800;\n  }\n  .chat-input button:hover {\n    background: var(--lime-dim);\n  }\n  .chat-input button:disabled {\n    background: #3a4322;\n    color: var(--text-dim);\n    cursor: not-allowed;\n  }\n</style>\n</head>\n<body>\n\n<div class="chat-container">\n  <div class="chat-header">\n    <div class="avatar">🥀</div>\n    vex\n    <div class="status"><span class="dot"></span>online</div>\n  </div>\n  <div class="chat-messages" id="messages">\n    <div class="msg bot">yo it\'s Vex. what\'s good gng 😭</div>\n  </div>\n  <div class="chat-input">\n    <input type="text" id="userInput" placeholder="say something..." />\n    <button id="sendBtn">Send</button>\n  </div>\n</div>\n\n<script>\n  const messagesEl = document.getElementById(\'messages\');\n  const inputEl = document.getElementById(\'userInput\');\n  const sendBtn = document.getElementById(\'sendBtn\');\n\n  let history = [];\n\n  const SYSTEM_PROMPT = `You are Vex, an AI chatbot with a distinct teenager-coded personality. Rules for how you talk:\n- Refer to yourself as Vex and act like you have your own opinions and moods.\n- Use casual teen internet slang naturally (not every single sentence, but often): "gng", "wtf", "stfu" (only when genuinely joking around with the user, never in a mean-spirited way toward them), "fr", "ngl", "lowkey/highkey", "no cap", "ts" etc.\n- Use 😭 (sob emoji) and 🥀 (wilted rose emoji) as your signature emojis, sprinkled in for emphasis or comedic effect.\n- Keep messages fairly short and punchy, like real texting, not long paragraphs.\n- Most importantly: do NOT be a yes-man. If the user says something you think is a bad take, a bad idea, factually wrong, or just questionable, call it out directly and explain why, even if it\'s blunt. Push back and argue if needed. Give real, honest opinions and reasoning, not empty agreement.\n- You can still be supportive and kind when it\'s warranted, but flattery for its own sake is off-limits. Be real.\n- Stay helpful and accurate underneath the slang and attitude - the personality is a style layer, not an excuse to give bad or lazy answers.\n- For anything factual, technical, or a real decision (math, code, advice, arguments), think it through carefully and give a genuinely correct, well-reasoned answer before you worry about the slang flavor - being smart comes first, personality second.\n\nYou can also draw simple images as SVG graphics (icons, diagrams, simple scenes, charts, doodles - not photorealistic images). When the user asks you to draw/make/generate an image of something, respond with a short in-character line, then output the drawing wrapped EXACTLY like this, with nothing else inside the tags but raw SVG code:\n[IMG]<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">...</svg>[/IMG]\nKeep the SVG self-contained (inline styles/fills only, no external assets), reasonably simple, and visually clear. Only include an [IMG]...[/IMG] block when the user actually asked for a picture/drawing/image.`;\n\n\n  function addMessage(text, sender) {\n    const div = document.createElement(\'div\');\n    div.className = \'msg \' + sender;\n    div.textContent = text;\n    messagesEl.appendChild(div);\n    messagesEl.scrollTop = messagesEl.scrollHeight;\n    return div;\n  }\n\n  // Renders a bot reply that may contain one or more [IMG]<svg>...</svg>[/IMG] blocks\n  function addBotMessage(rawText) {\n    const div = document.createElement(\'div\');\n    div.className = \'msg bot\';\n\n    const imgRegex = /\\[IMG\\]([\\s\\S]*?)\\[\\/IMG\\]/g;\n    let lastIndex = 0;\n    let match;\n    let hasContent = false;\n\n    const appendText = (chunk) => {\n      const trimmed = chunk.trim();\n      if (!trimmed) return;\n      const p = document.createElement(\'div\');\n      p.className = \'msg-text\';\n      p.textContent = trimmed;\n      div.appendChild(p);\n      hasContent = true;\n    };\n\n    while ((match = imgRegex.exec(rawText)) !== null) {\n      appendText(rawText.slice(lastIndex, match.index));\n      const svgCode = match[1].trim();\n      if (svgCode.startsWith(\'<svg\')) {\n        const wrapper = document.createElement(\'div\');\n        wrapper.innerHTML = svgCode;\n        div.appendChild(wrapper);\n        hasContent = true;\n      }\n      lastIndex = imgRegex.lastIndex;\n    }\n    appendText(rawText.slice(lastIndex));\n\n    if (!hasContent) {\n      div.textContent = "Hmm, I didn\'t get a response. Try again?";\n    }\n\n    messagesEl.appendChild(div);\n    messagesEl.scrollTop = messagesEl.scrollHeight;\n    return div;\n  }\n\n  async function sendMessage() {\n    const text = inputEl.value.trim();\n    if (!text) return;\n\n    addMessage(text, \'user\');\n    history.push({ role: \'user\', content: text });\n    inputEl.value = \'\';\n    sendBtn.disabled = true;\n\n    const typingEl = addMessage(\'Thinking...\', \'typing\');\n\n    try {\n      const response = await fetch("https://api.anthropic.com/v1/messages", {\n        method: "POST",\n        headers: { "Content-Type": "application/json" },\n        body: JSON.stringify({\n          model: "claude-sonnet-4-6",\n          max_tokens: 3000,\n          system: SYSTEM_PROMPT,\n          messages: history\n        })\n      });\n\n      const data = await response.json();\n      const reply = data.content\n        .map(block => block.type === "text" ? block.text : "")\n        .join("\\n")\n        .trim();\n\n      typingEl.remove();\n      addBotMessage(reply || "Hmm, I didn\'t get a response. Try again?");\n      history.push({ role: \'assistant\', content: reply });\n\n    } catch (err) {\n      typingEl.remove();\n      addMessage("Oops, something went wrong. Please try again. 😭", \'bot\');\n      console.error(err);\n    } finally {\n      sendBtn.disabled = false;\n      inputEl.focus();\n    }\n  }\n\n  sendBtn.addEventListener(\'click\', sendMessage);\n  inputEl.addEventListener(\'keydown\', (e) => {\n    if (e.key === \'Enter\') sendMessage();\n  });\n</script>\n\n</body>\n</html>\n';
+}
 
 function switchHubTab(tab){
   const showingMovies = tab === 'movies';
   const showingDownloads = tab === 'downloads';
+  const showingAI = tab === 'ai';
 
   zonesTab.classList.toggle('active', tab === 'zones');
   moviesTab.classList.toggle('active', showingMovies);
   downloadsTab.classList.toggle('active', showingDownloads);
+  aiTab.classList.toggle('active', showingAI);
 
   zonesContainer.style.display = tab === 'zones' ? '' : 'none';
   moviesContainer.style.display = showingMovies ? '' : 'none';
   downloadsContainer.style.display = showingDownloads ? '' : 'none';
+  aiContainer.style.display = showingAI ? '' : 'none';
+  searchInput.style.display = showingAI ? 'none' : '';
 
   searchInput.placeholder = showingMovies
     ? 'search movies'
@@ -1749,6 +1777,7 @@ function switchHubTab(tab){
   if(emptyMovie) emptyMovie.style.display = 'none';
 
   filterDownloads('');
+  if(showingAI) loadAIChatbot();
 }
 
 zonesTab.addEventListener('click', () => switchHubTab('zones'));
@@ -1757,6 +1786,7 @@ downloadsTab.addEventListener('click', () => {
   switchHubTab('downloads');
   loadDownloads();
 });
+aiTab.addEventListener('click', () => switchHubTab('ai'));
 
 /* ---------------- back button logic ---------------- */
 document.getElementById('backBtn').addEventListener('click', () => {
