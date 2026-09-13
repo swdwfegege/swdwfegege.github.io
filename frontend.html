@@ -187,21 +187,6 @@ header{
   padding:45px 20px;
   font-size:14px;
 }
-/* ---------- AI tab ---------- */
-.ai-chat-shell{
-  width:100%;
-  max-width:1000px;
-  height:680px;
-  margin:0 auto;
-  border:1px solid var(--border);
-  border-radius:18px;
-  overflow:hidden;
-  background:#0a0d08;
-  box-shadow:0 18px 50px rgba(0,0,0,.28);
-}
-#aiChatFrame{display:block;width:100%;height:100%;border:0;background:#0a0d08}
-@media(max-width:700px){.ai-chat-shell{height:calc(100vh - 180px);min-height:560px}}
-
 @media(max-width:600px){
   .download-item{ align-items:flex-start; }
   .download-btn{ padding:8px 11px; }
@@ -794,7 +779,6 @@ footer{
     <button class="hub-tab active" id="zonesTab" type="button">Zones</button>
     <button class="hub-tab" id="moviesTab" type="button">Movies</button>
     <button class="hub-tab" id="downloadsTab" type="button">Downloads</button>
-    <button class="hub-tab" id="aiTab" type="button">AI</button>
   </nav>
   
 
@@ -847,11 +831,6 @@ footer{
 <main class="grid-wrap" id="mainContainer"></main>
 <main class="grid-wrap" id="moviesContainer" style="display:none"></main>
 <main class="grid-wrap" id="downloadsContainer" style="display:none"></main>
-<main class="grid-wrap" id="aiContainer" style="display:none">
-  <div class="ai-chat-shell">
-    <iframe id="aiChatFrame" title="Vex AI Chatbot" loading="lazy" src="ai-chatbot (1).html"></iframe>
-  </div>
-</main>
 
 <footer>nothing to see down here</footer>
 
@@ -1317,6 +1296,29 @@ const ZONES = [
   { name: "Build a Plane", image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/377.png", link: "zones/Build a Plane.html" },
   { name: "Build a Queen", image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/319.png", link: "zones/Build a Queen.html" },
   { name: "Bust a Loop", image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/521.png", link: "zones/Bust a Loop.html" },
+  { name: 'Ages of Conflict', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/444.png", link: 'zones/Ages of Conflict.html' },
+  { name: 'Baldi\'s Basics Plus', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/467.png", link: 'zones/Baldi\'s Basics Plus.html' },
+  { name: 'Bridge Race', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/14.png", link: 'zones/Bridge Race.html' },
+  { name: 'CircloO 2', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/275.png", link: 'zones/CircloO 2.html' },
+  { name: 'CircloO', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/274.png", link: 'zones/CircloO.html' },
+  { name: 'Cluster Rush', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/81.png", link: 'zones/Cluster Rush.html' },
+  { name: 'Cut the Rope: Holiday Gift', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/214.png", link: 'zones/Cut the Rope_ Holiday Gift.html' },
+  { name: 'Cut the Rope: Time Travel', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/213.png", link: 'zones/Cut the Rope_ Time Travel.html' },
+  { name: 'EaglercraftX', image: '', link: 'zones/EaglercraftX.html' },
+  { name: 'Evolving Bombs 3D', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/388.png", link: 'zones/Evolving Bombs 3D (1).html' },
+  { name: 'Five Nights at Freddy\'s 2', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/39.png", link: 'zones/Five Nights at Freddy\'s 2.html' },
+  { name: 'Five Nights at Freddy\'s 3', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/40.png", link: 'zones/Five Nights at Freddy\'s 3.html' },
+  { name: 'Five Nights at Freddy\'s 4', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/41.png", link: 'zones/Five Nights at Freddy\'s 4.html' },
+  { name: 'Five Nights at Freddy\'s 4: Halloween', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/428.png", link: 'zones/Five Nights at Freddy\'s 4_ Halloween.html' },
+  { name: 'Five Nights at Freddy\'s: Pizza Simulator', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/191.png", link: 'zones/Five Nights at Freddy\'s_ Pizza Simulator.html' },
+  { name: 'Five Nights at Freddy\'s: Sister Location', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/185.png", link: 'zones/Five Nights at Freddy\'s_ Sister Location.html' },
+  { name: 'Five Nights at Freddy\'s: Ultimate Custom Night', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/192.png", link: 'zones/Five Nights at Freddy\'s_ Ultimate Custom Night.html' },
+  { name: 'Five Nights at Freddy\'s: World', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/190.png", link: 'zones/Five Nights at Freddy\'s_ World.html' },
+  { name: 'Five Nights at Winston\'s', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/204.png", link: 'zones/Five Nights at Winston\'s.html' },
+  { name: 'Get A Virus Sim', image: '', link: 'zones/Get A Virus Sim.html' },
+  { name: 'Man Runner 2048', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/573.png", link: 'zones/Man Runner 2048.html' },
+  { name: 'Mob Control HTML5', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/22.png", link: 'zones/Mob Control HTML5.html' },
+  { name: 'pong wars', image: '', link: 'zones/pong wars.html' },
 ];
 
 const MOVIES = [
@@ -1735,29 +1737,23 @@ loadDownloads();
 const zonesTab = document.getElementById('zonesTab');
 const moviesTab = document.getElementById('moviesTab');
 const downloadsTab = document.getElementById('downloadsTab');
-const aiTab = document.getElementById('aiTab');
 const zonesContainer = document.getElementById('mainContainer');
 const moviesContainer = document.getElementById('moviesContainer');
 const downloadsContainer = document.getElementById('downloadsContainer');
-const aiContainer = document.getElementById('aiContainer');
 const searchInput = document.getElementById('searchInput');
 
 function switchHubTab(tab){
   const showingMovies = tab === 'movies';
   const showingDownloads = tab === 'downloads';
-  const showingAI = tab === 'ai';
 
   zonesTab.classList.toggle('active', tab === 'zones');
   moviesTab.classList.toggle('active', showingMovies);
   downloadsTab.classList.toggle('active', showingDownloads);
-  aiTab.classList.toggle('active', showingAI);
 
   zonesContainer.style.display = tab === 'zones' ? '' : 'none';
   moviesContainer.style.display = showingMovies ? '' : 'none';
   downloadsContainer.style.display = showingDownloads ? '' : 'none';
-  aiContainer.style.display = showingAI ? '' : 'none';
 
-  searchInput.style.visibility = showingAI ? 'hidden' : '';
   searchInput.placeholder = showingMovies
     ? 'search movies'
     : showingDownloads
@@ -1775,7 +1771,7 @@ function switchHubTab(tab){
   const emptyMovie = document.getElementById('movieEmptyMsg');
   if(emptyMovie) emptyMovie.style.display = 'none';
 
-  if(!showingAI) filterDownloads('');
+  filterDownloads('');
 }
 
 zonesTab.addEventListener('click', () => switchHubTab('zones'));
@@ -1784,7 +1780,6 @@ downloadsTab.addEventListener('click', () => {
   switchHubTab('downloads');
   loadDownloads();
 });
-aiTab.addEventListener('click', () => switchHubTab('ai'));
 
 /* ---------------- back button logic ---------------- */
 document.getElementById('backBtn').addEventListener('click', () => {
