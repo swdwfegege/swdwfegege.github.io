@@ -608,6 +608,146 @@ footer{
   transform: translateY(0) scale(0.96);
 }
 </style>
+
+<style id="saturn-settings-css">
+.saturn-settings-btn{
+  appearance:none;
+  width:40px;
+  height:40px;
+  flex:0 0 40px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--panel);
+  color:var(--text-dim);
+  cursor:pointer;
+  transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease;
+}
+.saturn-settings-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.saturn-settings-btn:hover,
+.saturn-settings-btn:focus-visible{
+  color:var(--text);
+  border-color:var(--border-strong);
+  background:var(--panel-2);
+  outline:none;
+  transform:translateY(-1px);
+}
+
+#saturnSettingsOverlay{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(0,0,0,.62);
+  backdrop-filter:blur(6px);
+}
+#saturnSettingsOverlay.open{display:flex}
+#saturnSettingsPanel{
+  width:min(560px,100%);
+  max-height:min(720px,calc(100vh - 48px));
+  overflow:auto;
+  background:var(--panel);
+  color:var(--text);
+  border:1px solid var(--border-strong);
+  border-radius:16px;
+  box-shadow:0 22px 70px rgba(0,0,0,.55);
+}
+.saturn-settings-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+}
+.saturn-settings-title{
+  margin:0;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:19px;
+  font-weight:700;
+}
+.saturn-settings-close{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--text-dim);
+  width:34px;
+  height:34px;
+  border-radius:9px;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+}
+.saturn-settings-close:hover{background:var(--panel-2);color:var(--text)}
+.saturn-settings-body{padding:4px 20px 18px}
+.saturn-setting-row{
+  padding:16px 0;
+  border-bottom:1px solid var(--border);
+}
+.saturn-setting-row:last-child{border-bottom:0}
+.saturn-setting-label{
+  margin:0 0 5px;
+  font-size:14px;
+  font-weight:700;
+}
+.saturn-setting-help{
+  margin:0 0 11px;
+  color:var(--text-dim);
+  font-size:12px;
+  line-height:1.5;
+}
+.saturn-theme-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.saturn-theme-btn,
+.saturn-action-btn{
+  appearance:none;
+  border:1px solid var(--border);
+  background:var(--panel-2);
+  color:var(--text-dim);
+  border-radius:10px;
+  padding:10px 11px;
+  font:700 12px 'Inter',sans-serif;
+  cursor:pointer;
+  transition:border-color .18s ease,color .18s ease,background .18s ease;
+}
+.saturn-theme-btn:hover,
+.saturn-theme-btn.active,
+.saturn-action-btn:hover{
+  border-color:var(--border-strong);
+  color:var(--text);
+}
+.saturn-field{
+  width:100%;
+  appearance:none;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  border-radius:10px;
+  padding:10px 11px;
+  font:400 13px 'Inter',sans-serif;
+  outline:none;
+}
+.saturn-field:focus{border-color:var(--border-strong);box-shadow:0 0 0 3px rgba(212,230,60,.08)}
+.saturn-field + .saturn-field{margin-top:9px}
+.saturn-action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.saturn-key-status{font-size:12px;color:var(--text-dim);padding:9px 0 0}
+@media (max-width:760px){
+  .saturn-settings-btn{order:4}
+  .saturn-theme-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+
 </head>
 <body>
 
@@ -648,6 +788,14 @@ footer{
     <div class="pill"><svg><use href="#icon-wifi"/></svg><span id="ping">42 ms</span></div>
     <div class="pill" title="Time spent on page"><svg><use href="#icon-timer"/></svg><span id="sessionTime">0s</span></div>
   </div>
+
+
+  <button id="saturnSettingsBtn" class="saturn-settings-btn" type="button" aria-label="Settings" title="Settings">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/>
+      <path d="M19.4 13.5a7.9 7.9 0 0 0 0-3l1.5-1.1-1.8-3.1-1.8.7a7.7 7.7 0 0 0-2.6-1.5L14.5 3h-3.6l-.3 2.5A7.7 7.7 0 0 0 8 7L6.2 6.3 4.4 9.4l1.5 1.1a7.9 7.9 0 0 0 0 3l-1.5 1.1 1.8 3.1 1.8-.7a7.7 7.7 0 0 0 2.6 1.5l.3 2.5h3.6l.3-2.5a7.7 7.7 0 0 0 2.6-1.5l1.8.7 1.8-3.1-1.5-1.1Z"/>
+    </svg>
+  </button>
 
   <div class="search">
     <svg><use href="#icon-search"/></svg>
@@ -693,6 +841,55 @@ footer{
     back
   </button>
   <iframe id="zoneFrame" src=""></iframe>
+</div>
+
+
+<div id="saturnSettingsOverlay" aria-hidden="true">
+  <section id="saturnSettingsPanel" role="dialog" aria-modal="true" aria-labelledby="saturnSettingsTitle">
+    <div class="saturn-settings-top">
+      <h2 id="saturnSettingsTitle" class="saturn-settings-title">Settings</h2>
+      <button id="saturnSettingsClose" class="saturn-settings-close" type="button" aria-label="Close settings">×</button>
+    </div>
+
+    <div class="saturn-settings-body">
+      <div class="saturn-setting-row">
+        <h3 class="saturn-setting-label">Theme</h3>
+        <p class="saturn-setting-help">Change Saturn's accent color.</p>
+        <div class="saturn-theme-grid">
+          <button class="saturn-theme-btn" data-theme="green" type="button">Green</button>
+          <button class="saturn-theme-btn" data-theme="blue" type="button">Blue</button>
+          <button class="saturn-theme-btn" data-theme="purple" type="button">Purple</button>
+          <button class="saturn-theme-btn" data-theme="red" type="button">Red</button>
+          <button class="saturn-theme-btn" data-theme="orange" type="button">Orange</button>
+          <button class="saturn-theme-btn" data-theme="pink" type="button">Pink</button>
+        </div>
+      </div>
+
+      <div class="saturn-setting-row">
+        <h3 class="saturn-setting-label">Tab cloaker</h3>
+        <p class="saturn-setting-help">Change the browser tab title and favicon.</p>
+        <input id="saturnTabName" class="saturn-field" type="text" placeholder="Tab name">
+        <input id="saturnTabIcon" class="saturn-field" type="url" placeholder="Favicon URL (optional)">
+        <div class="saturn-action-row">
+          <button id="saturnApplyTab" class="saturn-action-btn" type="button">Apply</button>
+          <button id="saturnResetTab" class="saturn-action-btn" type="button">Reset</button>
+          <button id="saturnAboutBlank" class="saturn-action-btn" type="button">Open in about:blank</button>
+        </div>
+      </div>
+
+      <div class="saturn-setting-row">
+        <h3 class="saturn-setting-label">Panic key</h3>
+        <p class="saturn-setting-help">Press a key to instantly open the URL you choose.</p>
+        <button id="saturnSetPanic" class="saturn-action-btn" type="button">Set key</button>
+        <div id="saturnPanicStatus" class="saturn-key-status">No panic key set</div>
+        <input id="saturnPanicUrl" class="saturn-field" type="url" placeholder="https://example.com">
+        <div class="saturn-action-row">
+          <button id="saturnSavePanic" class="saturn-action-btn" type="button">Save panic key</button>
+          <button id="saturnClearPanic" class="saturn-action-btn" type="button">Clear</button>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <script>
@@ -1619,7 +1816,250 @@ document.getElementById('purchaseLink').addEventListener('click', (e) => {
   window.open('https://discord.gg/FqSB3WBNg', '_blank', 'noopener,noreferrer');
 });
 
+
+
 </script>
+
+<script id="saturn-settings-script">
+(function () {
+  "use strict";
+
+  function initSettings() {
+    var button = document.getElementById("saturnSettingsBtn");
+    var overlay = document.getElementById("saturnSettingsOverlay");
+    var panel = document.getElementById("saturnSettingsPanel");
+    var closeBtn = document.getElementById("saturnSettingsClose");
+
+    if (!button || !overlay || !panel || !closeBtn) return;
+
+    var key = "saturn_settings_codesandbox_v1";
+    var defaults = {
+      theme: "green",
+      tabName: document.title || "Saturn",
+      tabIcon: "",
+      panicKey: "",
+      panicUrl: ""
+    };
+    var settings = Object.assign({}, defaults);
+
+    try {
+      var saved = JSON.parse(localStorage.getItem(key) || "{}");
+      settings = Object.assign(settings, saved);
+    } catch (e) {}
+
+    var themes = {
+      green:  ["#d4e63c","#9aa823","rgba(212,230,60,.18)","rgba(212,230,60,.6)","rgba(212,230,60,.06)","rgba(212,230,60,.16)"],
+      blue:   ["#6ea8ff","#4f78b5","rgba(110,168,255,.18)","rgba(110,168,255,.6)","rgba(110,168,255,.06)","rgba(110,168,255,.16)"],
+      purple: ["#b98cff","#8664bd","rgba(185,140,255,.18)","rgba(185,140,255,.6)","rgba(185,140,255,.06)","rgba(185,140,255,.16)"],
+      red:    ["#ff7474","#bd5050","rgba(255,116,116,.18)","rgba(255,116,116,.6)","rgba(255,116,116,.06)","rgba(255,116,116,.16)"],
+      orange: ["#ffb45c","#bd7b36","rgba(255,180,92,.18)","rgba(255,180,92,.6)","rgba(255,180,92,.06)","rgba(255,180,92,.16)"],
+      pink:   ["#ff82c8","#c25f98","rgba(255,130,200,.18)","rgba(255,130,200,.6)","rgba(255,130,200,.06)","rgba(255,130,200,.16)"]
+    };
+
+    var nameInput = document.getElementById("saturnTabName");
+    var iconInput = document.getElementById("saturnTabIcon");
+    var panicKeyBtn = document.getElementById("saturnSetPanic");
+    var panicUrlInput = document.getElementById("saturnPanicUrl");
+    var panicStatus = document.getElementById("saturnPanicStatus");
+    var settingPanic = false;
+
+    function save() {
+      try { localStorage.setItem(key, JSON.stringify(settings)); } catch (e) {}
+    }
+
+    function setTheme(name) {
+      var t = themes[name] || themes.green;
+      settings.theme = themes[name] ? name : "green";
+
+      document.documentElement.style.setProperty("--green", t[0]);
+      document.documentElement.style.setProperty("--green-dim", t[1]);
+      document.documentElement.style.setProperty("--border", t[2]);
+      document.documentElement.style.setProperty("--border-strong", t[3]);
+
+      var grid = document.querySelector(".bg-grid");
+      if (grid) {
+        grid.style.backgroundImage =
+          "linear-gradient(" + t[4] + " 1px, transparent 1px),linear-gradient(90deg," +
+          t[4] + " 1px, transparent 1px)";
+      }
+
+      var glow = document.querySelector(".bg-glow");
+      if (glow) {
+        glow.style.background =
+          "radial-gradient(ellipse 60% 40% at 15% 0%," + t[5] +
+          ",transparent 60%),radial-gradient(ellipse 50% 35% at 90% 10%," +
+          t[4] + ",transparent 60%)";
+      }
+
+      document.querySelectorAll(".saturn-theme-btn").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-theme") === settings.theme);
+      });
+
+      save();
+    }
+
+    function applyTab() {
+      document.title = settings.tabName || defaults.tabName;
+
+      var oldIcon = document.querySelector("link[data-saturn-favicon]");
+      if (!settings.tabIcon) {
+        if (oldIcon) oldIcon.remove();
+        return;
+      }
+
+      var icon = oldIcon;
+      if (!icon) {
+        icon = document.createElement("link");
+        icon.rel = "icon";
+        icon.setAttribute("data-saturn-favicon", "1");
+        document.head.appendChild(icon);
+      }
+      icon.href = settings.tabIcon;
+    }
+
+    function updatePanicStatus() {
+      panicStatus.textContent =
+        settings.panicKey ? "Current key: " + settings.panicKey : "No panic key set";
+    }
+
+    function openSettings() {
+      nameInput.value = settings.tabName || defaults.tabName;
+      iconInput.value = settings.tabIcon || "";
+      panicUrlInput.value = settings.panicUrl || "";
+      updatePanicStatus();
+
+      overlay.style.display = "flex";
+      overlay.setAttribute("aria-hidden", "false");
+      requestAnimationFrame(function () {
+        overlay.classList.add("open");
+      });
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSettings() {
+      overlay.classList.remove("open");
+      setTimeout(function () {
+        if (!overlay.classList.contains("open")) {
+          overlay.style.display = "none";
+        }
+      }, 150);
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      settingPanic = false;
+      panicKeyBtn.textContent = "Set key";
+    }
+
+    button.addEventListener("click", openSettings);
+    closeBtn.addEventListener("click", closeSettings);
+
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closeSettings();
+    });
+
+    panel.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
+    document.querySelectorAll(".saturn-theme-btn").forEach(function (b) {
+      b.addEventListener("click", function () {
+        setTheme(b.getAttribute("data-theme"));
+      });
+    });
+
+    document.getElementById("saturnApplyTab").addEventListener("click", function () {
+      settings.tabName = nameInput.value.trim() || defaults.tabName;
+      settings.tabIcon = iconInput.value.trim();
+      applyTab();
+      save();
+    });
+
+    document.getElementById("saturnResetTab").addEventListener("click", function () {
+      settings.tabName = defaults.tabName;
+      settings.tabIcon = "";
+      nameInput.value = settings.tabName;
+      iconInput.value = "";
+      applyTab();
+      save();
+    });
+
+    document.getElementById("saturnAboutBlank").addEventListener("click", function () {
+      var w = window.open("about:blank", "_blank");
+      if (!w) return;
+
+      try {
+        var frameSrc = location.href.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+        w.document.open();
+        w.document.write(
+          "<!doctype html><html><head><title></title></head><body style=\"margin:0;overflow:hidden\">" +
+          "<iframe src=\"" + frameSrc +
+          "\" style=\"position:fixed;inset:0;width:100%;height:100%;border:0\"></iframe>" +
+          "</body></html>"
+        );
+        w.document.close();
+      } catch (e) {}
+    });
+
+    panicKeyBtn.addEventListener("click", function () {
+      settingPanic = true;
+      panicKeyBtn.textContent = "Press a key...";
+      panicStatus.textContent = "Press any key now.";
+    });
+
+    document.getElementById("saturnSavePanic").addEventListener("click", function () {
+      settings.panicUrl = panicUrlInput.value.trim();
+      save();
+      updatePanicStatus();
+    });
+
+    document.getElementById("saturnClearPanic").addEventListener("click", function () {
+      settings.panicKey = "";
+      settings.panicUrl = "";
+      panicUrlInput.value = "";
+      settingPanic = false;
+      panicKeyBtn.textContent = "Set key";
+      save();
+      updatePanicStatus();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (settingPanic) {
+        if (["Shift","Control","Alt","Meta"].includes(e.key)) return;
+        e.preventDefault();
+        settings.panicKey = e.key;
+        settingPanic = false;
+        panicKeyBtn.textContent = "Set key";
+        save();
+        updatePanicStatus();
+        return;
+      }
+
+      if (e.key === "Escape" && overlay.classList.contains("open")) {
+        closeSettings();
+        return;
+      }
+
+      var tag = document.activeElement && document.activeElement.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+
+      if (settings.panicKey && settings.panicUrl && e.key === settings.panicKey) {
+        window.location.href = settings.panicUrl;
+      }
+    });
+
+    overlay.style.display = "none";
+    setTheme(settings.theme);
+    applyTab();
+    updatePanicStatus();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSettings);
+  } else {
+    initSettings();
+  }
+})();
+</script>
+
 </body>
 <iframe
   src="music_player.html"
@@ -1634,6 +2074,5 @@ document.getElementById('purchaseLink').addEventListener('click', (e) => {
       height: 120px;
     }
   }
-</style>
 </style>
 </html>
