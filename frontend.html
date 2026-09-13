@@ -187,6 +187,21 @@ header{
   padding:45px 20px;
   font-size:14px;
 }
+/* ---------- AI tab ---------- */
+.ai-chat-shell{
+  width:100%;
+  max-width:1000px;
+  height:680px;
+  margin:0 auto;
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  background:#0a0d08;
+  box-shadow:0 18px 50px rgba(0,0,0,.28);
+}
+#aiChatFrame{display:block;width:100%;height:100%;border:0;background:#0a0d08}
+@media(max-width:700px){.ai-chat-shell{height:calc(100vh - 180px);min-height:560px}}
+
 @media(max-width:600px){
   .download-item{ align-items:flex-start; }
   .download-btn{ padding:8px 11px; }
@@ -779,6 +794,7 @@ footer{
     <button class="hub-tab active" id="zonesTab" type="button">Zones</button>
     <button class="hub-tab" id="moviesTab" type="button">Movies</button>
     <button class="hub-tab" id="downloadsTab" type="button">Downloads</button>
+    <button class="hub-tab" id="aiTab" type="button">AI</button>
   </nav>
   
 
@@ -831,6 +847,11 @@ footer{
 <main class="grid-wrap" id="mainContainer"></main>
 <main class="grid-wrap" id="moviesContainer" style="display:none"></main>
 <main class="grid-wrap" id="downloadsContainer" style="display:none"></main>
+<main class="grid-wrap" id="aiContainer" style="display:none">
+  <div class="ai-chat-shell">
+    <iframe id="aiChatFrame" title="Vex AI Chatbot" loading="lazy" src="ai-chatbot (1).html"></iframe>
+  </div>
+</main>
 
 <footer>nothing to see down here</footer>
 
@@ -1714,23 +1735,29 @@ loadDownloads();
 const zonesTab = document.getElementById('zonesTab');
 const moviesTab = document.getElementById('moviesTab');
 const downloadsTab = document.getElementById('downloadsTab');
+const aiTab = document.getElementById('aiTab');
 const zonesContainer = document.getElementById('mainContainer');
 const moviesContainer = document.getElementById('moviesContainer');
 const downloadsContainer = document.getElementById('downloadsContainer');
+const aiContainer = document.getElementById('aiContainer');
 const searchInput = document.getElementById('searchInput');
 
 function switchHubTab(tab){
   const showingMovies = tab === 'movies';
   const showingDownloads = tab === 'downloads';
+  const showingAI = tab === 'ai';
 
   zonesTab.classList.toggle('active', tab === 'zones');
   moviesTab.classList.toggle('active', showingMovies);
   downloadsTab.classList.toggle('active', showingDownloads);
+  aiTab.classList.toggle('active', showingAI);
 
   zonesContainer.style.display = tab === 'zones' ? '' : 'none';
   moviesContainer.style.display = showingMovies ? '' : 'none';
   downloadsContainer.style.display = showingDownloads ? '' : 'none';
+  aiContainer.style.display = showingAI ? '' : 'none';
 
+  searchInput.style.visibility = showingAI ? 'hidden' : '';
   searchInput.placeholder = showingMovies
     ? 'search movies'
     : showingDownloads
@@ -1748,7 +1775,7 @@ function switchHubTab(tab){
   const emptyMovie = document.getElementById('movieEmptyMsg');
   if(emptyMovie) emptyMovie.style.display = 'none';
 
-  filterDownloads('');
+  if(!showingAI) filterDownloads('');
 }
 
 zonesTab.addEventListener('click', () => switchHubTab('zones'));
@@ -1757,6 +1784,7 @@ downloadsTab.addEventListener('click', () => {
   switchHubTab('downloads');
   loadDownloads();
 });
+aiTab.addEventListener('click', () => switchHubTab('ai'));
 
 /* ---------------- back button logic ---------------- */
 document.getElementById('backBtn').addEventListener('click', () => {
