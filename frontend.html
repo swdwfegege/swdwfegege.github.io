@@ -855,145 +855,6 @@ footer{
 }
 </style>
 
-<style id="saturn-settings-css">
-.saturn-settings-btn{
-  appearance:none;
-  width:40px;
-  height:40px;
-  flex:0 0 40px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:var(--panel);
-  color:var(--text-dim);
-  cursor:pointer;
-  transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease;
-}
-.saturn-settings-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.saturn-settings-btn:hover,
-.saturn-settings-btn:focus-visible{
-  color:var(--text);
-  border-color:var(--border-strong);
-  background:var(--panel-2);
-  outline:none;
-  transform:translateY(-1px);
-}
-
-#saturnSettingsOverlay{
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  background:rgba(0,0,0,.62);
-  backdrop-filter:blur(6px);
-}
-#saturnSettingsOverlay.open{display:flex}
-#saturnSettingsPanel{
-  width:min(560px,100%);
-  max-height:min(720px,calc(100vh - 48px));
-  overflow:auto;
-  background:var(--panel);
-  color:var(--text);
-  border:1px solid var(--border-strong);
-  border-radius:16px;
-  box-shadow:0 22px 70px rgba(0,0,0,.55);
-}
-.saturn-settings-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  padding:18px 20px;
-  border-bottom:1px solid var(--border);
-}
-.saturn-settings-title{
-  margin:0;
-  font-family:'Space Grotesk',sans-serif;
-  font-size:19px;
-  font-weight:700;
-}
-.saturn-settings-close{
-  appearance:none;
-  border:0;
-  background:transparent;
-  color:var(--text-dim);
-  width:34px;
-  height:34px;
-  border-radius:9px;
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  font-size:22px;
-  line-height:1;
-}
-.saturn-settings-close:hover{background:var(--panel-2);color:var(--text)}
-.saturn-settings-body{padding:4px 20px 18px}
-.saturn-setting-row{
-  padding:16px 0;
-  border-bottom:1px solid var(--border);
-}
-.saturn-setting-row:last-child{border-bottom:0}
-.saturn-setting-label{
-  margin:0 0 5px;
-  font-size:14px;
-  font-weight:700;
-}
-.saturn-setting-help{
-  margin:0 0 11px;
-  color:var(--text-dim);
-  font-size:12px;
-  line-height:1.5;
-}
-.saturn-theme-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-.saturn-theme-btn,
-.saturn-action-btn{
-  appearance:none;
-  border:1px solid var(--border);
-  background:var(--panel-2);
-  color:var(--text-dim);
-  border-radius:10px;
-  padding:10px 11px;
-  font:700 12px 'Inter',sans-serif;
-  cursor:pointer;
-  transition:border-color .18s ease,color .18s ease,background .18s ease;
-}
-.saturn-theme-btn:hover,
-.saturn-theme-btn.active,
-.saturn-action-btn:hover{
-  border-color:var(--border-strong);
-  color:var(--text);
-}
-.saturn-field{
-  width:100%;
-  appearance:none;
-  border:1px solid var(--border);
-  background:var(--bg);
-  color:var(--text);
-  border-radius:10px;
-  padding:10px 11px;
-  font:400 13px 'Inter',sans-serif;
-  outline:none;
-}
-.saturn-field:focus{border-color:var(--border-strong);box-shadow:0 0 0 3px rgba(212,230,60,.08)}
-.saturn-field + .saturn-field{margin-top:9px}
-.saturn-action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
-.saturn-key-status{font-size:12px;color:var(--text-dim);padding:9px 0 0}
-@media (max-width:760px){
-  .saturn-settings-btn{order:4}
-  .saturn-theme-grid{grid-template-columns:repeat(2,1fr)}
-}
-</style>
-
 </head>
 <body>
 
@@ -1090,6 +951,20 @@ footer{
     ⚠ Report broken
   </button>
   <iframe id="zoneFrame" src=""></iframe>
+</div>
+
+<div id="reportModal" aria-hidden="true">
+  <section id="reportPanel" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <div class="report-top" id="reportTitle">Game report</div>
+    <div class="report-body">
+      <div id="reportMessage"></div>
+      <div class="report-note">Reports are saved on this browser.</div>
+    </div>
+    <div class="report-actions">
+      <button id="reportCancel" class="report-action" type="button">Cancel</button>
+      <button id="reportSubmit" class="report-action report-submit" type="button">Report broken</button>
+    </div>
+  </section>
 </div>
 
 
