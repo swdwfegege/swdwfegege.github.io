@@ -610,22 +610,6 @@ footer{
 }
 
 /* ---------- reports & play counts ---------- */
-.tile-play-count{
-  position:absolute;
-  left:10px;
-  bottom:9px;
-  z-index:2;
-  padding:4px 8px;
-  border-radius:999px;
-  background:rgba(0,0,0,.62);
-  border:1px solid rgba(255,255,255,.14);
-  color:rgba(255,255,255,.9);
-  font-size:10px;
-  font-weight:700;
-  line-height:1;
-  backdrop-filter:blur(5px);
-  pointer-events:none;
-}
 
 .game-report-btn{
   position:absolute;
@@ -855,6 +839,402 @@ footer{
 }
 </style>
 
+
+<style id="saturn-chill-css">
+/* ---------- chill first-launch welcome ---------- */
+#saturnWelcomeOverlay{
+  position:fixed;
+  inset:0;
+  z-index:120000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(212,230,60,.055), transparent 34%),
+    rgba(2,3,2,.78);
+  backdrop-filter:blur(12px) saturate(.85);
+  -webkit-backdrop-filter:blur(12px) saturate(.85);
+  opacity:0;
+  transition:opacity .28s ease;
+}
+#saturnWelcomeOverlay.open{opacity:1}
+
+#saturnWelcomePanel{
+  position:relative;
+  width:min(620px,100%);
+  overflow:hidden;
+  border:1px solid rgba(212,230,60,.25);
+  border-radius:22px;
+  background:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),
+    rgba(11,12,9,.96);
+  background-size:28px 28px;
+  box-shadow:
+    0 35px 100px rgba(0,0,0,.72),
+    0 0 0 1px rgba(255,255,255,.025) inset,
+    0 0 60px rgba(212,230,60,.045);
+  transform:translateY(14px) scale(.97);
+  transition:transform .32s cubic-bezier(.2,.8,.2,1);
+}
+#saturnWelcomeOverlay.open #saturnWelcomePanel{
+  transform:translateY(0) scale(1);
+}
+#saturnWelcomePanel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(115deg,transparent 0 35%,rgba(255,255,255,.025) 50%,transparent 65%);
+  transform:translateX(-100%);
+  animation:welcomeSweep 5s ease-in-out infinite;
+}
+@keyframes welcomeSweep{
+  0%,65%{transform:translateX(-100%)}
+  100%{transform:translateX(100%)}
+}
+.saturn-welcome-inner{
+  position:relative;
+  padding:34px;
+}
+.saturn-welcome-kicker{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:17px;
+  color:var(--green);
+  font:800 10px/1 'Inter',sans-serif;
+  letter-spacing:2.2px;
+  text-transform:uppercase;
+}
+.saturn-welcome-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px rgba(212,230,60,.55);
+}
+.saturn-welcome-title{
+  margin:0;
+  color:#fff;
+  font:800 clamp(30px,6vw,45px)/.98 'Space Grotesk',sans-serif;
+  letter-spacing:-1.8px;
+}
+.saturn-welcome-title span{color:var(--green)}
+.saturn-welcome-copy{
+  max-width:500px;
+  margin:13px 0 26px;
+  color:#9fa28e;
+  font:500 13px/1.65 'Inter',sans-serif;
+}
+.saturn-choice-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.saturn-choice{
+  position:relative;
+  min-height:128px;
+  padding:18px;
+  text-align:left;
+  border:1px solid rgba(212,230,60,.16);
+  border-radius:15px;
+  background:rgba(255,255,255,.025);
+  color:#fff;
+  cursor:pointer;
+  font-family:'Inter',sans-serif;
+  transition:transform .18s ease,border-color .18s ease,background .18s ease;
+}
+.saturn-choice:hover{
+  transform:translateY(-3px);
+  border-color:rgba(212,230,60,.52);
+  background:rgba(212,230,60,.055);
+}
+.saturn-choice:active{transform:translateY(-1px) scale(.99)}
+.saturn-choice-icon{
+  width:31px;
+  height:31px;
+  display:grid;
+  place-items:center;
+  margin-bottom:17px;
+  border-radius:9px;
+  background:rgba(212,230,60,.10);
+  color:var(--green);
+  font-size:15px;
+}
+.saturn-choice strong{
+  display:block;
+  margin-bottom:5px;
+  font-size:14px;
+}
+.saturn-choice small{
+  display:block;
+  color:#8e9180;
+  font-size:11px;
+  line-height:1.45;
+}
+.saturn-welcome-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-top:19px;
+}
+.saturn-welcome-check{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#777b6c;
+  font:600 11px 'Inter',sans-serif;
+  cursor:pointer;
+  user-select:none;
+}
+.saturn-welcome-check input{
+  width:14px;
+  height:14px;
+  margin:0;
+  accent-color:var(--green);
+}
+.saturn-welcome-close{
+  border:0;
+  background:transparent;
+  color:#777b6c;
+  font:700 11px 'Inter',sans-serif;
+  cursor:pointer;
+  padding:5px;
+}
+.saturn-welcome-close:hover{color:#fff}
+.saturn-welcome-corner{
+  position:absolute;
+  right:18px;
+  top:17px;
+  color:rgba(255,255,255,.12);
+  font:800 9px 'Inter',sans-serif;
+  letter-spacing:1.5px;
+}
+@media(max-width:600px){
+  .saturn-welcome-inner{padding:26px 22px}
+  .saturn-choice-grid{grid-template-columns:1fr}
+  .saturn-choice{min-height:105px}
+  .saturn-choice-icon{margin-bottom:11px}
+  .saturn-welcome-bottom{align-items:flex-start;flex-direction:column}
+}
+</style>
+
+
+<style id="saturn-real-frontend-refresh">
+/* ================= SATURN FRONTEND REFRESH ================= */
+:root{
+  --bg:#090909;
+  --bg-glow:#111111;
+  --panel:#111111;
+  --panel-2:#171717;
+  --border:rgba(255,255,255,.085);
+  --border-strong:rgba(255,255,255,.19);
+  --green:#d7e84a;
+  --green-dim:#9ea936;
+  --text:#f4f4f1;
+  --text-dim:#858581;
+}
+html{background:#090909}
+body{
+  background:
+    radial-gradient(900px 500px at 50% -180px,rgba(255,255,255,.055),transparent 65%),
+    linear-gradient(180deg,#0b0b0b 0%,#090909 55%,#080808 100%);
+  color:var(--text);
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 65%);
+}
+.bg-grid{opacity:.18;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:80px 80px;mask-image:linear-gradient(to bottom,black,transparent 72%)}
+.bg-glow{background:radial-gradient(ellipse 55% 35% at 50% 0%,rgba(215,232,74,.055),transparent 72%);animation:none}
+#particles{opacity:.28}
+
+header{
+  position:sticky;top:0;z-index:500;
+  min-height:68px;padding:12px 24px;
+  background:rgba(9,9,9,.84);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.brand{gap:11px}
+.brand-mark{
+  width:35px;height:35px;border-radius:10px;
+  background:#e1ef55;
+  box-shadow:none;
+}
+.brand-mark svg circle{fill:#171717!important}
+.brand-mark svg ellipse{stroke:#171717!important}
+.brand-name{font-size:18px;letter-spacing:-.35px;color:#f3f3ed}
+.hub-tabs{gap:5px;margin-left:28px}
+.hub-tab{
+  padding:9px 13px 10px;border-radius:9px;
+  color:#777773;font-size:13px;font-weight:700;
+}
+.hub-tab::after{display:none}
+.hub-tab:hover{color:#d8d8d3;background:rgba(255,255,255,.045)}
+.hub-tab.active{color:#f5f5ef;background:rgba(255,255,255,.065)}
+.hub-tab.active::before{
+  content:"";position:absolute;left:11px;right:11px;bottom:4px;height:2px;border-radius:4px;background:var(--green);
+}
+.stats{gap:7px}
+.pill{
+  min-height:36px;padding:7px 11px;border-radius:10px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.07);
+  color:#d8d8d2;font-size:12px;
+}
+.pill svg{color:#777773}
+.pill .dim{color:#777773}
+.search{
+  min-width:190px;max-width:310px;flex:0 1 260px;
+  padding:10px 13px;border-radius:10px;
+  background:#101010;border:1px solid rgba(255,255,255,.08);
+}
+.search:focus-within{border-color:rgba(215,232,74,.45);box-shadow:0 0 0 3px rgba(215,232,74,.06)}
+.search svg{color:#666662}
+.search input{font-size:13px}
+.search input::placeholder{color:#696965}
+.saturn-settings-btn{width:36px;height:36px;flex-basis:36px;border-radius:10px;background:#101010;border-color:rgba(255,255,255,.08);color:#777773}
+.saturn-settings-btn:hover{background:#181818;border-color:rgba(255,255,255,.17);color:#eee}
+
+.saturn-hero{
+  min-height:440px;max-width:1280px;padding:82px 24px 78px;
+}
+.saturn-hero-center{position:relative;z-index:2}
+.saturn-hero-title{
+  font-size:clamp(48px,7vw,78px);letter-spacing:-4px;line-height:.94;
+  text-shadow:0 2px 25px rgba(0,0,0,.35);
+}
+.saturn-hero-title span{color:var(--green)}
+.saturn-hero-title::after{
+  content:"";display:block;width:54px;height:3px;border-radius:3px;background:var(--green);margin:24px auto 0;opacity:.8;
+}
+.bookmark-hint{margin-top:22px;padding:7px 10px;border-color:rgba(255,255,255,.09);background:rgba(255,255,255,.025);color:#858581;font-size:11px}
+.keycap{border-color:rgba(255,255,255,.12);background:#151515;color:#c9c9c3}
+.discord-btn{
+  min-width:280px;margin-top:20px;padding:13px 20px;border-radius:10px;
+  background:#d7e84a;color:#101010;border:0;font-size:13px;
+  box-shadow:none;
+}
+.discord-btn:hover{background:#e1ef62;box-shadow:0 8px 24px rgba(0,0,0,.28);transform:translateY(-1px)}
+
+.saturn-ad{
+  left:24px;width:240px;min-height:270px;padding:18px;border-radius:14px;
+  background:rgba(14,14,14,.82);border-color:rgba(255,255,255,.09);box-shadow:0 20px 55px rgba(0,0,0,.4)
+}
+.saturn-ad-title{font-size:16px;color:#ddd;font-weight:700}
+.saturn-ad-icon::before{background:#d7e84a;box-shadow:none}
+.saturn-ad-icon::after{border-color:#d7e84a;box-shadow:none}
+.saturn-ad-input{height:43px;border-color:rgba(255,255,255,.1);background:#0a0a0a;font-size:13px}
+.saturn-ad-btn{height:43px;background:#d7e84a;color:#111;font-size:13px}
+.saturn-ad-link{font-size:11px;color:#666662}
+
+.hero-zones-divider{max-width:1280px;padding:0 24px}
+.hero-zones-divider::before{background:rgba(255,255,255,.07);opacity:1}
+.grid-wrap{max-width:1280px;padding:30px 24px 90px}
+.category-section{margin-bottom:38px}
+.category-title{font-size:15px;letter-spacing:-.15px;color:#d8d8d2;margin:0 0 13px 2px}
+.category-title svg{color:var(--green)!important}
+.grid{grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px}
+.tile{
+  aspect-ratio:1/1;border:1px solid rgba(255,255,255,.075);border-radius:13px;
+  background:#111;box-shadow:0 8px 24px rgba(0,0,0,.16);
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.tile:hover{
+  transform:translateY(-4px);
+  border-color:rgba(215,232,74,.42);
+  box-shadow:0 15px 35px rgba(0,0,0,.35),0 0 0 1px rgba(215,232,74,.05);
+  background:#151515;
+}
+.tile-img{transition:transform .28s ease,filter .28s ease}
+.tile:hover .tile-img{transform:scale(1.045);filter:saturate(1.05) brightness(1.05)}
+.tile-label{
+  font-size:12px;font-weight:700;color:#eee;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.9) 30%);
+  padding:35px 12px 11px;
+}
+.star-btn{width:30px;height:30px;right:8px;top:8px;border-radius:9px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px)}
+.star-btn:hover{background:rgba(215,232,74,.12);border-color:rgba(215,232,74,.35)}
+.add-tile{border-style:dashed;background:rgba(255,255,255,.018)}
+.add-tile:hover{background:rgba(215,232,74,.035)}
+
+.download-list{max-width:none;gap:8px}
+.download-item{padding:13px 15px;border-radius:11px;background:#111;border-color:rgba(255,255,255,.07)}
+.download-item:hover{background:#151515;border-color:rgba(215,232,74,.3)}
+.download-name{font-size:13px}.download-path{color:#666;font-size:10px}
+.download-btn{border-color:rgba(215,232,74,.3);background:rgba(215,232,74,.08);border-radius:8px;padding:8px 12px;font-size:11px}
+.download-btn:hover{background:rgba(215,232,74,.16)}
+
+/* screenshot-style first launch: simple, centered, black, no over-designed cards */
+#saturnWelcomeOverlay{
+  background:rgba(0,0,0,.70);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+}
+#saturnWelcomePanel{
+  width:min(638px,calc(100% - 20px));
+  border:0;
+  border-radius:10px;
+  background:rgba(7,7,7,.97);
+  box-shadow:0 24px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.025);
+  background-image:none;
+}
+#saturnWelcomePanel::before{display:none}
+.saturn-welcome-inner{padding:38px 40px 30px;text-align:center}
+.saturn-welcome-corner,.saturn-welcome-kicker{display:none}
+.saturn-welcome-title{
+  margin:0 auto;color:#f4f4f4;font:500 20px/1.5 'Inter',sans-serif;letter-spacing:-.35px;max-width:560px;
+}
+.saturn-welcome-title span{color:#f4f4f4}
+.saturn-welcome-copy{max-width:530px;margin:4px auto 22px;color:#ddd;font:400 16px/1.55 'Inter',sans-serif}
+.saturn-choice-grid{display:grid;grid-template-columns:1fr;gap:0}
+.saturn-choice{
+  min-height:48px;padding:0 15px;text-align:center;border:0;border-radius:5px;
+  background:#151515;color:#eee;font:400 15px 'Inter',sans-serif;transition:background .15s ease,transform .15s ease;
+}
+.saturn-choice:hover{transform:none;background:#202020;border-color:transparent}
+.saturn-choice{width:100%;height:48px;cursor:pointer}
+.saturn-choice-icon{display:none}
+.saturn-choice strong{display:inline;font-size:15px;font-weight:400}
+.saturn-choice small{display:none}
+.saturn-welcome-bottom{margin-top:12px;justify-content:center}
+.saturn-welcome-check{color:#777;font-size:11px}
+.saturn-welcome-close{display:none}
+
+/* player overlay */
+.zone-overlay{background:#050505!important}
+.back-btn,.game-report-btn{border-radius:9px!important;background:rgba(15,15,15,.9)!important;border:1px solid rgba(255,255,255,.1)!important}
+
+@media(max-width:1000px){
+  .stats .pill:nth-child(2),.stats .pill:nth-child(3){display:none}
+  .hub-tabs{margin-left:8px}
+}
+@media(max-width:800px){
+  header{padding:10px 14px}
+  .hub-tabs{order:3;width:100%;justify-content:flex-start;overflow:auto;margin:0;padding-top:2px}
+  .stats{display:none}
+  .search{order:2;max-width:none;min-width:150px}
+  .saturn-hero{padding:65px 18px 55px}
+  .saturn-hero-title{font-size:50px;letter-spacing:-2.7px}
+  .saturn-ad{position:static;max-width:330px;width:100%;margin-top:25px}
+  .grid-wrap{padding:24px 14px 80px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+}
+@media(max-width:600px){
+  .saturn-welcome-inner{padding:31px 22px 24px}
+  .saturn-welcome-title{font-size:18px}
+  .saturn-welcome-copy{font-size:14px}
+}
+</style>
+
 </head>
 <body>
 
@@ -940,6 +1320,39 @@ footer{
 <main class="grid-wrap" id="downloadsContainer" style="display:none"></main>
 
 <footer>nothing to see down here</footer>
+
+
+<!-- FIRST-LAUNCH WELCOME -->
+<div id="saturnWelcomeOverlay" aria-hidden="true">
+  <section id="saturnWelcomePanel" role="dialog" aria-modal="true" aria-labelledby="saturnWelcomeTitle">
+    <span class="saturn-welcome-corner">SATURN / 01</span>
+    <div class="saturn-welcome-inner">
+      <div class="saturn-welcome-kicker">
+        <span class="saturn-welcome-dot"></span>
+        quick start
+      </div>
+      <p class="saturn-welcome-copy">
+        fixed deltarune added some zones and updated the ui!
+      </p>
+
+      <div class="saturn-choice-grid">
+        <button class="saturn-choice" id="saturnChillChoice" type="button">
+          <span class="saturn-choice-icon">⌁</span>
+          <strong>close</strong>
+          <small>Go straight to the hub.</small>
+        </button>
+      </div>
+
+      <div class="saturn-welcome-bottom">
+        <label class="saturn-welcome-check">
+          <input id="saturnWelcomeRemember" type="checkbox">
+          <span>don't show this again</span>
+        </label>
+        <button id="saturnWelcomeSkip" class="saturn-welcome-close" type="button">skip</button>
+      </div>
+    </div>
+  </section>
+</div>
 
 <!-- ZONE OVERLAY PLAYER -->
 <div id="zoneOverlay" class="zone-overlay">
@@ -1514,7 +1927,6 @@ function buildTile(zone, index){
     <div class="tile-img" style="${shownImg ? `background-image:url(${shownImg})` : `background-color:${colors[index % colors.length]}`}">
       <span class="tile-mono" style="${shownImg ? 'display:none' : ''}">${initials}</span>
     </div>
-    ${zoneTile ? `<div class="tile-play-count">${getPlayCount(name).toLocaleString()} plays</div>` : ''}
     <button class="star-btn" title="Favorite" aria-label="Favorite ${name}">
       <svg><use href="#icon-star"/></svg>
     </button>
@@ -2063,6 +2475,62 @@ document.getElementById('purchaseLink').addEventListener('click', (e) => {
 
 
 
+</script>
+
+
+<script id="saturn-welcome-script">
+(function(){
+  "use strict";
+
+  var overlay = document.getElementById("saturnWelcomeOverlay");
+  var chill = document.getElementById("saturnChillChoice");
+    var skip = document.getElementById("saturnWelcomeSkip");
+  var remember = document.getElementById("saturnWelcomeRemember");
+
+  if(!overlay || !chill || !skip) return;
+
+  var seenKey = "saturn_welcome_seen_v1";
+
+  function rememberChoice(){
+    if(remember && remember.checked){
+      try { localStorage.setItem(seenKey, "1"); } catch(e){}
+    }
+  }
+
+  function closeWelcome(){
+    rememberChoice();
+    overlay.classList.remove("open");
+    overlay.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
+    setTimeout(function(){
+      overlay.style.display = "none";
+    }, 300);
+  }
+
+  chill.addEventListener("click", closeWelcome);
+  skip.addEventListener("click", closeWelcome);
+
+  overlay.addEventListener("click", function(e){
+    if(e.target === overlay) closeWelcome();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && overlay.classList.contains("open")){
+      closeWelcome();
+    }
+  });
+
+  var alreadySeen = false;
+  try { alreadySeen = localStorage.getItem(seenKey) === "1"; } catch(e){}
+
+  if(!alreadySeen){
+    overlay.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    requestAnimationFrame(function(){
+      overlay.classList.add("open");
+    });
+  }
+})();
 </script>
 
 <script id="saturn-settings-script">
