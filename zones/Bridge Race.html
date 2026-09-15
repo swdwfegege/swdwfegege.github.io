@@ -4,24 +4,15 @@
 <head>
   
   
-  <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-          dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-');
-  </script>
-  <base href="https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@86ba622d4f23e944352f50b6052fa16f22c5250d/basket-battle/">
+  <base href="https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@213d19aad1db5acdebe8e07a80ae4998f3146e33/bridge-race/">
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <title>YT Game Wrapper WebGL Template</title>
-  <link rel="stylesheet" href="TemplateData/style.css" nonce="HjWJF8wUoyyM9Kds5vxdMg">
-  <script src="https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/ytgame.js" nonce="HjWJF8wUoyyM9Kds5vxdMg">// Load YT Game API code</script>
+  <link rel="stylesheet" href="TemplateData/style.css" nonce="xc9yLMIA-AeOcD4uccnAOg">
+  <script src="https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/ytgame.js" nonce="xc9yLMIA-AeOcD4uccnAOg">// Load YT Game API code</script>
 </head>
 
 <body>
@@ -36,8 +27,8 @@
     <div id="unity-warning"> </div>
   </div>
 
-  <script src="unarchiver.min.js" nonce="HjWJF8wUoyyM9Kds5vxdMg">// used for decompression if zip files are used</script>
-  <script nonce="HjWJF8wUoyyM9Kds5vxdMg"> // Logic for Unity contianer
+  <script src="unarchiver.min.js" nonce="xc9yLMIA-AeOcD4uccnAOg">// used for decompression if zip files are used</script>
+  <script nonce="xc9yLMIA-AeOcD4uccnAOg"> // Logic for Unity contianer
     var container = document.querySelector("#unity-container");
     var canvas = document.querySelector("#unity-canvas");
     var loadingBar = document.querySelector("#unity-loading-bar");
@@ -72,15 +63,15 @@
     }
 
     var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/BasketBattleWeb.loader.js";
+    var loaderUrl = buildUrl + "/BridgeRace.loader.js";
     var config = {
-      dataUrl: buildUrl + "/BasketBattleWeb.data.unityweb",
-      frameworkUrl: buildUrl + "/BasketBattleWeb.framework.js.unityweb",
-        codeUrl: buildUrl + "/BasketBattleWeb.wasm.unityweb",
+      dataUrl: buildUrl + "/BridgeRace.data.unityweb",
+      frameworkUrl: buildUrl + "/BridgeRace.framework.js.unityweb",
+        codeUrl: buildUrl + "/BridgeRace.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
-      companyName: "Noor Creative, LLC",
-      productName: "Basket Battle",
-      productVersion: "3.4",
+      companyName: "Garawell",
+      productName: "Bridge Race",
+      productVersion: "3.21",
       showBanner: unityShowBanner,
     };
 
@@ -118,27 +109,40 @@
     // however its best to not trigger this if you dont used compression. 
     // NOTE: GZip does not work ATM.  If this is needed Unarchiver will need to be updated.
     loadResources = (callback) => {
+      const subZipStr = '.zip';
+      const subWASMStr = '.wasm';
+      const subJSStr = '.js';
+
       var codeUrl = config.codeUrl;
       var shouldDecompress = true;
 
-      let processedCount = 0;
-
-      let readyDefiner = () => {
-        processedCount++;
-        if(processedCount === 2) {
-          callback();
+      // check if .zip already exists in the URL, if it doesnt check if a .zip file exists
+      if (!codeUrl.includes(subZipStr)) {
+        if (UrlExists(codeUrl + subZipStr)) {
+          codeUrl = codeUrl + subZipStr;
+        } else {
+          shouldDecompress = false;
         }
       }
 
-      DecompressFile(config.codeUrl, 'application/wasm', (file) => {
-        config.codeUrl = file;
-        readyDefiner();
-      });
-
-      DecompressFile(config.dataUrl, 'application/data', (file) => {
-        config.dataUrl = file;
-        readyDefiner();
-      });
+      // decompress if using a zip file, otherwise just load regular wasm file
+      if (shouldDecompress) {
+        // Decompress the file based on the type, WASM, JS, etc.
+        // if you need more types please add a const above and modify the type logic below.
+        var blobType = 'application/octet-stream';
+        if (codeUrl.includes(subWASMStr)){
+          blobType = 'application/wasm';
+        } else if (codeUrl.includes(subJSStr)){
+          blobType = 'text/javascript';
+        }
+        
+        DecompressFile(codeUrl, blobType, (file) => {
+          config.codeUrl = file;
+          callback();
+        });
+      } else {
+        callback();
+      }
     }
 
     // Fetch/Load a file then call our callback 
@@ -201,16 +205,9 @@
     // Path 1: Use this path if no decompression of your .wasm, .data, .js files are needed
     InitUnitySection();
 
-    window.onfocus = function() {
-      unityGameInstance.SendMessage("IDFAPreload", "BrowserVisible");
-    };
-    window.onblur = function() {
-      unityGameInstance.SendMessage("IDFAPreload", "BrowserHide");
-    };
-
     // Path 2: Use this path to Load resources (.wasm, .data, .js) that are Zipped and need to be decompressed
     // if you dont use compresseion its best to comment out Path 1 and uncomment Path 2.
-    //loadResources(InitUnitySection);  // Uncomment this line to start Unity by loading zipped files
+    // loadResources(InitUnitySection);  // Uncomment this line to start Unity by loading zipped files
   </script>
 </body>
 </html>
