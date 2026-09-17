@@ -1616,6 +1616,121 @@ body.frutiger-aero-theme .back-btn{
 }
 </style>
 
+
+<style id="frutiger-aero-refinement">
+/* Frutiger Aero refinement: softer background, clearer content, less visual clash. */
+body.frutiger-aero-theme::after{
+  background:
+    linear-gradient(180deg,
+      rgba(196,241,255,.18) 0%,
+      rgba(80,190,232,.05) 38%,
+      rgba(39,157,122,.13) 72%,
+      rgba(20,112,91,.22) 100%),
+    var(--frutiger-aero-image);
+  background-size:cover;
+  background-position:center center;
+  filter:saturate(.88) contrast(.97);
+}
+
+body.frutiger-aero-theme .bg-grid{opacity:.055!important}
+body.frutiger-aero-theme .bg-glow{opacity:.30!important}
+body.frutiger-aero-theme #particles{opacity:.08!important}
+
+/* Give the landing area a subtle glass surface instead of floating directly over the photo. */
+body.frutiger-aero-theme .saturn-hero{
+  max-width:1368px;
+  margin:18px auto 0;
+  min-height:445px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:28px;
+  background:linear-gradient(180deg,rgba(225,250,255,.12),rgba(180,240,230,.06));
+  box-shadow:0 18px 55px rgba(0,78,110,.10),inset 0 1px rgba(255,255,255,.38);
+}
+
+body.frutiger-aero-theme .saturn-hero-center{
+  position:relative;
+  z-index:2;
+}
+
+body.frutiger-aero-theme .saturn-hero-title{
+  font-size:52px;
+  letter-spacing:-2px;
+  text-shadow:0 2px 0 rgba(255,255,255,.68),0 7px 22px rgba(0,72,100,.18);
+}
+
+body.frutiger-aero-theme .bookmark-hint{
+  background:rgba(238,253,255,.58)!important;
+  box-shadow:0 5px 18px rgba(0,80,110,.10),inset 0 1px rgba(255,255,255,.78);
+}
+
+body.frutiger-aero-theme .discord-btn{
+  min-width:300px;
+  border-radius:999px;
+  box-shadow:0 8px 22px rgba(0,101,135,.16),inset 0 1px rgba(255,255,255,.7);
+}
+
+/* Keep the zone artwork untouched while making the cards sit naturally in the scene. */
+body.frutiger-aero-theme .grid-wrap{
+  margin-top:18px;
+  padding-top:22px;
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:26px 26px 0 0;
+  background:rgba(225,250,255,.075);
+  box-shadow:inset 0 1px rgba(255,255,255,.28);
+}
+
+body.frutiger-aero-theme .category-title{
+  padding-left:6px;
+  text-shadow:0 1px 0 rgba(255,255,255,.75);
+}
+
+body.frutiger-aero-theme .tile{
+  background:rgba(240,255,255,.22)!important;
+  border-color:rgba(255,255,255,.72)!important;
+  box-shadow:0 8px 20px rgba(0,77,105,.13),inset 0 1px rgba(255,255,255,.72);
+}
+body.frutiger-aero-theme .tile:hover{
+  transform:translateY(-4px);
+  border-color:rgba(37,183,177,.82)!important;
+  box-shadow:0 16px 30px rgba(0,77,105,.20),0 0 0 2px rgba(92,225,190,.18)!important;
+}
+
+body.frutiger-aero-theme .tile-label{
+  background:linear-gradient(180deg,transparent 0%,rgba(4,75,94,.18) 22%,rgba(4,64,82,.78) 100%)!important;
+}
+
+body.frutiger-aero-theme .star-btn{
+  background:rgba(235,255,255,.72)!important;
+  color:#17647a!important;
+  border-color:rgba(255,255,255,.9)!important;
+  box-shadow:0 3px 9px rgba(0,70,95,.12);
+}
+
+/* Slightly cleaner header so it feels like glass rather than a separate white bar. */
+body.frutiger-aero-theme header{
+  background:linear-gradient(180deg,rgba(232,251,255,.84),rgba(210,245,255,.68))!important;
+  box-shadow:0 3px 18px rgba(0,74,105,.10),inset 0 -1px rgba(255,255,255,.55);
+}
+
+body.frutiger-aero-theme .hub-tab.active{
+  background:rgba(255,255,255,.62);
+  box-shadow:inset 0 1px rgba(255,255,255,.8),0 3px 10px rgba(0,80,105,.07);
+}
+
+@media(max-width:800px){
+  body.frutiger-aero-theme .saturn-hero{
+    margin:10px 12px 0;
+    border-radius:22px;
+    min-height:auto;
+  }
+  body.frutiger-aero-theme .grid-wrap{
+    margin-left:12px;
+    margin-right:12px;
+    border-radius:22px 22px 0 0;
+  }
+}
+</style>
+
 </head>
 <body>
 
