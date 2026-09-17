@@ -1235,6 +1235,103 @@ header{
 }
 </style>
 
+
+<style id="gorilla-gang-theme-css">
+/* Gorilla Gang theme: this image is used ONLY while Gorilla Gang is selected. */
+:root{
+  --gorilla-image: url("https://p19-common-sign.tiktokcdn-us.com/tos-useast5-avt-0068-tx/49ba9cc08ed4d4c1731a78df0a683307~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=f53ceae1&x-expires=1789844400&x-signature=YuPapPyit4BAaX1hCCVw5OHIcBw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast8");
+}
+
+body.gorilla-gang-theme{
+  --green:#a8d85a;
+  --green-dim:#6f963b;
+  --border:rgba(168,216,90,.28);
+  --border-strong:rgba(168,216,90,.72);
+  --text:#fff;
+  --text-dim:#d3d3d3;
+  background:#111!important;
+  position:relative;
+}
+
+body.gorilla-gang-theme::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(0,0,0,.42),rgba(0,0,0,.42)),var(--gorilla-image);
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+
+body.gorilla-gang-theme > *{position:relative;z-index:1}
+body.gorilla-gang-theme .bg-grid,
+body.gorilla-gang-theme .bg-glow,
+body.gorilla-gang-theme #particles{display:none}
+
+body.gorilla-gang-theme header{
+  background:rgba(12,12,12,.72)!important;
+  border-bottom-color:rgba(255,255,255,.14)!important;
+}
+
+body.gorilla-gang-theme .brand-mark{
+  background-image:var(--gorilla-image)!important;
+  background-size:cover!important;
+  background-position:center!important;
+  border:1px solid rgba(255,255,255,.35);
+  overflow:hidden;
+}
+body.gorilla-gang-theme .brand-mark svg{display:none}
+body.gorilla-gang-theme .brand-name{color:#fff!important}
+
+/* Replace every Zone/Movie tile image with the Gorilla Gang picture. */
+body.gorilla-gang-theme .tile-img{
+  background-image:linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),var(--gorilla-image)!important;
+  background-size:cover!important;
+  background-position:center!important;
+}
+body.gorilla-gang-theme .tile-mono{display:none!important}
+body.gorilla-gang-theme .tile{
+  border-color:rgba(255,255,255,.20)!important;
+  background:rgba(10,10,10,.70)!important;
+}
+body.gorilla-gang-theme .tile:hover{
+  border-color:var(--green)!important;
+  box-shadow:0 15px 35px rgba(0,0,0,.55),0 0 0 1px rgba(168,216,90,.18)!important;
+}
+body.gorilla-gang-theme .tile-label{
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.92) 35%)!important;
+}
+
+body.gorilla-gang-theme .category-title,
+body.gorilla-gang-theme .download-name,
+body.gorilla-gang-theme .hub-tab.active{color:#fff!important}
+body.gorilla-gang-theme .discord-btn{
+  background:#8fbc55!important;
+  color:#101010!important;
+}
+body.gorilla-gang-theme .saturn-settings-btn,
+body.gorilla-gang-theme .search,
+body.gorilla-gang-theme .pill,
+body.gorilla-gang-theme .download-item{
+  background:rgba(10,10,10,.72)!important;
+  border-color:rgba(255,255,255,.16)!important;
+  backdrop-filter:blur(8px);
+}
+body.gorilla-gang-theme .saturn-settings-panel,
+body.gorilla-gang-theme #saturnWelcomePanel{
+  background:rgba(8,8,8,.90)!important;
+}
+body.gorilla-gang-theme .star-btn{
+  background:rgba(0,0,0,.68)!important;
+}
+body.gorilla-gang-theme .tile.favorited{
+  border-color:var(--green)!important;
+}
+</style>
+
 </head>
 <body>
 
@@ -1399,6 +1496,7 @@ header{
           <button class="saturn-theme-btn" data-theme="red" type="button">Red</button>
           <button class="saturn-theme-btn" data-theme="orange" type="button">Orange</button>
           <button class="saturn-theme-btn" data-theme="pink" type="button">Pink</button>
+          <button class="saturn-theme-btn" data-theme="gorilla-gang" type="button">Gorilla Gang</button>
         </div>
       </div>
 
@@ -2566,7 +2664,8 @@ document.getElementById('purchaseLink').addEventListener('click', (e) => {
       purple: ["#b98cff","#8664bd","rgba(185,140,255,.18)","rgba(185,140,255,.6)","rgba(185,140,255,.06)","rgba(185,140,255,.16)"],
       red:    ["#ff7474","#bd5050","rgba(255,116,116,.18)","rgba(255,116,116,.6)","rgba(255,116,116,.06)","rgba(255,116,116,.16)"],
       orange: ["#ffb45c","#bd7b36","rgba(255,180,92,.18)","rgba(255,180,92,.6)","rgba(255,180,92,.06)","rgba(255,180,92,.16)"],
-      pink:   ["#ff82c8","#c25f98","rgba(255,130,200,.18)","rgba(255,130,200,.6)","rgba(255,130,200,.06)","rgba(255,130,200,.16)"]
+      pink:   ["#ff82c8","#c25f98","rgba(255,130,200,.18)","rgba(255,130,200,.6)","rgba(255,130,200,.06)","rgba(255,130,200,.16)"],
+      "gorilla-gang": ["#8fbc55","#557a2e","rgba(143,188,85,.20)","rgba(143,188,85,.62)","rgba(143,188,85,.08)","rgba(143,188,85,.18)"]
     };
 
     var nameInput = document.getElementById("saturnTabName");
@@ -2607,6 +2706,8 @@ document.getElementById('purchaseLink').addEventListener('click', (e) => {
       document.querySelectorAll(".saturn-theme-btn").forEach(function (b) {
         b.classList.toggle("active", b.getAttribute("data-theme") === settings.theme);
       });
+
+      document.body.classList.toggle("gorilla-gang-theme", settings.theme === "gorilla-gang");
 
       save();
     }
