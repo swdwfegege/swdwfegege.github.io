@@ -581,27 +581,32 @@ footer{
 }
 .back-btn {
   position: absolute;
-  top: 16px;
   left: 16px;
+  bottom: 16px;
+  top: auto;
   z-index: 10000;
+  width: 58px;
+  height: 58px;
+  padding: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: var(--panel);
-  border: 1px solid var(--border-strong);
-  color: var(--text);
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+.back-btn img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 .back-btn:hover {
-  background: var(--panel-2);
-  border-color: var(--green);
+  filter: brightness(1.08);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0,0,0,0.7);
 }
@@ -616,23 +621,29 @@ footer{
   top:16px;
   right:16px;
   z-index:10001;
+  width:58px;
+  height:58px;
+  padding:0;
   display:flex;
   align-items:center;
-  gap:8px;
-  border:1px solid rgba(255,116,116,.65);
-  border-radius:10px;
-  padding:10px 14px;
-  background:rgba(30,12,12,.92);
-  color:#fff;
-  font:700 13px 'Inter',sans-serif;
+  justify-content:center;
+  border:0;
+  border-radius:50%;
+  background:transparent;
   cursor:pointer;
+  overflow:hidden;
   box-shadow:0 5px 18px rgba(0,0,0,.35);
-  transition:transform .15s ease,background .15s ease,border-color .15s ease;
+  transition:transform .15s ease,filter .15s ease,box-shadow .15s ease;
+}
+.game-report-btn img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
 }
 .game-report-btn:hover{
   transform:translateY(-1px);
-  background:rgba(75,20,20,.96);
-  border-color:#ff7474;
+  filter:brightness(1.08);
 }
 .game-report-btn:active{transform:scale(.97)}
 
@@ -1211,7 +1222,7 @@ header{
 
 /* player overlay */
 .zone-overlay{background:#050505!important}
-.back-btn,.game-report-btn{border-radius:9px!important;background:rgba(15,15,15,.9)!important;border:1px solid rgba(255,255,255,.1)!important}
+.back-btn,.game-report-btn{border-radius:50%!important;background:transparent!important;border:0!important}
 
 @media(max-width:1000px){
   .stats .pill:nth-child(2),.stats .pill:nth-child(3){display:none}
@@ -1614,6 +1625,14 @@ body.frutiger-aero-theme .back-btn{
   border-color:rgba(255,255,255,.82)!important;
   box-shadow:0 6px 20px rgba(0,85,120,.20)!important;
 }
+.back-btn,.game-report-btn{
+  background:transparent!important;
+  border:0!important;
+  border-radius:50%!important;
+}
+.back-btn{top:auto!important;left:16px!important;bottom:16px!important;}
+.game-report-btn{top:16px!important;right:16px!important;}
+
 </style>
 
 
@@ -1852,12 +1871,11 @@ body.frutiger-aero-theme .hub-tab.active{
 
 <!-- ZONE OVERLAY PLAYER -->
 <div id="zoneOverlay" class="zone-overlay">
-  <button id="backBtn" class="back-btn">
-    <svg width="20" height="20"><use href="#icon-back"/></svg>
-    back
+  <button id="backBtn" class="back-btn" type="button" aria-label="Back">
+    <img src="assets/home.png" alt="Back">
   </button>
-  <button id="gameReportBtn" class="game-report-btn" type="button">
-    ⚠ Report broken
+  <button id="gameReportBtn" class="game-report-btn" type="button" aria-label="Report broken">
+    <img src="assets/report.png" alt="Report broken">
   </button>
   <iframe id="zoneFrame" src=""></iframe>
 </div>
@@ -3284,5 +3302,3 @@ document.getElementById('purchaseLink').addEventListener('click', (e) => {
   }
 </style>
 </html>
-saturn_reports_playcounts.html
-HTML
