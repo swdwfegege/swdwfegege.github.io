@@ -2038,9 +2038,7 @@ for(let i=0;i<34;i++){
   pWrap.appendChild(p);
 }
 
-/* =====================================================================
-                                  ZONES
-===================================================================== */
+/* im gay */
 const ZONES = [
   { name: 'Minecraft',         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3-NLG95WUm-a39k5_e7GLvw7cqeWlXRtvwSBeP6D5_A&s=10', link: 'zones/Minecraft 1.12.2.html' },
   { name: 'Próxy',         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFQSmfoAy1oIf3MghDkmkfbgSHsq4Z2n0b6l8Pdfzymw&s', link: 'zones/pröxy.html' },
@@ -2352,12 +2350,13 @@ const ZONES = [
   { name: 'Five Nights at Freddy\'s: Ultimate Custom Night', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/192.png", link: 'zones/Five Nights at Freddy\'s_ Ultimate Custom Night.html' },
   { name: 'Five Nights at Freddy\'s: World', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/190.png", link: 'zones/Five Nights at Freddy\'s_ World.html' },
   { name: 'Five Nights at Winston\'s', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/204.png", link: 'zones/Five Nights at Winston\'s.html' },
-  { name: 'Get A Virus Sim', image: '', link: 'zones/Get A Virus Sim.html' },
+  { name: 'Get A Virus Sim', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPb6GNXhU_-6kGspx-4W5DqXyMurypbgtcDPpqXsz5uA&s=10', link: 'zones/Get A Virus Sim.html' },
   { name: 'Man Runner 2048', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/573.png", link: 'zones/Man Runner 2048.html' },
   { name: 'Mob Control HTML5', image: "https://cdn.jsdelivr.net/gh/freebuisness/covers@main/22.png", link: 'zones/Mob Control HTML5.html' },
-  { name: 'pong wars', image: '', link: 'zones/pong wars.html' },
+  { name: 'pong wars', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJO-2nru-Hl2DzUlPka-dCwq3d1CETZnTUCoeGQEsYiw&s=10', link: 'zones/pong wars.html' },
   { name: 'no wifi dino game (i hate u lukas)', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9IFYFkzCar3rZTgRLT4sujuzPGuBRBKotixRhiqi1gA&s=10', link: 'zones/wifi.html' },
   { name: 'Kick The Buddy', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStB8Sb1Z2pOFx_r13GjnKJQZUlrf2au_8ioUHfoLha3g&s=10', link: 'zones/kickthebuddy.html' },
+  { name: 'Roblox', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz_jZiaD3GyAkoNvi4yf6JriWgirqjEBNxVPikO0Ghjg&s', link: 'zones/roblox.html' },
 ];
 
 const MOVIES = [
@@ -2375,7 +2374,7 @@ const MOVIES = [
 const colors = ['#ff6b57','#7b5bff','#ff4fa0','#3ba8ff','#ffb340','#4fe05a','#ff5c5c','#8a7bff','#2fd6c8','#ffd23f','#5ad1ff','#ff8a3d'];
 
 function isSiteZone(zone){
-  // Movies use the same tile builder, but only Zones get play/report stats.
+  // stop snooping around bud
   return Array.isArray(ZONES) && ZONES.includes(zone) || store.customZones.includes(zone);
 }
 
@@ -2434,7 +2433,7 @@ function buildTile(zone, index){
 
   if(store.favorites.includes(name)) tile.classList.add('favorited');
 
-  // Launch zone/movie overlay.
+  // propaganda code
   tile.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -2468,7 +2467,7 @@ function renderZones(){
 
   let globalIndex = 0;
 
-  // 1. Render Favorites Section (if any favorites exist)
+  // renderrrr
   if(favoriteZones.length > 0){
     const favSection = document.createElement('div');
     favSection.className = 'category-section';
@@ -2487,7 +2486,7 @@ function renderZones(){
     container.appendChild(favSection);
   }
 
-  // 2. Render All zones Section
+  // renderrr again
   const allSection = document.createElement('div');
   allSection.className = 'category-section';
 
@@ -2502,7 +2501,7 @@ function renderZones(){
     allGrid.appendChild(buildTile(zone, globalIndex++));
   });
 
-  // Add suggest zone tile
+  // zone = yes :)
   const addBtn = document.createElement('a');
   addBtn.className = 'tile add-tile';
   addBtn.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdO1EtMpTdaAgJkkxVyJxqerFNZLql6xH-pJXiy8v7PTgP7Uw/viewform?usp=publish-editor';
@@ -2514,7 +2513,7 @@ function renderZones(){
   allSection.appendChild(allGrid);
   container.appendChild(allSection);
 
-  // Empty search message placeholder
+  // this is a placeholder for empty btw
   const emptyMsg = document.createElement('p');
   emptyMsg.className = 'empty-msg';
   emptyMsg.id = 'emptyMsg';
@@ -2522,7 +2521,7 @@ function renderZones(){
   container.appendChild(emptyMsg);
 }
 
-// Initial render
+// I FUCKING HATE RENDERS
 renderZones();
 
 function renderMovies(){
@@ -2557,11 +2556,7 @@ function renderMovies(){
 
 renderMovies();
 
-/* =====================================================================
-                              DOWNLOADS
-   The Downloads tab reads the /zones folder from the GitHub repository.
-   That means newly uploaded .html zones appear automatically.
-   ===================================================================== */
+/* downloads that run of repo */
 
 const DOWNLOADS_CACHE_KEY = 'saturn_downloads_v1';
 let downloadZones = [];
@@ -2569,7 +2564,7 @@ let downloadZones = [];
 function getGitHubRepoInfo(){
   const host = window.location.hostname;
 
-  // GitHub Pages: username.github.io/repository
+  // dabloons
   if(host.endsWith('.github.io')){
     const owner = host.split('.')[0];
     const parts = window.location.pathname.split('/').filter(Boolean);
@@ -2577,7 +2572,7 @@ function getGitHubRepoInfo(){
     return { owner, repo };
   }
 
-  // Optional manual fallback for custom domains.
+  // blah blah blah boring code
   return { owner: 'swdwfegege', repo: 'swdwfegege.github.io' };
 }
 
@@ -2606,9 +2601,6 @@ function mergeDownloadZones(githubFiles){
     }
   });
 
-  // Also include zones already defined in the site's ZONES array.
-  // This keeps the list working if GitHub's API is temporarily unavailable
-  // or a zone has a custom/case-sensitive filename.
   ZONES.concat(store.customZones).forEach(zone => {
     const filename = getZoneFilename(zone.link);
     if(!filename || !/\.html$/i.test(filename)) return;
@@ -2752,7 +2744,7 @@ async function downloadZone(zone, button){
   }catch(error){
     console.error('Zone download failed:', error);
 
-    // Fallback: open the raw file if the browser blocks the fetch.
+    // open raw ayo
     if(zone.downloadUrl){
       window.open(zone.downloadUrl, '_blank', 'noopener,noreferrer');
     }else{
@@ -2771,7 +2763,7 @@ async function downloadZone(zone, button){
 }
 
 async function loadDownloads(){
-  // Render immediately from the existing ZONES list.
+  // rebder for the 50th fucking time
   downloadZones = mergeDownloadZones([]);
   renderDownloads('Checking GitHub for the latest zones...');
 
@@ -2796,7 +2788,7 @@ async function loadDownloads(){
   }catch(error){
     console.warn('Could not refresh the zones list from GitHub:', error);
 
-    // Still show all zones known by the frontend.
+
     downloadZones = mergeDownloadZones([]);
     renderDownloads('');
   }
@@ -2804,10 +2796,9 @@ async function loadDownloads(){
   filterDownloads(searchInput.value.trim().toLowerCase());
 }
 
-// Load once in the background so the first visit is instant.
 loadDownloads();
 
-/* ---------------- Zones / Movies / Downloads tabs ---------------- */
+// im gay
 const zonesTab = document.getElementById('zonesTab');
 const moviesTab = document.getElementById('moviesTab');
 const downloadsTab = document.getElementById('downloadsTab');
@@ -2906,7 +2897,7 @@ reportSubmit.addEventListener('click', () => {
     `<strong>${gameName}</strong> reports: <strong>${getReportCount(gameName).toLocaleString()}</strong>`;
   reportSubmit.textContent = 'Reported';
   reportSubmit.disabled = true;
-
+// basic instructions from here on out :)
   // Refresh the visible play-count tiles when the game is closed.
   setTimeout(() => {
     reportSubmit.textContent = 'Report broken';
